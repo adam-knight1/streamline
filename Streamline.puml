@@ -1,0 +1,68 @@
+@startuml
+
+class User {
++userId: ?? uuid or string
++username: String
++email: String
+
+ // some constructors
++User()
++User(username: String, email: String)
+
+//Getters and setters here
++getUserId(): String
+
+}
+interface UserRepository {
++save(user: User): User
++findById(userId: String): User
++delete(user: User): void
+}
+class UserService {
+-userRepository: UserRepository
+
+// UserService constructor
++UserService(userRepository: UserRepository)
+
+// some methods -  add more as needeed
++createUser(createUserRequest: CreateUserRequest): User
+
+}
+
+class UserController {
+-userService: UserService
+
+// Constructor
++UserController(userService: UserService)
+
+// should we add endpoint methods?
++createUser(createUserRequest: CreateUserRequest): ResponseEntity<User>
+
+
+class TaskList {
++userId: String
++taskListName: String
+-user: User
+getUserId(): String
+  // Other getters and setters
+}
+
+interface UserRepository {
++save(user: User): User
+ +findById(userId: String): User
++delete(user: User): void
+}
+
+class TaskListService {
+  -userRepository: UserRepository
+  +createTaskList(createTaskListRequest: CreateTaskListRequest): TaskList
+  // Add other methods as needed
+}
+
+class TaskListController {
+-taskListService: TaskListService
++createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
+  //more endpoints need to be added
+}
+}
+@enduml
