@@ -56,12 +56,15 @@ interface UserRepository {
 class TaskListService {
   -userRepository: UserRepository
   +createTaskList(createTaskListRequest: CreateTaskListRequest): TaskList
+  +updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): TaskList
+  +deleteTaskList(taskListId: String): boolean
   // Add other methods as needed
 }
 
 class TaskListController {
 -taskListService: TaskListService
 +createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
+
   //more endpoints need to be added
 }
 
