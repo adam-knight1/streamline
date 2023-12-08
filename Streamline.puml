@@ -64,5 +64,11 @@ class TaskListController {
 +createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
   //more endpoints need to be added
 }
+
+interface TaskListRepository {
++save(taskListRecord: TaskListRecord): TaskListRecord
++findById(taskListId: String): TaskListRecord
++delete(taskListRecord: TaskListRecord): void
+}
 }
 @enduml
