@@ -38,19 +38,18 @@ class UserController {
 // should we add endpoint methods?
 +createUser(createUserRequest: CreateUserRequest): ResponseEntity<User>
 
+interface UserRepository {
++save(user: User): User
+ +findById(userId: String): User
++delete(user: User): void
+}
 
 class TaskList {
 +userId: String
 +taskListName: String
 -user: User
-getUserId(): String
++getUserId(): String
   // Other getters and setters
-}
-
-interface UserRepository {
-+save(user: User): User
- +findById(userId: String): User
-+delete(user: User): void
 }
 
 class TaskListService {
@@ -58,13 +57,17 @@ class TaskListService {
   +createTaskList(createTaskListRequest: CreateTaskListRequest): TaskList
   +updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): TaskList
   +deleteTaskList(taskListId: String): boolean
+  -transformToTaskList(taskListRecord: TaskListRecord): TaskList
   // Add other methods as needed
 }
 
 class TaskListController {
 -taskListService: TaskListService
 +createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
-
++getTaskList(taskListId: String): ResponseEntity<TaskList>
++updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
++deleteTaskList((taskListId: String): ResponseEntity<Void>
+-transformToTaskListResponse(taskList: TaskList): TaskListResponse
   //more endpoints need to be added
 }
 
