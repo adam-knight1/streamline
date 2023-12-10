@@ -8,6 +8,7 @@ public class TaskListRecord {
     public String userId;
     public String taskListName;
 
+
     public TaskListRecord(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
