@@ -1,9 +1,19 @@
 package com.kenzie.appserver.service.model;
 
+import org.springframework.scheduling.config.Task;
+
+import java.util.List;
+
 public class TaskList {
     public String userId;
     public String taskListName;
-    private User user;
+    public List<Task> tasks;
+
+    public TaskList(String userId, String taskListName, List<Task> tasks){
+        this.userId = userId;
+        this.taskListName = taskListName;
+        this.tasks = tasks;
+    }
 
     public String getUserId() {
         return userId;
@@ -21,11 +31,11 @@ public class TaskList {
         this.taskListName = taskListName;
     }
 
-    public User getUser() {
-        return user;
+    public List<Task> getTasks() {
+        return tasks;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

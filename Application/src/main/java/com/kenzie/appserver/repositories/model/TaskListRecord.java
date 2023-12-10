@@ -1,17 +1,31 @@
 package com.kenzie.appserver.repositories.model;
 
+import org.springframework.scheduling.config.Task;
+
+import java.util.List;
+
 public class TaskListRecord {
     public String userId;
     public String taskListName;
-    private User user;
 
-    public TaskList(String userId, String taskListName, User user) {
+    public TaskListRecord(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
-        this.user = user;
     }
 
     public String getUserId() {
         return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTaskListName() {
+        return taskListName;
+    }
+
+    public void setTaskListName(String taskListName) {
+        this.taskListName = taskListName;
     }
 }
