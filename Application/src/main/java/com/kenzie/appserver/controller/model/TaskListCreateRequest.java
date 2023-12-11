@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 
-public class CreateTaskListRequest {
+public class TaskListCreateRequest {
     @NotEmpty
     @JsonProperty("userId")
     private String userId;

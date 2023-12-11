@@ -1,6 +1,6 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.CreateTaskListRequest;
+import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.service.TaskListService;
 import com.kenzie.appserver.service.model.TaskList;
@@ -31,7 +31,7 @@ public class TaskListController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TaskListResponse> createTaskList(CreateTaskListRequest request,
+    public ResponseEntity<TaskListResponse> createTaskList(TaskListCreateRequest request,
                                                            String userId, String taskListName){
         TaskList taskList = taskListService.createTaskList(request, userId, taskListName);
         if(taskList == null){
@@ -46,7 +46,7 @@ public class TaskListController {
     }
 
     @PutMapping("/userId/updateName")
-    public ResponseEntity<TaskListResponse> updateTaskListName(CreateTaskListRequest request, String userId){
+    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
         TaskList taskList = taskListService.updateTaskListName(request, userId);
         if(taskList == null){
             return ResponseEntity.notFound().build();
