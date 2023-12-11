@@ -25,7 +25,7 @@ public class UserController {
         System.out.println("Received request to find user with userId: " + userId);
         User user = userService.findByUserId(userId);
         if (user == null) {
-            throw new UserNotFoundException("User not found"); // added this custom exception -adam
+            throw new UserNotFoundException("User not found"); //see custom exception -adam
         }
         return ResponseEntity.ok(userToResponse(user));
     }

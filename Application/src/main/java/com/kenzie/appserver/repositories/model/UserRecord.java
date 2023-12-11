@@ -13,6 +13,9 @@ import java.util.Objects;
         @DynamoDBHashKey(attributeName = "userId")
         private String userId;
 
+        //the last project had an issue setting sort keys
+        //if possible we can change it this time
+        //or use a GSI to look up by email or something - Adam
         @DynamoDBAttribute(attributeName = "email")
         private String email;
 
