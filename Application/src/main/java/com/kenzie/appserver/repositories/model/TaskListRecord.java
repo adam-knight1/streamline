@@ -1,9 +1,5 @@
 package com.kenzie.appserver.repositories.model;
 
-import org.springframework.scheduling.config.Task;
-
-import java.util.List;
-
 public class TaskListRecord {
     public String userId;
     public String taskListName;
