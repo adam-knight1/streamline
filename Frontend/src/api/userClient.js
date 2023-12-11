@@ -33,3 +33,25 @@ export default class UserClient {
             throw error;
         }
     }
+
+    async updateUser(userId, updatedInfo) {
+            try {
+                const response = await this.client.put(`/user/${userId}`, updatedInfo);
+                return response.data;
+            } catch (error) {
+                console.error("Failed to update user:", error);
+                throw error;
+            }
+        }
+
+
+       async deleteUser(userId) {
+           try {
+               const response = await this.client.delete(`/user/${userId}`);
+               return response.data;
+           } catch (error) {
+               console.error("Failed to delete user:", error);
+               throw error;
+           }
+       }
+       }
