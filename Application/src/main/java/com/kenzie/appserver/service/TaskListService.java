@@ -21,6 +21,16 @@ public class TaskListService {
         this.taskListRepository = taskListRepository;
     }
 
+    public TaskList findTaskListByUserId(String userId){
+        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
+        if(taskListRecord.isPresent()){
+            TaskListRecord record = taskListRecord.get();
+            return transformToTaskList(record);
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list does not exist.");
+        }
+    }
+
     public TaskList createTaskList(CreateTaskListRequest request, String userId, String taskListName) {
         String requestedUserId = request.getUserId();
         //Check to ensure user id is correct
