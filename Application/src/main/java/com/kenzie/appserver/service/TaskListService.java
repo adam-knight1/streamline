@@ -1,6 +1,6 @@
 package com.kenzie.appserver.service;
 
-import com.kenzie.appserver.controller.model.CreateTaskListRequest;
+import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
@@ -31,7 +31,7 @@ public class TaskListService {
         }
     }
 
-    public TaskList createTaskList(CreateTaskListRequest request, String userId, String taskListName) {
+    public TaskList createTaskList(TaskListCreateRequest request, String userId, String taskListName) {
         String requestedUserId = request.getUserId();
         //Check to ensure user id is correct
         if(!requestedUserId.equals(userId)){
@@ -49,7 +49,7 @@ public class TaskListService {
         return newTaskList;
     }
 
-    public TaskList updateTaskListName(CreateTaskListRequest request, String userId){
+    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
         Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
         TaskList updatedList;
         if(taskListRecord.isPresent()){
