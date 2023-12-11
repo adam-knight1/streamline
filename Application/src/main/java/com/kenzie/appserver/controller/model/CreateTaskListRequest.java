@@ -1,7 +1,15 @@
 package com.kenzie.appserver.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotEmpty;
+
 public class CreateTaskListRequest {
+    @NotEmpty
+    @JsonProperty("userId")
     private String userId;
+
+    @JsonProperty("taskListName")
     private String taskListName;
 
     public String getUserId() {
