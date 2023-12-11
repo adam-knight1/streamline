@@ -61,7 +61,6 @@ public class TaskListService {
     }
 
     private TaskList transformToTaskList(TaskListRecord record){
-        TaskList taskList = new TaskList(record.getUserId(), record.getTaskListName(), record.getTasks())
-        return taskList;
+        return new TaskList(record.getUserId(), record.getTaskListName(), record.getTasks());
     }
 }
