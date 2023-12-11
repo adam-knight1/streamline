@@ -1,4 +1,15 @@
 package com.kenzie.appserver.repositories;
 
-public interface UserRepository {
+import com.kenzie.appserver.repositories.model.UserRecord;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+@EnableScan
+public interface UserRepository extends CrudRepository<UserRecord, String> {
+
+    String findUserByUserId(String userId);
+    List<String> findUsersByUserId(String userId);
+
 }
