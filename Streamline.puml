@@ -1,9 +1,10 @@
 @startuml
 
 class User {
-+userId: ?? uuid or string
++userId: uuid
 +username: String
 +email: String
+
 
  // some constructors
 +User()
