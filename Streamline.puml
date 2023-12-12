@@ -41,12 +41,6 @@ class TaskList {
 getUserId(): String
 }
 
-interface UserRepository {
-+save(user: User): User
-+findById(userId: String): User
-+delete(user: User): void
-}
-
 interface TaskRepository {
 +save(task: Task ): Task
 +findById (taskId: String)
