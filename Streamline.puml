@@ -10,6 +10,7 @@ interface TaskRepository {
 +findById (taskId: String)
 +deleteById(taskId : String): void
 }
+
 class TaskService {
 -taskRepository : TaskRepository
 +getAllTasks(): List<Task>
@@ -19,5 +20,4 @@ class TaskService {
 +deleteTask(taskId: String):void
 }
 @enduml
-
 }
