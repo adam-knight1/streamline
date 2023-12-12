@@ -1,5 +1,26 @@
 @startuml
 
+class Task {
++taskId : String
++taskName : String
++taskDescription : String
++taskStatus : String
+}
+interface TaskRepository {
++save(task: Task ): Task
++findById (taskId: String)
++deleteById(taskId : String): void
+}
+
+class TaskService {
+-taskRepository : TaskRepository
++getAllTasks(): List<Task>
++getTaskById(taskId : String): Task
++createTask(task: Task): Task
++updateTask(taskId : String, updateTask: Task) : Task
++deleteTask(taskId: String):void
+=======
+
 class User {
 +userId: uuid
 +username: String
@@ -77,5 +98,7 @@ interface TaskListRepository {
 +findById(taskListId: String): TaskListRecord
 +delete(taskListRecord: TaskListRecord): void
 }
+
 }
 @enduml
+}
