@@ -44,6 +44,7 @@ class TaskList {
 +userId: String
 +taskListName: String
 -user: User
+<<<<<<< HEAD
 +getUserId(): String
   // Other getters and setters
 }
@@ -54,6 +55,9 @@ class TaskListService {
   +updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): TaskList
   +deleteTaskList(taskListId: String): boolean
   -transformToTaskList(taskListRecord: TaskListRecord): TaskList
+getUserId(): String
+}
+
 interface TaskRepository {
 +save(task: Task ): Task
 +findById (taskId: String)
