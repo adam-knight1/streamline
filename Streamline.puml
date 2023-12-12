@@ -35,6 +35,7 @@ interface TaskRepository {
 +findById (taskId: String)
 +deleteById(taskId : String): void
 }
+
 class TaskService {
 -taskRepository : TaskRepository
 +getAllTasks(): List<Task>
@@ -47,7 +48,6 @@ class TaskService {
 class TaskListController {
 -taskListService: TaskListService
 +createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
-<<<<<<< HEAD
 +getTaskList(taskListId: String): ResponseEntity<TaskList>
 +updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
 +deleteTaskList((taskListId: String): ResponseEntity<Void>
@@ -60,5 +60,6 @@ interface TaskListRepository {
 +findById(taskListId: String): TaskListRecord
 +delete(taskListRecord: TaskListRecord): void
 }
+
 @enduml
 }
