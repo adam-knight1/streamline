@@ -1,32 +1,4 @@
 @startuml
-
-class User {
-+userId: uuid
-+username: String
-+email: String
-+User()
-+User(username: String, email: String)
-+getUserId(): String
-}
-
-interface UserRepository {
-+save(user: User): User
-+findById(userId: String): User
-+delete(user: User): void
-}
-class UserService {
--userRepository: UserRepository
-// UserService constructor
-+UserService(userRepository: UserRepository)
-+createUser(createUserRequest: CreateUserRequest): User
-}
-
-class UserController {
--userService: UserService
-+UserController(userService: UserService)
-+createUser(createUserRequest: CreateUserRequest): ResponseEntity<User>
-}
-
 class Task {
 +taskId : String
 +taskName : String
@@ -63,7 +35,6 @@ interface TaskRepository {
 +findById (taskId: String)
 +deleteById(taskId : String): void
 }
-
 class TaskService {
 -taskRepository : TaskRepository
 +getAllTasks(): List<Task>
