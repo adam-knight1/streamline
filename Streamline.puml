@@ -61,17 +61,6 @@ class TaskService {
 +updateTask(taskId : String, updateTask: Task) : Task
 +deleteTask(taskId: String):void
 }
-
-class TaskListService {
- -userRepository: UserRepository
- +createTaskList(createTaskListRequest: CreateTaskListRequest): TaskList
-}
-
-class TaskListController {
--taskListService: TaskListService
-+createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
-
-}
 @enduml
 
 }
