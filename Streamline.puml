@@ -85,6 +85,5 @@ interface TaskListRepository {
 +findById(taskListId: String): TaskListRecord
 +delete(taskListRecord: TaskListRecord): void
 }
-
 @enduml
 }
