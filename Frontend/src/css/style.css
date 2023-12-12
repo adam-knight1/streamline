@@ -53,6 +53,11 @@
     background: #9cc3e4;
 }
 
+.button:active, button:active {
+    transform: translateY(2px);
+   }
+  /*added by adam so the button shifts*/
+
 .card {
     color: var(--primary-color);
     background-color: var(--secondary-color);
@@ -87,3 +92,28 @@
 .state.active {
     display: block;
 }
+/*
+added by adam
+*/
+.user-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.user-button:hover {
+    background-color: #0056b3;
+}
+/*
+added by adam
+*/
+.welcome-section {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f2f2f2;
+}
+

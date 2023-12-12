@@ -1,4 +1,5 @@
 @startuml
+
 class Task {
 +taskId : String
 +taskName : String
@@ -18,6 +19,86 @@ class TaskService {
 +createTask(task: Task): Task
 +updateTask(taskId : String, updateTask: Task) : Task
 +deleteTask(taskId: String):void
+=======
+
+class User {
++userId: uuid
++username: String
++email: String
+
+
+ // some constructors
++User()
++User(username: String, email: String)
+
+//Getters and setters here
++getUserId(): String
+
+}
+interface UserRepository {
++save(user: User): User
++findById(userId: String): User
++delete(user: User): void
+}
+class UserService {
+-userRepository: UserRepository
+
+// UserService constructor
++UserService(userRepository: UserRepository)
+
+// some methods -  add more as needeed
++createUser(createUserRequest: CreateUserRequest): User
+
+}
+
+class UserController {
+-userService: UserService
+
+// Constructor
++UserController(userService: UserService)
+
+// should we add endpoint methods?
++createUser(createUserRequest: CreateUserRequest): ResponseEntity<User>
+
+interface UserRepository {
++save(user: User): User
+ +findById(userId: String): User
++delete(user: User): void
+}
+
+class TaskList {
++userId: String
++taskListName: String
+-user: User
++getUserId(): String
+  // Other getters and setters
+}
+
+class TaskListService {
+  -userRepository: UserRepository
+  +createTaskList(createTaskListRequest: CreateTaskListRequest): TaskList
+  +updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): TaskList
+  +deleteTaskList(taskListId: String): boolean
+  -transformToTaskList(taskListRecord: TaskListRecord): TaskList
+  // Add other methods as needed
+}
+
+class TaskListController {
+-taskListService: TaskListService
++createTaskList(createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
++getTaskList(taskListId: String): ResponseEntity<TaskList>
++updateTaskList(taskListId: String, createTaskListRequest: CreateTaskListRequest): ResponseEntity<TaskList>
++deleteTaskList((taskListId: String): ResponseEntity<Void>
+-transformToTaskListResponse(taskList: TaskList): TaskListResponse
+  //more endpoints need to be added
+}
+
+interface TaskListRepository {
++save(taskListRecord: TaskListRecord): TaskListRecord
++findById(taskListId: String): TaskListRecord
++delete(taskListRecord: TaskListRecord): void
+}
+
 }
 @enduml
 }

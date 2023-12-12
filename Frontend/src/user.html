@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="userPage.js"></script>
+  <script type="text/javascript" src="commentPage.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body>
+<header class="header" id="header">
+
+  <div class="site-title">
+    <h1>Account Settings</h1>
+  </div>
+</header>
+<div class="welcome-section">
+  <p>Here you can create, update, or delete your user profile.</p>
+</div>
+
+<div class="card" id="create-user-form">
+  <h2>Create New User</h2>
+  <form class="card-content" id="create-user">
+    <p class="form-field">
+      <label>Username</label>
+      <input type="text" required class="validated-field" id="username-field">
+    </p>
+    <p class="form-field">
+      <label>Email</label>
+      <input type="email" required class="validated-field" id="email-field">
+    </p>
+    <p class="form-field">
+      <label>Password</label>
+      <input type="password" required class="validated-field" id="password-field">
+    </p>
+    <button type="submit">Create</button>
+    <div id="created-user-id"></div>
+    <div id="keep-it-safe"></div>
+  </form>
+</div>
+
+<div class="card" id="find-user-form">
+  <h2>Find User</h2>
+  <form class="card-content" id="find-user">
+    <p class="form-field">
+      <label>User ID</label>
+      <input type="text" required class="validated-field" id="find-user-id-field">
+    <div id="error-message"></div>
+    <div id="user-details"></div>
+
+
+    </p>
+    <button type="submit">Search</button>
+  </form>
+</div>
+
+<div class="card" id="update-user-form">
+  <h2>Update User</h2>
+  <form class="card-content" id="update-user">
+    <p class="form-field">
+      <label>User ID of Existing User</label>
+      <input type="text" required class="validated-field" id="update-user-id-field">
+    </p>
+    <p class="form-field">
+      <label>Username</label>
+      <input type="text" class="validated-field" id="update-username-field">
+    </p>
+    <p class="form-field">
+      <label>Email</label>
+      <input type="email" class="validated-field" id="update-email-field">
+    </p>
+    <p class="form-field">
+      <label>Password</label>
+      <input type="password" class="validated-field" id="update-password-field">
+    </p>
+    <button type="submit">Update</button>
+  </form>
+</div>
+
+<div class="card" id="delete-user-form">
+  <h2>Delete Existing User</h2>
+  <form class="card-content" id="delete-user">
+    <p class="form-field">
+      <label>User ID</label>
+      <input type="text" required class="validated-field" id="delete-user-record-field">
+    </p>
+    <button type="submit">Delete</button>
+  </form>
+</div>
+
+
+<a href="javascript:history.back()" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Go Back</a>
+</body>
+</html>

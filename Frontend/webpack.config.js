@@ -9,6 +9,8 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
+
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -22,6 +24,7 @@ module.exports = {
       {
         context: [
           '/example',
+          '/user'
         ],
         target: 'http://localhost:5001'
       }
@@ -33,6 +36,13 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
+
+    new HtmlWebpackPlugin({
+                  template: './src/user.html',
+                  filename: 'user.html',
+                  inject: false
+                }),
+                //added by adam
     new CopyPlugin({
       patterns: [
         {
