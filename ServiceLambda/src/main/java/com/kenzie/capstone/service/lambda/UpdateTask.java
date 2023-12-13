@@ -11,6 +11,7 @@ import com.kenzie.capstone.service.TaskService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.ExampleData;
+import com.kenzie.capstone.service.model.TaskRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +24,7 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
+       // JsonStringToReferralConverter jsonStringToReferralConverter = new JsonStringToReferralConverter();
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
@@ -30,7 +32,7 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        //LambdaService lambdaService = serviceComponent.provideLambdaService();
+        //taskservice is showing an error due to it not being completed"
         TaskService taskService = serviceComponent.provideLambdaService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -43,21 +45,10 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         if (id == null || id.length() == 0) {
             return response
                     .withStatusCode(400)
-                    .withBody("Id is invalid");
+                    .withBody("userId is invalid");
         }
 
-        try {
-            ExampleData exampleData = lambdaService.getExampleData(id);
-            String output = gson.toJson(exampleData);
-
-            return response
-                    .withStatusCode(200)
-                    .withBody(output);
-
-        } catch (Exception e) {
-            return response
-                    .withStatusCode(400)
-                    .withBody(gson.toJson(e.getMessage()));
-        }
+       //still working on this
+        return response;
     }
 }
