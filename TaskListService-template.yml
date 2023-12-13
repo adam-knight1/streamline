@@ -9,7 +9,6 @@ Parameters:
 
     #I have not changed anything in this file yet.. need to back at a few things -AM
 
-
 Resources:
   GetExampleDataFunction:
     Type: AWS::Serverless::Function
