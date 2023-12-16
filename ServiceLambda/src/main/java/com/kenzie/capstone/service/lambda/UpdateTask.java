@@ -31,9 +31,10 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         // Logging the request json to make debugging easier.
         log.info(gson.toJson(input));
 
+
+        //why is this still throwing error?
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        //taskservice is showing an error due to it not being completed"
-        TaskService taskService = serviceComponent.provideLambdaService();
+        TaskService taskService = serviceComponent.provideTaskService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -45,10 +46,28 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         if (id == null || id.length() == 0) {
             return response
                     .withStatusCode(400)
-                    .withBody("userId is invalid");
+                    .withBody("taskId is invalid");
         }
 
-       //still working on this
-        return response;
+        // Get the JSON payload for updating the task
+        String requestBody = input.getBody();
+        TaskRequest taskRequest = gson.fromJson(requestBody, TaskRequest.class);
+
+        try {
+            // Perform the task update using TaskService
+            TaskService updatedTask = taskService.updateTask(id, taskRequest);
+
+            // Construct the response body with the updated task details
+            String responseBody = gson.toJson(updatedTask);
+
+            return response
+                    .withStatusCode(200)
+                    .withBody(responseBody);
+        } catch (Exception e) {
+            log.error("Error updating task: " + e.getMessage());
+            return response
+                    .withStatusCode(500)
+                    .withBody("Error updating task");
+        }
     }
 }

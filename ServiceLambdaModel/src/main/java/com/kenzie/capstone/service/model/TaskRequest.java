@@ -7,6 +7,8 @@ import java.util.List;
 public class TaskRequest {
     private String userId;
     private String taskListName;
+    private String name;
+    private String description;
 
     public TaskRequest(String userId, String taskListName) {
         this.userId = userId;
@@ -24,14 +26,27 @@ public class TaskRequest {
         this.userId = userId;
     }
 
-    public String getTaskId() {
+    public String getTaskListName() {
         return taskListName;
     }
 
-    public void setTaskId(String taskListName) {
+    public void setTaskListName(String taskListName) {
         this.taskListName = taskListName;
     }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     @Override
     public String toString() {
         return "TaskRequest{" +
@@ -39,4 +54,5 @@ public class TaskRequest {
                 ", taskId='" + taskListName + '\'' +
                 '}';
     }
+
 }

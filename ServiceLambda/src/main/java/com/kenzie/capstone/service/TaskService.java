@@ -1,8 +1,11 @@
 package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.ExampleDao;
+import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
+import com.kenzie.capstone.service.model.TaskRecord;
+import com.kenzie.capstone.service.model.TaskRequest;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -12,24 +15,43 @@ public class TaskService {
 
 
     //This is an example template i have not edited anything in here yet. -AM
-    private ExampleDao exampleDao;
+
+    private TaskDao taskDao;
 
     @Inject
-    public TaskService(ExampleDao exampleDao) {
-        this.exampleDao = exampleDao;
+    public TaskService(TaskDao taskDao) {
+        this.taskDao = taskDao;
     }
 
-    public ExampleData getExampleData(String id) {
-        List<ExampleRecord> records = exampleDao.getExampleData(id);
-        if (records.size() > 0) {
-            return new ExampleData(records.get(0).getId(), records.get(0).getData());
+
+    public TaskRequest retrieveTaskRequest(String userId) {
+        List<TaskRecord> taskRecords = taskDao.getTasksByUserId(userId);
+        if (!taskRecords.isEmpty()) {
+            TaskRecord record = taskRecords.get(0);
+            return new TaskRequest(record.getUserId(), record.getTaskId());
         }
         return null;
     }
 
-    public ExampleData setExampleData(String data) {
-        String id = UUID.randomUUID().toString();
-        ExampleRecord record = exampleDao.setExampleData(id, data);
-        return new ExampleData(id, data);
+    public TaskRequest createTaskRequest(String taskId) {
+        String generatedId = UUID.randomUUID().toString();
+        TaskRecord createdTask = taskDao.createTaskRecord(generatedId, taskId);
+        return new TaskRequest(generatedId, taskId);
+    }
+
+    public TaskService updateTask(String taskId, TaskRequest taskRequest) {
+        TaskRecord existingTask = taskDao.getTaskRecordById(taskId);
+
+        if (existingTask == null) {
+            throw new IllegalArgumentException("Task with ID " + taskId + " does not exist");
+        }
+
+        // Update the properties of the existing task using data from taskRequest
+        // For example:
+        existingTask.setName(taskRequest.getName());
+        existingTask.setDescription(taskRequest.getDescription());
+        // Update other properties as needed
+
+        return taskDao.updateTaskRecord(existingTask);
     }
 }
