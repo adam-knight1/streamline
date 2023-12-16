@@ -6,7 +6,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.util.TaskListService;
+import com.kenzie.capstone.service.TaskListService;
 
 import java.util.HashMap;
 import java.util.logging.LogManager;
@@ -16,10 +16,11 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
     static final Logger log = LogManager.getLogger();
 
     @Override
-    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context){
+    public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
+
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-
+        JsonStringToReferralConverter jsonStringToReferralConverter = new JsonStringToReferralConverter();
         // Logging the request json to make debugging easier.
         log.info(gson.toJson(input));
 
@@ -40,6 +41,16 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         }
 
         // unfinished -bs
-        return response;
+        try {
+            ReferralRequest referralRequest = jsonStringToReferralConverter.convert(input.getBody());
+            ReferralResponse referralResponse = referralService.addReferral(referralRequest);
+            return response
+                    .withStatusCode(200)
+                    .withBody(gson.toJson(referralResponse));
+        } catch (InvalidDataException e || NullPointerException ee) {
+            return response
+                    .withStatusCode(400)
+                    .withBody(gson.toJson(e.errorPayload()));
+        }
     }
 }
