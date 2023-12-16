@@ -8,6 +8,8 @@ import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
+import com.kenzie.capstone.service.model.TaskRecord;
+import com.kenzie.capstone.service.model.TaskRequest;
 
 import java.util.List;
 
@@ -18,52 +20,65 @@ public class TaskDao {
 
     /**
      * Allows access to and manipulation of Match objects from the data store.
+     *
      * @param mapper Access to DynamoDB
      */
     public TaskDao(DynamoDBMapper mapper) {
         this.mapper = mapper;
     }
 
-    public ExampleData storeExampleData(ExampleData exampleData) {
+    public TaskRequest storeTaskData(TaskRequest taskRequest) {
         try {
-            mapper.save(exampleData, new DynamoDBSaveExpression()
+            mapper.save(taskRequest, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
-                            "id",
+                            "userId",
                             new ExpectedAttributeValue().withExists(false)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("id has already been used");
         }
 
-        return exampleData;
+        return taskRequest;
     }
 
-    public List<ExampleRecord> getExampleData(String id) {
-        ExampleRecord exampleRecord = new ExampleRecord();
-        exampleRecord.setId(id);
+    public List<TaskRecord> getTaskData(String userId) {
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setUserId(userId);
 
-        DynamoDBQueryExpression<ExampleRecord> queryExpression = new DynamoDBQueryExpression<ExampleRecord>()
-                .withHashKeyValues(exampleRecord)
+        DynamoDBQueryExpression<TaskRecord> queryExpression = new DynamoDBQueryExpression<TaskRecord>()
+                .withHashKeyValues(taskRecord)
                 .withConsistentRead(false);
 
-        return mapper.query(ExampleRecord.class, queryExpression);
+        return mapper.query(TaskRecord.class, queryExpression);
     }
 
-    public ExampleRecord setExampleData(String id, String data) {
-        ExampleRecord exampleRecord = new ExampleRecord();
-        exampleRecord.setId(id);
-        exampleRecord.setData(data);
+    public TaskRecord setTaskData(String userId, String taskId) {
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setUserId(userId);
+        taskRecord.setTaskId(taskId);
 
         try {
-            mapper.save(exampleRecord, new DynamoDBSaveExpression()
+            mapper.save(taskRecord, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
-                            "id",
+                            "userId",
                             new ExpectedAttributeValue().withExists(false)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("id already exists");
         }
 
-        return exampleRecord;
+        return taskRecord;
     }
+
+    public List<TaskRecord> getTasksByUserId(String userId) {
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setUserId(userId);
+
+        DynamoDBQueryExpression<TaskRecord> queryExpression = new DynamoDBQueryExpression<TaskRecord>()
+                .withHashKeyValues(taskRecord)
+                .withConsistentRead(false);
+
+        return mapper.query(TaskRecord.class, queryExpression);
+    }
+
 }
