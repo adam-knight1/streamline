@@ -1,4 +1,4 @@
-package com.kenzie.capstone.service.util;
+package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.model.ExampleData;
