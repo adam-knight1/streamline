@@ -59,7 +59,6 @@ import java.util.Objects;
                     Objects.equals(getPassword(), that.getPassword());
         }
 
-
         @Override
         public int hashCode() {
             return Objects.hash(getUserId(), getUsername(), getPassword());
