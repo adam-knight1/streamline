@@ -30,6 +30,11 @@ public class UserDao {
             return userRecord;
         }
 
+    public UserRecord findUserById(String userId) {
+        return mapper.load(UserRecord.class, userId);
+    }
+
+
         /*public List<UserRecord> findUserByEmail(String email) {
             UserRecord userRecord = new UserRecord();
             userRecord.setEmail(email);
