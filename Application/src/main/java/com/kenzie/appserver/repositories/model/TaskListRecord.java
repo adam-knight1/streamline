@@ -1,5 +1,10 @@
 package com.kenzie.appserver.repositories.model;
 
+import com.kenzie.appserver.service.model.Task;
+
+import java.util.List;
+import java.util.Objects;
+
 public class TaskListRecord {
     public String userId;
     public String taskListName;
