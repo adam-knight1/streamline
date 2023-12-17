@@ -21,6 +21,7 @@ import java.util.Objects;
         @DynamoDBAttribute(attributeName = "password")
         private String password;
 
+
         public String getUserId() { return userId; }
 
         public void setUserId(String userId) { this.userId = userId; }
