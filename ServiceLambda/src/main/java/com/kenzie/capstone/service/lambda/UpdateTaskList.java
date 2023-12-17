@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.lambda;
 
+import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
@@ -10,10 +11,11 @@ import com.kenzie.capstone.service.TaskListService;
 
 import java.util.HashMap;
 import java.util.logging.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    static final Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger(UpdateTaskList.class);
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
