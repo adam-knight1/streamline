@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
+import com.kenzie.capstone.service.TaskService;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
 import com.kenzie.capstone.service.model.TaskRecord;
@@ -80,5 +81,16 @@ public class TaskDao {
 
         return mapper.query(TaskRecord.class, queryExpression);
     }
+
+//    public TaskRecord createTaskRecord(String generatedId, String taskId) {
+//    }
+//
+//    public TaskRecord getTaskRecordById(String taskId) {
+//    }
+//
+//    public TaskService updateTaskRecord(TaskRecord existingTask) {
+//    }
+
+    //should i use taskrecord or make a taskresponse to update task?
 
 }

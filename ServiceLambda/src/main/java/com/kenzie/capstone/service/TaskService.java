@@ -47,7 +47,6 @@ public class TaskService {
         }
 
         // Update the properties of the existing task using data from taskRequest
-        // For example:
         existingTask.setName(taskRequest.getName());
         existingTask.setDescription(taskRequest.getDescription());
         // Update other properties as needed
