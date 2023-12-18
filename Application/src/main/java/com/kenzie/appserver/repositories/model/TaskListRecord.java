@@ -2,6 +2,7 @@ package com.kenzie.appserver.repositories.model;
 
 import com.kenzie.appserver.service.model.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,5 +53,12 @@ public class TaskListRecord {
     @Override
     public int hashCode() {
         return Objects.hash(getUserId(), getTaskListName());
+    }
+
+    public void addTask(Task task) {
+        if(tasks == null){
+            tasks = new ArrayList<>();
+        }
+        tasks.add(task);
     }
 }
