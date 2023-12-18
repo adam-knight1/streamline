@@ -1,8 +1,8 @@
 package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.ExampleDao;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.ExampleRecord;
+import com.kenzie.capstone.service.dao.TaskListDao;
+import com.kenzie.capstone.service.model.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -10,22 +10,38 @@ import java.util.UUID;
 
 public class TaskListService {
     // Example template not edited yet
-    private ExampleDao exampleDao;
+    private TaskListDao taskListDao;
 
     @Inject
-    public TaskListService(ExampleDao exampleDao) {this.exampleDao = exampleDao;}
+    public TaskListService(TaskListDao taskListDao) {this.taskListDao = taskListDao;}
 
-    public ExampleData getExampleData(String id) {
-        List<ExampleRecord> records = exampleDao.getExampleData(id);
-        if (records.size() > 0) {
-            return new ExampleData(records.get(0).getId(), records.get(0).getData());
+    public TaskListRequest retrieveTaskListRequest(String userId) {
+        List<TaskListRecord> taskListRecords = taskListDao.getTaskListsByUserId(userId);
+        if (!taskListRecords.isEmpty()) {
+            TaskListRecord record = taskListRecords.get(0);
+            return new TaskListRequest(record.getUserId(), record.getTaskListName());
         }
         return null;
     }
 
-    public ExampleData setExampleData(String data) {
-        String id = UUID.randomUUID().toString();
-        ExampleRecord record = exampleDao.setExampleData(id, data);
-        return new ExampleData(id, data);
+    public TaskListRequest createTaskListRequest(String userId, String taskListName) {
+        TaskListRequest createdRecord = taskListDao.createTaskListRecord(userId, taskListName);
+        return new TaskListRequest(userId, taskListName);
+    }
+
+    public TaskListResponse updateTaskList(String userId, TaskListRequest taskListRequest) {
+        String taskListName = taskListRequest.getTaskListName();
+        TaskListRecord existingTaskList = taskListDao.getTaskListsByTaskListName(userId, taskListName);
+
+        if (existingTaskList == null) {
+            throw new IllegalArgumentException("TaskList with userId " + userId + " and TaskListName " + taskListName
+                    + " does not exist");
+        }
+
+        // Update the properties of the existing taskList using data from taskListRequest
+        existingTaskList.setUserId(taskListRequest.getUserId());
+        existingTaskList.setTaskListName(taskListRequest.getTaskListName());
+
+        return taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskList.getTaskListName());
     }
 }
