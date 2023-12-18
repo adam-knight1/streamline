@@ -9,23 +9,24 @@ import java.util.Objects;
     @DynamoDBTable(tableName = "User")
     public class UserRecord {
        // @Id
-        @DynamoDBHashKey(attributeName = "userId")
+        //@DynamoDBHashKey(attributeName = "userId")
         private String userId;
 
-        @DynamoDBAttribute(attributeName = "email")
+       // @DynamoDBAttribute(attributeName = "email")
         private String email;
 
-        @DynamoDBAttribute(attributeName = "username")
+       // @DynamoDBAttribute(attributeName = "username")
         private String username;
 
-        @DynamoDBAttribute(attributeName = "password")
+       // @DynamoDBAttribute(attributeName = "password")
         private String password;
 
-
+        @DynamoDBHashKey(attributeName = "userId")
         public String getUserId() { return userId; }
 
         public void setUserId(String userId) { this.userId = userId; }
 
+        @DynamoDBAttribute(attributeName = "username")
         public String getUsername() {
             return username;
         }
@@ -33,7 +34,7 @@ import java.util.Objects;
         public void setUsername(String username) {
             this.username = username;
         }
-
+        @DynamoDBAttribute(attributeName = "password")
         public String getPassword() {
             return password;
         }
@@ -41,7 +42,7 @@ import java.util.Objects;
         public void setPassword(String password) {
             this.password = password;
         }
-
+        @DynamoDBAttribute(attributeName = "email")
         public String getEmail() {
             return email;
         }
