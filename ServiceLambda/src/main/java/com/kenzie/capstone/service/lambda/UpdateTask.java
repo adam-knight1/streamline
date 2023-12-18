@@ -19,6 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+   // private final TaskService taskService;
+
+  //  public UpdateTask(){
+  //      ServiceComponent serviceComponent = DaggerServiceComponent.create();
+  //      this.taskService = serviceComponent.provideTaskService();
+  //  }
 
     static final Logger log = LogManager.getLogger();
 
