@@ -3,6 +3,7 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
+import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Service
 public class TaskListService {
+    @Autowired
     private TaskListRepository taskListRepository;
 
     @Autowired

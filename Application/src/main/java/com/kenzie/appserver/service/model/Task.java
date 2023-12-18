@@ -3,7 +3,7 @@ package com.kenzie.appserver.service.model;
 
 import java.util.UUID;
 
-public class Task {
+public class Task  {
     private String taskId;
     private String taskName;
     private String taskDescription;
@@ -18,6 +18,10 @@ public class Task {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStatus = taskStatus;
+    }
+
+    public void updateTaskStatus(String newStatus){
+        this.taskStatus = newStatus;
     }
 
     public String getTaskId() {
@@ -51,5 +55,6 @@ public class Task {
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
+
 }
 

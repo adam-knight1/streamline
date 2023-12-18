@@ -64,5 +64,5 @@ public class TaskRecord {
     public int hashCode() {
         return Objects.hash(userId, taskId);
     }
-}
+
 }
