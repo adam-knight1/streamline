@@ -5,6 +5,7 @@ import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,12 @@ import java.util.Optional;
 public class TaskListService {
     @Autowired
     private TaskListRepository taskListRepository;
+    private LambdaServiceClient lambdaServiceClient;
 
     @Autowired
-    public TaskListService(TaskListRepository taskListRepository) {
+    public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient) {
         this.taskListRepository = taskListRepository;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
 
     public TaskList findTaskListByUserId(String userId){
@@ -46,7 +49,7 @@ public class TaskListService {
         }
         //Create the task list
         TaskList newTaskList = new TaskList(userId, taskListName, Collections.emptyList());
-        TaskListRecord newTaskListRecord = new TaskListRecord(userId, taskListName);
+        TaskListRecord newTaskListRecord = new TaskListRecord(userId, taskListName, Collections.emptyList());
         taskListRepository.save(newTaskListRecord);
         return newTaskList;
     }
