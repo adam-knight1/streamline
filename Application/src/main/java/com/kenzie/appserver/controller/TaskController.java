@@ -31,8 +31,21 @@ public class TaskController {
     }
 
     @PostMapping("/{taskId}/update-status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam String newStatus){
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam String newStatus) {
         Task updatedTask = taskService.updateTaskStatus(taskId, newStatus);
+        if (updatedTask != null) {
+            return ResponseEntity.ok(updatedTask);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
+    @DeleteMapping("/{taskId}/delete")
+    public ResponseEntity<String > deleteTask (@PathVariable String taskId) {
+        if(taskService.deleteTask(taskId)) {
+            return ResponseEntity.ok("Task sucessfully deleted ");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
