@@ -19,4 +19,25 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return (List<Task>) taskRepository.findAll();
     }
+
+    public Task addTask (Task task) {
+        return taskRepository.save(task);
+    }
+
+    public Task updateTaskStatus(String taskId, String newStatus){
+        Task task = taskRepository.findById(taskId).orElse(null);
+        if(task != null){
+            task.setTaskStatus(newStatus);
+            taskRepository.save(task);
+        }
+        return task;
+    }
+
+    public boolean deleteTask(String taskId) {
+        if(taskRepository.existsById(taskId)) {
+            taskRepository.deleteById(taskId);
+            return true;
+        }
+        return false;
+    }
 }
