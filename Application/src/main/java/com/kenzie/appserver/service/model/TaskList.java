@@ -5,6 +5,7 @@ import org.springframework.scheduling.config.Task;
 import java.util.List;
 
 public class TaskList {
+    private String taskListId;
     public String userId;
     public String taskListName;
     public List<Task> tasks;
@@ -12,6 +13,12 @@ public class TaskList {
     public TaskList(String userId, String taskListName){
         this.userId = userId;
         this.taskListName = taskListName;
+    }
+
+    public void addTask(Task task){
+        if(task != null){
+            this.tasks.add(task);
+        }
     }
 
     public String getUserId() {
