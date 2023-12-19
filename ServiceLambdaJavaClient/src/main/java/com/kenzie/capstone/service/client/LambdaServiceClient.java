@@ -2,7 +2,8 @@ package com.kenzie.capstone.service.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenzie.capstone.service.model.ExampleData;
+import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponse;
 import com.kenzie.capstone.service.model.UserRequest;
 import com.kenzie.capstone.service.model.UserResponse;
 
@@ -14,30 +15,6 @@ public class LambdaServiceClient {
 
     public LambdaServiceClient() {
         this.mapper = new ObjectMapper();
-    }
-
-    public ExampleData getExampleData(String id) {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_EXAMPLE_ENDPOINT.replace("{id}", id));
-        ExampleData exampleData;
-        try {
-            exampleData = mapper.readValue(response, ExampleData.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-        }
-        return exampleData;
-    }
-
-    public ExampleData setExampleData(String data) {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.postEndpoint(SET_EXAMPLE_ENDPOINT, data);
-        ExampleData exampleData;
-        try {
-            exampleData = mapper.readValue(response, ExampleData.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-        }
-        return exampleData;
     }
 
     public UserResponse createUser(UserRequest userRequest) throws JsonProcessingException {
@@ -52,6 +29,18 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return userResponse;
+    }
+
+    public TaskResponse addTaskToTaskList (String userId, String taskListName,TaskRequest taskRequest)throws JsonProcessingException{
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String requestData = mapper.writeValueAsString(taskRequest);
+        String response = endpointUtility.postEndpoint("task/add", requestData);
+
+        //deserializing response into a TaskResponse object
+        TaskResponse taskResponse = mapper.readValue(response, TaskResponse.class);
+
+        return taskResponse;
+
     }
 
 }
