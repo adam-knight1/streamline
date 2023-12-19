@@ -5,6 +5,9 @@ import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.dao.UserDao;
+
+import com.kenzie.capstone.service.dao.UserDao;
+
 import com.kenzie.capstone.service.util.DynamoDbClientProvider;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -41,6 +44,13 @@ public class DaoModule {
     @Inject
     public TaskDao provideTaskDao(@Named("DynamoDBMapper") DynamoDBMapper mapper) {
         return new TaskDao(mapper);
+    }
+
+    @Singleton
+    @Provides
+    @Named("UserDao")
+    public UserDao provideUserDao(@Named("DynamoDBMapper") DynamoDBMapper mapper) {
+        return new UserDao(mapper);
     }
 
     @Singleton

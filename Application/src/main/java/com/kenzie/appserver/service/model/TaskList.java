@@ -20,6 +20,12 @@ public class TaskList {
         }
     }
 
+    public void addTask(Task task){
+        if(task != null){
+            this.tasks.add(task);
+        }
+    }
+
     public String getUserId() {
         return userId;
     }
