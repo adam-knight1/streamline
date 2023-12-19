@@ -8,13 +8,10 @@ import java.util.Objects;
 public class TaskListRecord {
     public String userId;
     public String taskListName;
-    public List<Task> tasks;
 
-
-    public TaskListRecord(String userId, String taskListName, List<Task> tasks) {
+    public TaskListRecord(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
-        this.tasks = tasks;
     }
 
     public String getUserId() {
@@ -31,14 +28,6 @@ public class TaskListRecord {
 
     public void setTaskListName(String taskListName) {
         this.taskListName = taskListName;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 
     @Override
