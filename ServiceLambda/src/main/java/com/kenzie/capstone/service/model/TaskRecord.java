@@ -10,11 +10,11 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "task")
 public class TaskRecord {
 
-
     private String userId;
     private String taskId;
     private String name;
     private String description;
+
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
@@ -65,4 +65,6 @@ public class TaskRecord {
         return Objects.hash(userId, taskId);
     }
 
+    public void setTaskListName(String taskListName) {
+    }
 }
