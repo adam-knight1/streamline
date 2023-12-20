@@ -1,28 +1,20 @@
 package com.kenzie.capstone.service;
-
-import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.dao.TaskDao;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.ExampleRecord;
+
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponse;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.UUID;
 
-public class TaskService {
-
-
-    //This is an example template i have not edited anything in here yet. -AM
+public class LambdaTaskService {
 
     private TaskDao taskDao;
 
-    @Inject
-    public TaskService(TaskDao taskDao) {
-        this.taskDao = taskDao;
-    }
 
+//This is an example template i have not edited anything in here yet. -AM
 
     public TaskRequest retrieveTaskRequest(String userId) {
         List<TaskRecord> taskRecords = taskDao.getTasksByUserId(userId);
@@ -53,4 +45,6 @@ public class TaskService {
 
         return taskDao.updateTaskRecord(existingTask);
     }
+
+
 }

@@ -6,9 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
-import com.kenzie.capstone.service.TaskService;
 import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.ExampleRecord;
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
 
@@ -28,7 +26,7 @@ public class TaskDao {
         this.mapper = mapper;
     }
 
-    public TaskRequest storeTaskData(TaskRequest taskRequest) {
+    public TaskRequest storeTaskData(TaskRecord taskRequest) {
         try {
             mapper.save(taskRequest, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
@@ -81,6 +79,7 @@ public class TaskDao {
 
         return mapper.query(TaskRecord.class, queryExpression);
     }
+
 
 //    public TaskRecord createTaskRecord(String generatedId, String taskId) {
 //    }

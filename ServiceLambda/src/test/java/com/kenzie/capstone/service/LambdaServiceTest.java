@@ -1,8 +1,12 @@
 package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.ExampleDao;
+import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
+import com.kenzie.capstone.service.model.TaskRecord;
+import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -12,6 +16,8 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,56 +38,38 @@ class LambdaServiceTest {
         this.exampleDao = mock(ExampleDao.class);
         this.lambdaService = new LambdaService(exampleDao);
     }
-
     @Test
-    void setDataTest() {
-        ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
+    void addTaskToTaskListTest() {
+        TaskDao taskDao = mock(TaskDao.class);
+        TaskService taskService = new TaskService(taskDao);
 
-        // GIVEN
-        String data = "somedata";
+        //Given
+        String userId = "testUserId";
+        String taskListName = "testTaskList";
+        TaskRequest taskRequest = new TaskRequest();
 
-        // WHEN
-        ExampleData response = this.lambdaService.setExampleData(data);
+        taskRequest.setName("Test task");
+        taskRequest.setDescription("This is a test description");
 
-        // THEN
-        verify(exampleDao, times(1)).setExampleData(idCaptor.capture(), dataCaptor.capture());
+        TaskRecord expectedTaskRecord = new TaskRecord();
+        expectedTaskRecord.setUserId(userId);
+        expectedTaskRecord.setTaskListName(taskListName);
+        expectedTaskRecord.setTaskId(anyString());
+        expectedTaskRecord.setName(taskRequest.getName());
+        expectedTaskRecord.setDescription(taskRequest.getDescription());
 
-        assertNotNull(idCaptor.getValue(), "An ID is generated");
-        assertEquals(data, dataCaptor.getValue(), "The data is saved");
+        //When
+        when(taskDao.setTaskData(any(TaskRecord.class))).thenReturn(expectedTaskRecord);
+        TaskResponse result = taskService.addTaskToTaskList(userId, taskListName, taskRequest);
 
-        assertNotNull(response, "A response is returned");
-        assertEquals(idCaptor.getValue(), response.getId(), "The response id should match");
-        assertEquals(data, response.getData(), "The response data should match");
+        //then
+        assertEquals(userId, result.getUserId());
+        assertEquals(taskListName, result.getTaskListName());
+        assertNotNull(result.getTaskId());
+        assertEquals(taskRequest.getName(), result.getName());
+        assertEquals(taskRequest.getDescription(), result.getDescription());
+
+
     }
 
-    @Test
-    void getDataTest() {
-        ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
-
-        // GIVEN
-        String id = "fakeid";
-        String data = "somedata";
-        ExampleRecord record = new ExampleRecord();
-        record.setId(id);
-        record.setData(data);
-
-
-        when(exampleDao.getExampleData(id)).thenReturn(Arrays.asList(record));
-
-        // WHEN
-        ExampleData response = this.lambdaService.getExampleData(id);
-
-        // THEN
-        verify(exampleDao, times(1)).getExampleData(idCaptor.capture());
-
-        assertEquals(id, idCaptor.getValue(), "The correct id is used");
-
-        assertNotNull(response, "A response is returned");
-        assertEquals(id, response.getId(), "The response id should match");
-        assertEquals(data, response.getData(), "The response data should match");
     }
-
-    // Write additional tests here
-
-}
