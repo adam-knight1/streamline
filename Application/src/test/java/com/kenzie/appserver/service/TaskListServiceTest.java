@@ -96,6 +96,10 @@ public class TaskListServiceTest {
         verify(taskListRepository, never()).save((TaskList) any());
     }
 
+    /** ------------------------------------------------------------------------
+     *  taskListService.updateTaskList
+     *  ------------------------------------------------------------------------ **/
+
     @Test
     public void updateTaskList_Exists_Succeeds() {
         // GIVEN
@@ -105,6 +109,7 @@ public class TaskListServiceTest {
         TaskListRecord taskListRecord = new TaskListRecord(userId, taskListName);
 
         String newTaskListName = "NewName";
+        when(taskListRepository.findById(userId)).thenReturn(Optional.of(taskListRecord));
 
         // WHEN
         taskListService.updateTaskListName()
