@@ -3,9 +3,7 @@ import com.kenzie.capstone.service.dao.TaskDao;
 
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,8 +11,9 @@ public class LambdaTaskService {
 
     private TaskDao taskDao;
 
-
-//This is an example template i have not edited anything in here yet. -AM
+    public LambdaTaskService(TaskDao taskDao){
+        this.taskDao =taskDao;
+    }
 
     public TaskRequest retrieveTaskRequest(String userId) {
         List<TaskRecord> taskRecords = taskDao.getTasksByUserId(userId);
@@ -31,7 +30,7 @@ public class LambdaTaskService {
         return new TaskRequest(generatedId, taskId);
     }
 
-    public TaskService updateTask(String taskId, TaskRequest taskRequest) {
+    public TaskRecord updateTask(String taskId, TaskRequest taskRequest) {
         TaskRecord existingTask = taskDao.getTaskRecordById(taskId);
 
         if (existingTask == null) {
