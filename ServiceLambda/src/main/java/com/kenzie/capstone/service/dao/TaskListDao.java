@@ -91,7 +91,7 @@ public class TaskListDao {
         return  mapper.query(TaskListRecord.class, queryExpression).get(0);
     }
 
-    public TaskListRequest createTaskListRecord(String userId, String taskListName) {
+    public TaskListResponse createTaskListRecord(String userId, String taskListName) {
         TaskListRequest taskListRequest = new TaskListRequest();
         taskListRequest.setUserId(userId);
         taskListRequest.setTaskListName(taskListName);
@@ -106,7 +106,7 @@ public class TaskListDao {
             throw new IllegalArgumentException("userId already exists");
         }
 
-        return taskListRequest;
+        return new TaskListResponse(userId, taskListName);
     }
 
     public TaskListResponse updateTaskListRecord(String userId, String taskListName) {

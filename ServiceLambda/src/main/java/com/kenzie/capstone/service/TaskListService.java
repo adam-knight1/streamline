@@ -6,6 +6,7 @@ import com.kenzie.capstone.service.model.*;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TaskListService {
@@ -24,9 +25,17 @@ public class TaskListService {
         return null;
     }
 
-    public TaskListRequest createTaskListRequest(String userId, String taskListName) {
-        TaskListRequest createdRecord = taskListDao.createTaskListRecord(userId, taskListName);
-        return new TaskListRequest(userId, taskListName);
+//    public TaskListRequest createTaskListRequest(String userId, String taskListName) {
+//        TaskListRequest createdRecord = taskListDao.createTaskListRecord(userId, taskListName);
+//        return new TaskListRequest(userId, taskListName);
+//    }
+
+    public TaskListResponse createTaskList(TaskListRequest taskListRequest){
+        if(taskListDao.getTaskListsByUserId(taskListRequest.getUserId()) != null){
+            throw new IllegalArgumentException("TaskList with userId " + taskListRequest.getUserId() +
+                    " already exists.");
+        }
+        return taskListDao.createTaskListRecord(taskListRequest.getUserId(), taskListRequest.getTaskListName());
     }
 
     public TaskListResponse updateTaskList(String userId, TaskListRequest taskListRequest) {

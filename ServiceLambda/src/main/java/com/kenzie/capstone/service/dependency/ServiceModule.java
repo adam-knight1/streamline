@@ -2,10 +2,12 @@ package com.kenzie.capstone.service.dependency;
 
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.LambdaUserService;
+import com.kenzie.capstone.service.TaskListService;
 import com.kenzie.capstone.service.TaskService;
 import com.kenzie.capstone.service.dao.ExampleDao;
 
 import com.kenzie.capstone.service.dao.TaskDao;
+import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.dao.UserDao;
 import dagger.Module;
 import dagger.Provides;
@@ -31,8 +33,13 @@ public class ServiceModule {
     public TaskService provideTaskService(@Named("TaskDao") TaskDao taskDao) {
         return new TaskService(taskDao);
     }
-}
 
+    @Singleton
+    @Provides
+    @Inject
+    public TaskListService provideTaskListService(@Named("TaskListDao") TaskListDao taskListDao) {
+        return new TaskListService(taskListDao);
+    }
 
     @Singleton
     @Provides
