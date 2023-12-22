@@ -26,7 +26,6 @@ public class CreateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         headers.put("Content-Type", "application/json");
         response.setHeaders(headers);
 
-        //Incorporated DaggerServiceComponent following AM, same error
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
         TaskListService taskListService = serviceComponent.provideTaskListService();
 
@@ -34,11 +33,9 @@ public class CreateTaskList implements RequestHandler<APIGatewayProxyRequestEven
 
         //Deserialize JSON to TaskListRequest object
         TaskListRequest taskListRequest = gson.fromJson(requestBody, TaskListRequest.class);
-        String userID = taskListRequest.getUserId();
-        String taskListName = taskListRequest.getTaskListName();
 
         try{
-            taskListService.createTaskList(userID, taskListName);
+            taskListService.createTaskList(taskListRequest);
             return response.withStatusCode(200).withBody("Task list successfully created.");
         }catch(IllegalArgumentException e){
             log.error("Invalid argument: " + e.getMessage());
