@@ -1,8 +1,8 @@
 package com.kenzie.capstone.service.dependency;
 
 import com.kenzie.capstone.service.LambdaService;
+import com.kenzie.capstone.service.LambdaTaskService;
 import com.kenzie.capstone.service.LambdaUserService;
-import com.kenzie.capstone.service.TaskService;
 import com.kenzie.capstone.service.dao.ExampleDao;
 
 import com.kenzie.capstone.service.dao.TaskDao;
@@ -28,10 +28,9 @@ public class ServiceModule {
     @Singleton
     @Provides
     @Inject
-    public TaskService provideTaskService(@Named("TaskDao") TaskDao taskDao) {
-        return new TaskService(taskDao);
+    public LambdaTaskService provideLambdaTaskService(@Named("TaskDao") TaskDao taskDao) {
+        return new LambdaTaskService(taskDao);
     }
-}
 
 
     @Singleton
