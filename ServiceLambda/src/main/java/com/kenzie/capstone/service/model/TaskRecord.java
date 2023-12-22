@@ -17,6 +17,7 @@ public class TaskRecord {
     private boolean completed;
 
 
+
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
