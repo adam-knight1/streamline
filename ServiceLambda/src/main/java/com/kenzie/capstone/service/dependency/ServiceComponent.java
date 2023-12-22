@@ -2,6 +2,7 @@ package com.kenzie.capstone.service.dependency;
 
 import com.kenzie.capstone.service.LambdaService;
 
+import com.kenzie.capstone.service.LambdaTaskService;
 import com.kenzie.capstone.service.LambdaUserService;
 import com.kenzie.capstone.service.TaskListService;
 import com.kenzie.capstone.service.TaskService;
@@ -16,7 +17,7 @@ import javax.inject.Singleton;
 @Component(modules = {DaoModule.class, ServiceModule.class})
 public interface ServiceComponent {
     LambdaService provideLambdaService();
-    TaskService provideTaskService();
+    LambdaTaskService provideLambdaTaskService();
     TaskListService provideTaskListService();
     LambdaUserService provideLambdaUserService();
 }

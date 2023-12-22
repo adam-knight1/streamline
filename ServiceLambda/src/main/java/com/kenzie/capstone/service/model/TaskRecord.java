@@ -14,6 +14,8 @@ public class TaskRecord {
     private String taskId;
     private String name;
     private String description;
+    private boolean completed;
+
 
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -52,17 +54,25 @@ public class TaskRecord {
         this.description = description;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId);
+        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId);
+        return Objects.hash(userId, taskId, name, description, completed);
     }
 
     public void setTaskListName(String taskListName) {

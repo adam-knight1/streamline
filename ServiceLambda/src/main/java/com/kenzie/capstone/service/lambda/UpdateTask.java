@@ -7,10 +7,10 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaService;
-import com.kenzie.capstone.service.TaskService;
+import com.kenzie.capstone.service.LambdaTaskService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.model.ExampleData;
+import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-   // private final TaskService taskService;
-
-  //  public UpdateTask(){
-  //      ServiceComponent serviceComponent = DaggerServiceComponent.create();
-  //      this.taskService = serviceComponent.provideTaskService();
-  //  }
 
     static final Logger log = LogManager.getLogger();
 
@@ -40,7 +34,7 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 
         //why is this still throwing error?
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        TaskService taskService = serviceComponent.provideTaskService();
+        LambdaTaskService lambdaTaskService = serviceComponent.provideLambdaTaskService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -61,7 +55,7 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 
         try {
             // Perform the task update using TaskService
-            TaskService updatedTask = taskService.updateTask(id, taskRequest);
+            TaskRecord updatedTask = lambdaTaskService.updateTask(id, taskRequest);
 
             // Construct the response body with the updated task details
             String responseBody = gson.toJson(updatedTask);
