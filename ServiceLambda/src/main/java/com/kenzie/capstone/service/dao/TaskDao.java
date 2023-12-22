@@ -3,14 +3,14 @@ package com.kenzie.capstone.service.dao;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
-import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.TaskRecord;
-import com.kenzie.capstone.service.model.TaskRequest;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class TaskDao {
 
@@ -26,7 +26,8 @@ public class TaskDao {
         this.mapper = mapper;
     }
 
-    public TaskRequest storeTaskData(TaskRecord taskRequest) {
+
+    public TaskRecord storeTaskData(TaskRecord taskRequest) {
         try {
             mapper.save(taskRequest, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
@@ -80,7 +81,6 @@ public class TaskDao {
         return mapper.query(TaskRecord.class, queryExpression);
     }
 
-
 //    public TaskRecord createTaskRecord(String generatedId, String taskId) {
 //    }
 //
@@ -89,7 +89,58 @@ public class TaskDao {
 //
 //    public TaskService updateTaskRecord(TaskRecord existingTask) {
 //    }
+    public TaskRecord createTaskRecord(String userId, String taskId) {
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setTaskId(taskId);
+        taskRecord.setUserId(userId);
+        
+        if (userId == null || userId.isEmpty()){
+            throw new IllegalArgumentException("User ID cannot be null or empty");
+        }
 
-    //should i use taskrecord or make a taskresponse to update task?
+        if (taskId == null || taskId.isEmpty()){
+            throw new IllegalArgumentException("Task ID cannot be null or empty");
+        }
+        
+        mapper.save(taskRecord);
+        return taskRecord;
+        
+    }
 
+    public TaskRecord getTaskRecordById(String taskId) {
+        if (taskId == null || taskId.isEmpty()){
+            throw new IllegalArgumentException("Task ID cannot be null or empty");
+        }
+        TaskRecord taskRecord = null;
+
+        try {
+            taskRecord = mapper.load(TaskRecord.class, taskId);
+        }catch (AmazonDynamoDBException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error while fetching TaskRecord by taskId: " + taskId,e);
+        }
+        return taskRecord;
+    }
+
+    public TaskRecord updateTaskRecord(TaskRecord existingTask) {
+        if (existingTask == null || existingTask.getTaskId() == null || existingTask.getTaskId().isEmpty()){
+            throw new IllegalArgumentException("Existing TaskRecord or its ID cannot be null or empty");
+        }
+        try {
+            TaskRecord retrievedTask = mapper.load(TaskRecord.class,existingTask.getTaskId());
+
+            if (retrievedTask != null){
+                retrievedTask.setDescription(existingTask.getDescription());
+                retrievedTask.setCompleted(existingTask.isCompleted());
+
+                mapper.save(retrievedTask);
+            }else {
+                throw new NoSuchElementException("No TaskRecord found for TaskId: " + existingTask.getTaskId());
+            }
+        }catch (AmazonDynamoDBException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error while updating TaskRecord: " + existingTask.getTaskId(), e);
+        }
+        return existingTask;
+    }
 }
