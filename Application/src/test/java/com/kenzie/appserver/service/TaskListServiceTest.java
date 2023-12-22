@@ -5,6 +5,7 @@ import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
+import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class TaskListServiceTest {
@@ -68,7 +70,7 @@ public class TaskListServiceTest {
         request.setUserId("differentUserId");
 
         // WHEN & THEN
-        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () ->
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
                 taskListService.createTaskList(request, userId, taskListName));
         Assertions.assertEquals("Provided user id does not match the user id in the request.", exception.getMessage());
         //Verify no interactions with repository
@@ -85,12 +87,11 @@ public class TaskListServiceTest {
         request.setTaskListName(taskListName);
 
         // Simulating an existing task list for the same user ID
-        TaskListRecord existingRecord = new TaskListRecord(userId, "Existing List",
-                Collections.emptyList());
+        TaskListRecord existingRecord = new TaskListRecord(userId, "Existing List");
         when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
 
         // WHEN & THEN
-        ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () ->
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
                 taskListService.createTaskList(request, userId, taskListName));
         Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatus());
         verify(taskListRepository, never()).save((TaskList) any());
@@ -103,18 +104,43 @@ public class TaskListServiceTest {
     @Test
     public void updateTaskList_Exists_Succeeds() {
         // GIVEN
-        String userId = UUID.randomUUID().toString();
+        String userId = "user";
         String taskListName = "Name";
-
-        TaskListRecord taskListRecord = new TaskListRecord(userId, taskListName);
-
         String newTaskListName = "NewName";
-        when(taskListRepository.findById(userId)).thenReturn(Optional.of(taskListRecord));
+        TaskListCreateRequest request = new TaskListCreateRequest();
+        request.setUserId(userId);
+        request.setTaskListName(newTaskListName);
+
+        // simulating an existing tasklist for the same user
+        TaskListRecord existingRecord = new TaskListRecord(userId, taskListName);
+        TaskList updatedRepoTaskList = new TaskList(userId, newTaskListName);
+
+        when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
+        when(taskListRepository.updateListName(request.getTaskListName())).thenReturn(updatedRepoTaskList);
 
         // WHEN
-        taskListService.updateTaskListName()
+        TaskList updatedTasklist = taskListService.updateTaskListName(request, userId);
 
         // THEN
+        Assertions.assertNotNull(updatedTasklist);
+        Assertions.assertEquals(newTaskListName, updatedTasklist.getTaskListName());
+    }
 
+    @Test
+    public void updateTaskList_DoesNotExist_Fails() {
+        // GIVEN
+        String userId = "user";
+        String taskListName = "Name";
+        String newTaskListName = "NewName";
+        TaskListCreateRequest request = new TaskListCreateRequest();
+        request.setUserId(userId);
+        request.setTaskListName(newTaskListName);
+
+        when(taskListRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // WHEN & THEN
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
+                taskListService.updateTaskListName(request, userId));
+        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

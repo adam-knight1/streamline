@@ -48,8 +48,8 @@ public class TaskListService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Task list already exists for the user.");
         }
         //Create the task list
-        TaskList newTaskList = new TaskList(userId, taskListName, Collections.emptyList());
-        TaskListRecord newTaskListRecord = new TaskListRecord(userId, taskListName, Collections.emptyList());
+        TaskList newTaskList = new TaskList(userId, taskListName);
+        TaskListRecord newTaskListRecord = new TaskListRecord(userId, taskListName);
         taskListRepository.save(newTaskListRecord);
         return newTaskList;
     }
@@ -78,4 +78,21 @@ public class TaskListService {
     private TaskList transformToTaskList(TaskListRecord record){
         return new TaskList(record.getUserId(), record.getTaskListName());
     }
+//    createTaskList_taskListAlreadyExistsForId() {
+//        // GIVEN
+//        String userId = "user";
+//        String taskListName = "New List";
+//        TaskListCreateRequest request = new TaskListCreateRequest();
+//        request.setUserId(userId);
+//        request.setTaskListName(taskListName);
+//
+//        // Simulating an existing task list for the same user ID
+//        TaskListRecord existingRecord = new TaskListRecord(userId, "Existing List");
+//        when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
+//
+//        // WHEN & THEN
+//        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
+//                taskListService.createTaskList(request, userId, taskListName));
+//        Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+//        verify(taskListRepository, never()).save((TaskList) any());
 }

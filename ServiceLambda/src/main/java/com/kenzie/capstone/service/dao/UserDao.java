@@ -1,7 +1,6 @@
 package com.kenzie.capstone.service.dao;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-<<<<<<< HEAD
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
@@ -62,14 +61,3 @@ public class UserDao {
             }
         }
     }
-
-
-
-=======
-
-public class UserDao {
-    public UserDao(DynamoDBMapper mapper) {
-
-    }
-}
->>>>>>> 833691b (Added UserDao created provideUserDao method in DaoModule)
