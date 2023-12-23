@@ -30,6 +30,8 @@ Resources:
           Properties:
             Path: /example/{id}
             Method: get
+
+     #
   CreateTaskFunction:
     Type: AWS::Serverless::Function
   Properties:
@@ -53,6 +55,8 @@ Resources:
         Properties:
           Path: /task/create
           Method: post
+
+
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
