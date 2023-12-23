@@ -33,32 +33,6 @@ Resources:
             Path: /user/create
             Method: post
 
-#CreateTask
-  Resources:
-    CreateTaskFunction:
-      Type: AWS::Serverless::Function
-      Properties:
-        CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-        Handler: com.kenzie.capstone.service.lambda.CreateTask
-        Runtime: java11
-        Description: Create a new task
-        MemorySize: 512
-        Timeout: 240
-        # Function's execution role
-        Policies:
-          - AWSLambdaBasicExecutionRole
-          - AWSLambda_ReadOnlyAccess
-          - AWSXrayWriteOnlyAccess
-          - AWSLambdaVPCAccessExecutionRole
-          - AmazonS3FullAccess
-          - AmazonDynamoDBFullAccess
-        Tracing: Active
-        Events:
-          UpdateResource:
-            Type: Api
-            Properties:
-              Path: /task/create
-              Method: post
 
 
 
