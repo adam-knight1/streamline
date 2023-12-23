@@ -81,14 +81,6 @@ public class TaskDao {
         return mapper.query(TaskRecord.class, queryExpression);
     }
 
-//    public TaskRecord createTaskRecord(String generatedId, String taskId) {
-//    }
-//
-//    public TaskRecord getTaskRecordById(String taskId) {
-//    }
-//
-//    public TaskService updateTaskRecord(TaskRecord existingTask) {
-//    }
     public TaskRecord createTaskRecord(String userId, String taskId) {
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setTaskId(taskId);

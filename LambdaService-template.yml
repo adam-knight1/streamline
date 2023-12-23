@@ -30,6 +30,8 @@ Resources:
           Properties:
             Path: /example/{id}
             Method: get
+
+     #
   CreateTaskFunction:
     Type: AWS::Serverless::Function
   Properties:
@@ -53,6 +55,8 @@ Resources:
         Properties:
           Path: /task/create
           Method: post
+
+
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -100,4 +104,26 @@ Resources:
             Path: /tasklist/create
             Method: post
 
-
+UpdateTaskListFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+    Handler: com.kenzie.capstone.service.lambda.UpdateTaskList
+    Runtime: java11
+    Description: Update existing TaskList
+    MemorySize: 512
+    Timeout: 30
+    Policies:
+      - AWSLambdaBasicExecutionRole
+      - AWSLambda_ReadOnlyAccess
+      - AWSXrayWriteOnlyAccess
+      - AWSLambdaVPCAccessExecutionRole
+      - AmazonS3FullAccess
+      - AmazonDynamoDBFullAccess
+    Tracing: Active
+    Events:
+      CreateTaskEvent:
+        Type: Api
+        Properties:
+          Path: /taskList/update
+          Method: post
