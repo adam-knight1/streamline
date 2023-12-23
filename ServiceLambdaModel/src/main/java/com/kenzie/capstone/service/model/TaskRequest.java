@@ -6,13 +6,14 @@ import java.util.List;
 
 public class TaskRequest {
     private String userId;
-    private String taskListName;
-    private String name;
+    private String taskName;
+   // private String name;
     private String description;
+    private boolean completed;
 
-    public TaskRequest(String userId, String taskListName) {
+    public TaskRequest(String userId, String taskName) {
         this.userId = userId;
-        this.taskListName = taskListName;
+        this.taskName = taskName;
     }
 
     public TaskRequest() {
@@ -26,18 +27,12 @@ public class TaskRequest {
         this.userId = userId;
     }
 
-    public String getTaskListName() {
-        return taskListName;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTaskListName(String taskListName) {
-        this.taskListName = taskListName;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     public String getDescription() {
@@ -47,12 +42,21 @@ public class TaskRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public String toString() {
         return "TaskRequest{" +
                 "userId='" + userId + '\'' +
-                ", taskId='" + taskListName + '\'' +
+                ", taskName='" + taskName + '\'' +
+                ", description='" + description + '\'' +
+                ", completed=" + completed +
                 '}';
     }
-
 }
