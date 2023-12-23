@@ -30,29 +30,29 @@ Resources:
           Properties:
             Path: /example/{id}
             Method: get
-#  CreateTaskFunction:
-#    Type: AWS::Serverless::Function
-#  Properties:
-#    CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-#    Handler: com.kenzie.capstone.service.lambda.CreateTask
-#    Runtime: java11
-#    Description: Create a new task
-#    MemorySize: 512
-#    Timeout: 30
-#    Policies:
-#      - AWSLambdaBasicExecutionRole
-#      - AWSLambda_ReadOnlyAccess
-#      - AWSXrayWriteOnlyAccess
-#      - AWSLambdaVPCAccessExecutionRole
-#      - AmazonS3FullAccess
-#      - AmazonDynamoDBFullAccess
-#    Tracing: Active
-#    Events:
-#      CreateTaskEvent:
-#        Type: Api
-#        Properties:
-#          Path: /task/create
-#          Method: post
+  CreateTaskFunction:
+    Type: AWS::Serverless::Function
+  Properties:
+    CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+    Handler: com.kenzie.capstone.service.lambda.CreateTask
+    Runtime: java11
+    Description: Create a new task
+    MemorySize: 512
+    Timeout: 30
+    Policies:
+      - AWSLambdaBasicExecutionRole
+      - AWSLambda_ReadOnlyAccess
+      - AWSXrayWriteOnlyAccess
+      - AWSLambdaVPCAccessExecutionRole
+      - AmazonS3FullAccess
+      - AmazonDynamoDBFullAccess
+    Tracing: Active
+    Events:
+      CreateTaskEvent:
+        Type: Api
+        Properties:
+          Path: /task/create
+          Method: post
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
