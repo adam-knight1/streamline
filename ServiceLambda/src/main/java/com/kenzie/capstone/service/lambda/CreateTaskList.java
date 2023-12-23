@@ -4,9 +4,10 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kenzie.capstone.service.TaskListService;
+import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.TaskListRequest;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class CreateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         response.setHeaders(headers);
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        TaskListService taskListService = serviceComponent.provideTaskListService();
+        LambdaTaskListService lambdaTaskListService = serviceComponent.provideLambdaTaskListService();
 
         String requestBody = input.getBody();
 
@@ -35,7 +36,7 @@ public class CreateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         TaskListRequest taskListRequest = gson.fromJson(requestBody, TaskListRequest.class);
 
         try{
-            taskListService.createTaskList(taskListRequest);
+            lambdaTaskListService.createTaskList(taskListRequest);
             return response.withStatusCode(200).withBody("Task list successfully created.");
         }catch(IllegalArgumentException e){
             log.error("Invalid argument: " + e.getMessage());

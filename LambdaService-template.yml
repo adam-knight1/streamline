@@ -80,5 +80,50 @@ Resources:
           Properties:
             Path: /user/create
             Method: post
+  CreateTaskListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.CreateTaskList
+      Runtime: java11
+      Description: Create a new task list
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        CreateUserEvent:
+          Type: Api
+          Properties:
+            Path: /tasklist/create
+            Method: post
 
-
+UpdateTaskListFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+    Handler: com.kenzie.capstone.service.lambda.UpdateTaskList
+    Runtime: java11
+    Description: Update existing TaskList
+    MemorySize: 512
+    Timeout: 30
+    Policies:
+      - AWSLambdaBasicExecutionRole
+      - AWSLambda_ReadOnlyAccess
+      - AWSXrayWriteOnlyAccess
+      - AWSLambdaVPCAccessExecutionRole
+      - AmazonS3FullAccess
+      - AmazonDynamoDBFullAccess
+    Tracing: Active
+    Events:
+      CreateTaskEvent:
+        Type: Api
+        Properties:
+          Path: /taskList/update
+          Method: post
