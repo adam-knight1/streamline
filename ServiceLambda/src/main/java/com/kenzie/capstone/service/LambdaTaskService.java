@@ -42,7 +42,7 @@ public class LambdaTaskService {
         }
 
         // Update the properties of the existing task using data from taskRequest
-        existingTask.setName(taskRequest.getName());
+        existingTask.setTaskName(taskRequest.getTaskName());
         existingTask.setDescription(taskRequest.getDescription());
         // Update other properties as needed
 
