@@ -9,10 +9,9 @@ public class TaskList {
     public String taskListName;
     public List<Task> tasks;
 
-    public TaskList(String userId, String taskListName, List<Task> tasks){
+    public TaskList(String userId, String taskListName){
         this.userId = userId;
         this.taskListName = taskListName;
-        this.tasks = tasks;
     }
 
     public void addTask(Task task){

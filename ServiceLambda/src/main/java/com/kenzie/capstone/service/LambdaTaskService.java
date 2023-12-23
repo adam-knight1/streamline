@@ -3,6 +3,7 @@ import com.kenzie.capstone.service.dao.TaskDao;
 
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponse;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +11,9 @@ import java.util.UUID;
 public class LambdaTaskService {
 
     private TaskDao taskDao;
+
+
+//This is an example template i have not edited anything in here yet. -AM
 
     public LambdaTaskService(TaskDao taskDao){
         this.taskDao =taskDao;
