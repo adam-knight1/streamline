@@ -1,20 +1,19 @@
 package com.kenzie.capstone.service;
 
-import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
-import com.kenzie.capstone.service.model.*;
+import com.kenzie.capstone.service.model.TaskListRecord;
+import com.kenzie.capstone.service.model.TaskListRequest;
+import com.kenzie.capstone.service.model.TaskListResponse;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
-public class TaskListService {
+public class LambdaTaskListService {
     // Example template not edited yet
     private TaskListDao taskListDao;
 
     @Inject
-    public TaskListService(TaskListDao taskListDao) {this.taskListDao = taskListDao;}
+    public LambdaTaskListService(TaskListDao taskListDao) {this.taskListDao = taskListDao;}
 
     public TaskListRequest retrieveTaskListRequest(String userId) {
         List<TaskListRecord> taskListRecords = taskListDao.getTaskListsByUserId(userId);

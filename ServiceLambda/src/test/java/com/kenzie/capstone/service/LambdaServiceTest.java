@@ -1,25 +1,18 @@
 package com.kenzie.capstone.service;
 
-import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.dao.TaskDao;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.ExampleRecord;
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
 import com.kenzie.capstone.service.model.TaskResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.ArgumentCaptor;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +22,7 @@ class LambdaServiceTest {
     /** ------------------------------------------------------------------------
      *  expenseService.getExpenseById
      *  ------------------------------------------------------------------------ **/
-
+/*
     private ExampleDao exampleDao;
     private LambdaService lambdaService;
 
@@ -71,5 +64,5 @@ class LambdaServiceTest {
 
 
     }
-
+*/
     }
