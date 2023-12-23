@@ -6,14 +6,13 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
+import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.TaskListService;
+import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.kenzie.capstone.service.model.TaskListRecord;
 import com.kenzie.capstone.service.model.TaskListRequest;
 import com.kenzie.capstone.service.model.TaskListResponse;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +32,7 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
 
         //Same error as OB and AM, does dagger generate this for us?
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        TaskListService taskListService = serviceComponent.provideTaskListService();
+        LambdaTaskListService lambdaTaskListService = serviceComponent.provideLambdaTaskListService();
 
         String userId = input.getPathParameters().get("userId");
 
@@ -49,8 +48,8 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
 
         // unfinished -bs
         try {
-            // Perform the taskList update using TaskListService
-            TaskListResponse taskListResponse = taskListService.updateTaskList(userId, taskListRequest);
+            // Perform the taskList update using LambdaTaskListService
+            TaskListResponse taskListResponse = lambdaTaskListService.updateTaskList(userId, taskListRequest);
             return response
                     .withStatusCode(200)
                     .withBody(gson.toJson(taskListResponse));
