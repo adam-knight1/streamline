@@ -56,7 +56,6 @@ Resources:
           Path: /task/create
           Method: post
 
-
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
