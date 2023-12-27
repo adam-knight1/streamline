@@ -19,9 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-
     private static final Logger log = LogManager.getLogger(UpdateTaskList.class);
-
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
         Gson gson = new GsonBuilder().create();
@@ -32,6 +30,12 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
         LambdaTaskListService lambdaTaskListService = serviceComponent.provideLambdaTaskListService();
+
+        String userId = input.getPathParameters().get("userId");
+        if (userId == null || userId.length() == 0){
+            return response.withStatusCode(400)
+                    .withBody("userId is invalid");
+        }
 
 
         return response;
