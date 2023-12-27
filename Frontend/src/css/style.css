@@ -71,10 +71,7 @@ textarea {
     padding: 0 1em;
 }
 
-@media (min-width: 768px) {
-    .background {
-        padding: 2% 0;
-    }
+
 
     .header {
         justify-content: center;
