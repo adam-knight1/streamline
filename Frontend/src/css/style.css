@@ -1,119 +1,100 @@
 :root {
-    /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
-    --primary-color: #131921;
-    --secondary-color: #fff;
-    --error-color: rgba(194, 0, 0, 0.71);
+    --primary-color: #003366;
+    --secondary-color: #ffffff;
+    --accent-color: #ff7f50;
+    --error-color: #d32f2f;
+    --hover-color: #ff4500;
+    --font-main: 'Open Sans', sans-serif;
 }
 
 .background {
-    background-color: #eaeded;
-    margin: 0;
-    counter-reset: section;
+    background-color: #e0fbfc;
 }
 
 .header {
-    /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 0 20px;
+    padding: 1% 5%;
 }
 
 .header_home {
-    font-size: 36px;
-    line-height: 40px;
-    height: 100px;
-    text-decoration: none;
-    color: var(--secondary-color);
+    font-size: 1.5em;
 }
 
 .header_nav_link {
-    margin-left: 20px;
-    vertical-align: top;
-    line-height: 40px;
-}
-
-.about {
-    margin-left: 20px;
+    margin: 0 1%;
+    font-size: 1em;
 }
 
 .button, button {
-    background: #aed9ff;
-    padding: 3px;
-    border-radius: 3px;
-    text-decoration: none;
-    color: black;
-    border: 1px solid black;
-    cursor: pointer;
+    background: var(--accent-color);
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    color: var(--secondary-color);
+    font-weight: bold;
 }
 
 .button:hover, button:hover {
-    background: #9cc3e4;
+    background-color: var(--hover-color);
 }
-
-.button:active, button:active {
-    transform: translateY(2px);
-   }
-  /*added by adam so the button shifts*/
 
 .card {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
-    margin: 20px;
-    padding: 10px 20px;
-}
-
-.validated-field:invalid {
-    outline: 2px solid var(--error-color);
-}
-.validated-field:focus:invalid {
-    color: var(--error-color);
-}
-
-.card-content {
-    max-width: 500px;
+    margin: 1% 2%;
+    padding: 1%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 .card-content .form-field {
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 1em;
 }
 
-#concert-list li {
-    margin-bottom: 1rem;
-}
-
-.state {
-    display: none;
-}
-
-.state.active {
-    display: block;
-}
-/*
-added by adam
-*/
-.user-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.user-button:hover {
-    background-color: #0056b3;
-}
-/*
-added by adam
-*/
 .welcome-section {
-  text-align: center;
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #f2f2f2;
+    padding: 2em 1em;
+    background-color: #a8dadc;
+    margin: 0 auto;
+    max-width: 60em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    border: 1px solid #ced4da;
+    padding: 0.5em;
+    border-radius: 4px;
+    margin-bottom: 1em;
+}
+
+.main-container {
+    max-width: 75em;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+@media (min-width: 768px) {
+    .background {
+        padding: 2% 0;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
+    .header_home {
+        font-size: 2em;
+    }
+
+    .card {
+        margin: 2% auto;
+        padding: 2em;
+        max-width: 60em;
+    }
+
+    .welcome-section {
+        margin-top: 2em;
+    }
+
+    .card-content .form-field {
+        margin-bottom: 2em;
+    }
+}
