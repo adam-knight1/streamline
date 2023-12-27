@@ -9,10 +9,12 @@ import java.util.Objects;
 public class TaskListRecord {
     public String userId;
     public String taskListName;
+    public List<Task> tasks;
 
     public TaskListRecord(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
+        this.tasks = new ArrayList<>();
     }
 
     public String getUserId() {
