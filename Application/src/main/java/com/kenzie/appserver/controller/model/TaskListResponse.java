@@ -45,4 +45,5 @@ public class TaskListResponse {
     public void setTasks(List<com.kenzie.appserver.service.model.Task> tasks) {
         this.tasks = tasks;
     }
+
 }
