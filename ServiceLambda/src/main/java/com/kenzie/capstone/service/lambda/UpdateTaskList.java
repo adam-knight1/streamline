@@ -30,23 +30,27 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        //Same error as OB and AM, does dagger generate this for us?
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
         LambdaTaskListService lambdaTaskListService = serviceComponent.provideLambdaTaskListService();
 
-        String userId = input.getPathParameters().get("userId");
+        String userId = null;
+
+        // Check if path parameters are present and not null
+//        Map<String, String> pathParameters = input.getPathParameters();
+        if (input != null) {
+            userId = input.getPathParameters().get("userId");
+        }
 
         if (userId == null || userId.length() == 0) {
             return response
                     .withStatusCode(400)
-                    .withBody("userId is invalid");
+                    .withBody("userId is null");
         }
 
         // Get the JSON payload for updating the taskList
         String requestBody = input.getBody();
         TaskListRequest taskListRequest = gson.fromJson(requestBody, TaskListRequest.class);
 
-        // unfinished -bs
         try {
             // Perform the taskList update using LambdaTaskListService
             TaskListResponse taskListResponse = lambdaTaskListService.updateTaskList(userId, taskListRequest);
@@ -56,7 +60,7 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         } catch (IllegalArgumentException e) {
             return response
                     .withStatusCode(400)
-                    .withBody(gson.toJson(e));
+                    .withBody(gson.toJson(e.getMessage()));
         }
     }
 }
