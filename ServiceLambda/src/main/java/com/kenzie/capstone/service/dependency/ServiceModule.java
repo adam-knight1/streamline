@@ -18,7 +18,6 @@ import javax.inject.Singleton;
     includes = DaoModule.class
 )
 public class ServiceModule {
-
     @Singleton
     @Provides
     @Inject
@@ -29,8 +28,9 @@ public class ServiceModule {
     @Singleton
     @Provides
     @Inject
-    public LambdaTaskListService provideLambdaTaskListService(@Named("TaskListDao") TaskListDao taskListDao) {
-        return new LambdaTaskListService(taskListDao);
+    public LambdaTaskListService provideLambdaTaskListService(@Named("TaskListDao") TaskListDao taskListDao,
+                                                              @Named("TaskDao") TaskDao taskDao) {
+        return new LambdaTaskListService(taskListDao, taskDao);
     }
 
     @Singleton

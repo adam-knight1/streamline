@@ -11,7 +11,6 @@ import java.util.UUID;
 public class LambdaTaskListService {
     // Example template not edited yet
     private TaskListDao taskListDao;
-
     private TaskDao taskDao;
 
     @Inject
@@ -62,21 +61,22 @@ public class LambdaTaskListService {
         if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
             throw new IllegalArgumentException("Task name is required");
         }
-       // TaskListRecord taskListRecord = taskListDao.getTaskListsByUserId(userId); ??
+        TaskListRecord taskListRecord = (TaskListRecord) taskListDao.getTaskListsByUserId(userId);
 
         if (taskListRecord == null) {
             throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
         }
+
         String taskId = UUID.randomUUID().toString();
-        TaskRecord taskRecord = new TaskRecord(
-                userId, taskId, taskListRecord.getTaskListName(), taskRequest.getTaskName(), taskRequest.isCompleted());
+        TaskRecord taskRecord = new TaskRecord();
 
         taskDao.storeTaskData(taskRecord);
 
         // Return the TaskResponse
         return new TaskResponse(
-                taskRecord.getUserId(), taskRecord.getTaskName(), taskRecord.getTaskId(), taskRecord.getTaskName(),
+                taskRecord.getUserId(), taskRecord.getTaskListName(), taskRecord.getTaskId(), taskRecord.getTaskName(),
                 taskRecord.getDescription()
         );
     }
-}
+    }
+
