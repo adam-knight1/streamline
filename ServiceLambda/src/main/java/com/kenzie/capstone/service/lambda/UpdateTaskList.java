@@ -36,8 +36,8 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
         String userId = null;
 
         // Check if path parameters are present and not null
-//        Map<String, String> pathParameters = input.getPathParameters();
-        if (input != null) {
+        Map<String, String> pathParameters = input.getPathParameters();
+        if (pathParameters != null) {
             userId = input.getPathParameters().get("userId");
         }
 
