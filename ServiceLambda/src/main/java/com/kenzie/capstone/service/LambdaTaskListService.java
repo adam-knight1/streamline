@@ -1,19 +1,24 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
-import com.kenzie.capstone.service.model.TaskListRecord;
-import com.kenzie.capstone.service.model.TaskListRequest;
-import com.kenzie.capstone.service.model.TaskListResponse;
+import com.kenzie.capstone.service.model.*;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.UUID;
 
 public class LambdaTaskListService {
     // Example template not edited yet
     private TaskListDao taskListDao;
 
+    private TaskDao taskDao;
+
     @Inject
-    public LambdaTaskListService(TaskListDao taskListDao) {this.taskListDao = taskListDao;}
+    public LambdaTaskListService(TaskListDao taskListDao, TaskDao taskDao) {
+        this.taskListDao = taskListDao;
+        this.taskDao = taskDao;
+    }
 
     public TaskListRequest retrieveTaskListRequest(String userId) {
         List<TaskListRecord> taskListRecords = taskListDao.getTaskListsByUserId(userId);
@@ -51,5 +56,27 @@ public class LambdaTaskListService {
         existingTaskList.setTaskListName(taskListRequest.getTaskListName());
 
         return taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskList.getTaskListName());
+    }
+
+    public TaskResponse createTask(String userId, TaskRequest taskRequest) {
+        if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
+            throw new IllegalArgumentException("Task name is required");
+        }
+       // TaskListRecord taskListRecord = taskListDao.getTaskListsByUserId(userId); ??
+
+        if (taskListRecord == null) {
+            throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
+        }
+        String taskId = UUID.randomUUID().toString();
+        TaskRecord taskRecord = new TaskRecord(
+                userId, taskId, taskListRecord.getTaskListName(), taskRequest.getTaskName(), taskRequest.isCompleted());
+
+        taskDao.storeTaskData(taskRecord);
+
+        // Return the TaskResponse
+        return new TaskResponse(
+                taskRecord.getUserId(), taskRecord.getTaskName(), taskRecord.getTaskId(), taskRecord.getTaskName(),
+                taskRecord.getDescription()
+        );
     }
 }

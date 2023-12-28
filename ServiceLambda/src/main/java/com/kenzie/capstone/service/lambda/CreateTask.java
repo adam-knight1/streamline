@@ -36,8 +36,23 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
             return response.withStatusCode(400)
                     .withBody("userId is invalid");
         }
+        String requestBody = input.getBody();
+        TaskRequest taskRequest = gson.fromJson(requestBody , TaskRequest.class);
 
-
-        return response;
+        if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()){
+            return response
+                    .withStatusCode(400)
+                    .withBody("Task name is required");
+        }
+        try {
+            TaskResponse taskResponse = lambdaTaskListService.createTask(userId , taskRequest);
+            return response
+                    .withStatusCode(200)
+                    .withBody(gson.toJson(taskResponse));
+        } catch (IllegalArgumentException e){
+            return response
+                    .withStatusCode(400)
+                    .withBody(gson.toJson(e));
+        }
     }
 }

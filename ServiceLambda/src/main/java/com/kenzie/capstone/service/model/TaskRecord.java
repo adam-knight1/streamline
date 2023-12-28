@@ -9,14 +9,19 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "task")
 public class TaskRecord {
-
     private String userId;
     private String taskId;
     private String taskName;
     private String description;
     private boolean completed;
 
-
+    public TaskRecord(String userId, String taskId, String taskName, String description, boolean completed) {
+        this.userId = userId;
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.description = description;
+        this.completed = completed;
+    }
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
@@ -75,4 +80,3 @@ public class TaskRecord {
         return Objects.hash(userId, taskId, taskName, description, completed);
     }
 }
-
