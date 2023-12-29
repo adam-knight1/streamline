@@ -5,10 +5,15 @@ import com.kenzie.capstone.service.model.UserRecord;
 import com.kenzie.capstone.service.model.UserResponse;
 
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class LambdaUserService {
 
     private UserDao userDao;
+    private String errorMessage;
+    private static final Logger log = LoggerFactory.getLogger(LambdaUserService.class);
 
     public LambdaUserService(UserDao userDao) {
         this.userDao = userDao;
@@ -19,21 +24,23 @@ public class LambdaUserService {
     }
 
     public UserResponse createNewUser(UserRecord userRecord) {
+        if (userRecord == null || userRecord.getEmail() == null || userRecord.getUsername() == null || userRecord.getPassword() == null) {
+            log.error("The user recordRecord contains null values");
+        }
+
         if (userRecord.getUserId() == null) {
             userRecord.setUserId(UUID.randomUUID().toString());
         }
 
-            try {
+        try {
             userDao.createUser(userRecord);
         } catch (Exception e) {
-            return new UserResponse(); //will add something more descriptive -adam
-        }
-        UserResponse userResponse = new UserResponse();
-        userResponse.setUserId(userRecord.getUserId());
-        userResponse.setEmail(userRecord.getEmail());
-        userResponse.setUserId(userRecord.getUserId());
+            log.error("Error creating user: ", e);
 
-        return userResponse;
+        }
+        log.info("Successfully created user");
+
+        return new UserResponse();
     }
 
     public UserRecord updateUser(UserRecord userRecord) {
