@@ -46,13 +46,13 @@ public class TaskRecord {
         this.taskId = taskId;
     }
 
-    @DynamoDBAttribute(attributeName = "taskListname")
+    @DynamoDBAttribute(attributeName = "taskName")
     public String getTaskName() {
         return taskName;
     }
 
-    public void setTaskName(String taskListName) {
-        this.taskName = taskListName;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     @DynamoDBAttribute(attributeName = "description")
@@ -73,10 +73,10 @@ public class TaskRecord {
     }
     @DynamoDBAttribute(attributeName = "taskListName")
     public String getTaskListName() {
-        return taskName;
+        return taskListName;
     }
     public void setTaskListName(String taskListName){
-        this.taskName = taskListName;
+        this.taskListName = taskListName;
     }
 
     @Override
