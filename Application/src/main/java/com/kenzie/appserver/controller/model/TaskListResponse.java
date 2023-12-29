@@ -1,7 +1,7 @@
 package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.scheduling.config.Task;
+import com.kenzie.appserver.service.model.Task;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ public class TaskListResponse {
     @JsonProperty("name")
     private String taskListName;
 
-    private List<Task> tasks;
+    private List<com.kenzie.appserver.service.model.Task> tasks;
 
     public TaskListResponse(){}
 
-    public TaskListResponse(String userId, String taskListName, List<Task> tasks){
+    public TaskListResponse(String userId, String taskListName, List<com.kenzie.appserver.service.model.Task> tasks){
         this.userId = userId;
         this.taskListName = taskListName;
         this.tasks = tasks;
@@ -42,7 +42,8 @@ public class TaskListResponse {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<com.kenzie.appserver.service.model.Task> tasks) {
         this.tasks = tasks;
     }
+
 }

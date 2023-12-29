@@ -6,35 +6,48 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="background">
-    <header class="header" id="header">
-        <div class="site-title">
-            <a class="header_home" href="index.html">Example App</a>
-        </div>
-    </header>
-    <div class="card">
-        <h2>Create Example</h2>
-        <form class="card-content" id="create-form">
-            <p class="form-field">
-                <label>Name</label>
-                <input type="text" required class="validated-field" id="create-name-field">
-            </p>
-            <button type="submit">Create</button>
-        </form>
+<header class="header" id="header">
+    <div class="site-title">
+        <a class="header_home" href="index.html">Streamline - Reinventing the Todo List</a>
     </div>
-    <div class="card">
-        <h2>Get By ID</h2>
-        <form class="card-content" id="get-by-id-form">
-            <p class="form-field">
-                <label>ID</label>
-                <input type="text" required class="validated-field" id="id-field">
-            </p>
-            <button type="submit">Get</button>
-        </form>
+</header>
+
+<div class="welcome-section">
+    <h2>Welcome to Streamline!</h2>
+    <p>This app is designed to help you stay productive and organized!</p>
+    <p>Create your account below to get started!</p>
+</div>
+
+<div class="card" id="create-user-form">
+    <h2>Create New User</h2>
+    <form class="card-content" id="create-user">
+        <p class="form-field">
+            <label>Username</label>
+            <input type="text" required class="validated-field" id="username-field">
+        </p>
+        <p class="form-field">
+            <label>Email</label>
+            <input type="email" required class="validated-field" id="email-field">
+        </p>
+        <p class="form-field">
+            <label>Password</label>
+            <input type="password" required class="validated-field" id="password-field">
+        </p>
+        <button type="submit">Create</button>
+        <div id="created-user-id"></div>
+        <div id="keep-it-safe"></div>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Streamline User Menu</h2>
+    <div class="card-content">
+        <a href="login.html" class="user-button">Login</a>
+        <a href="user.html" class="user-button">Account Management</a>
+        <a href="supportTriage.html" class="user-button">Support</a>
     </div>
-    <div class="card" id="result">
-        <h2>Result:</h2>
-        <p id="result-info"></p>
-    </div>
+</div>
 
 </body>
 </html>
+

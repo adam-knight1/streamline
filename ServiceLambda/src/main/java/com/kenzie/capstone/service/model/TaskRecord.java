@@ -9,14 +9,24 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "task")
 public class TaskRecord {
-
     private String userId;
     private String taskId;
+    private String taskListName;
     private String taskName;
     private String description;
     private boolean completed;
 
+    public TaskRecord(){
+    }
 
+    public TaskRecord(String userId, String taskId, String taskListName, String taskName, String description, boolean completed) {
+        this.userId = userId;
+        this.taskId = taskId;
+        this.taskListName = taskListName;
+        this.taskName = taskName;
+        this.description = description;
+        this.completed = completed;
+    }
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
@@ -61,18 +71,26 @@ public class TaskRecord {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+    @DynamoDBAttribute(attributeName = "taskListName")
+    public String getTaskListName() {
+        return taskName;
+    }
+    public void setTaskListName(String taskListName){
+        this.taskName = taskListName;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(description, that.description);
+        return completed == that.completed && Objects.equals(userId, that.userId) &&
+                Objects.equals(taskId, that.taskId) && Objects.equals(taskListName, that.taskListName) &&
+                Objects.equals(taskName, that.taskName) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId, taskName, description, completed);
+        return Objects.hash(userId, taskId, taskListName, taskName, description, completed);
     }
 }
-
