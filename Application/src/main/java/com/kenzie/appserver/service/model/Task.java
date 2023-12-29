@@ -1,8 +1,9 @@
 package com.kenzie.appserver.service.model;
 
 
-import java.util.UUID;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+import java.util.UUID;
 public class Task  {
     private String taskId;
     private String taskName;

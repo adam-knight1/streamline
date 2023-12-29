@@ -8,7 +8,7 @@ class UserPage extends BaseClass {
         super();
         this.bindClassMethods(['onCreate', 'onUpdate', 'onDelete', 'onFind', 'renderUser'], this);
         this.dataStore = new DataStore();
-        this.client = new UserClient;
+        this.client - new UserClient;
     }
 
     async mount() {

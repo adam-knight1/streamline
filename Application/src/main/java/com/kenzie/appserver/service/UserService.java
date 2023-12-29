@@ -68,39 +68,12 @@ public class UserService {
     }*/
 
     public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
-        lambdaServiceClient.createUser(userRequest);
+        try {
+            lambdaServiceClient.createUser(userRequest);
+        } catch (Exception e) {
+            System.out.println("unsuccessful user creation");
+        }
         return new UserResponse();
-    }
-
-    public Optional<User> updateUser(String userId, User updatedUserInfo) {
-
-        Optional<UserRecord> optionalExistingUser = userRepository.findById(userId);
-
-        if (optionalExistingUser.isPresent()) {
-            UserRecord existingUser = optionalExistingUser.get();
-
-            // Update the existingUser with updatedUserInfo here
-            existingUser.setEmail(updatedUserInfo.getEmail());
-            existingUser.setPassword(updatedUserInfo.getPassword());
-            existingUser.setUsername(updatedUserInfo.getUsername());
-
-            userRepository.save(existingUser);
-
-            return Optional.of(transformToUser(existingUser));
-        }
-        return Optional.empty();
-    }
-
-    public boolean deleteUser(String userId) {
-        Optional<UserRecord> optionalUserRecord = userRepository.findById(userId);
-
-        if (optionalUserRecord.isPresent()) {
-            userRepository.delete(optionalUserRecord.get());
-            return true;
-        } else {
-            System.out.println("User not found for deletion.");
-            return false;
-        }
     }
 
     public User transformToUser(UserRecord userRecord) {

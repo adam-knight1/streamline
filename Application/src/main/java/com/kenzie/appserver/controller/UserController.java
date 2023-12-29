@@ -47,13 +47,16 @@ public class UserController {
 
         try {
             userService.createNewUser(userRequest); //the methods takes a userRequest now
+            UserResponse userResponse = userService.createNewUser(userRequest);
+            return ResponseEntity.ok(userResponse); // Return the response from the UserService
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return  ResponseEntity.ok(userToResponse(user));
+       // return  ResponseEntity.ok(userToResponse(user));
     }
 
-    @PutMapping("/{userId}")
+   /* @PutMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
         Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
         return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user)))
@@ -69,7 +72,7 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 
     private UserResponse userToResponse(User user) {
         UserResponse userResponse = new UserResponse();
