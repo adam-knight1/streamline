@@ -26,6 +26,7 @@ class UserPage extends BaseClass {
 
     async onCreate(event) {
         event.preventDefault();
+        console.log('Client:', this.client);
 
         this.dataStore.set("user", null);
 
