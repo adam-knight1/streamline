@@ -5,13 +5,14 @@ import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.model.UserRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@RestController
+/*@RestController
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -74,4 +75,36 @@ public class UserController {
         return userResponse;
     }
 
+}*/
+
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    private final LambdaServiceClient lambdaServiceClient;
+
+    @Autowired
+    public UserController(LambdaServiceClient lambdaServiceClient) {
+        this.lambdaServiceClient = lambdaServiceClient;
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable("userId") String userId) {
+        // Implementation to get user using LambdaServiceClient
+        // ...
+    }
+
+    @PostMapping
+    public ResponseEntity<UserResponse> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
+        try {
+            UserResponse userResponse = lambdaServiceClient
+            return ResponseEntity.ok(userResponse);
+        } catch (Exception e) {
+            // Handle exceptions
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }
+

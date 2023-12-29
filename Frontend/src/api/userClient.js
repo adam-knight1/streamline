@@ -23,7 +23,7 @@ export default class UserClient extends BaseClass {
 
     async createUser(username, password, email) {
         try {
-            const response = await this.client.post('/user', {
+            const response = await this.client.post('/user/create', {
                 username: username,
                 password: password,
                 email: email
