@@ -32,7 +32,7 @@ public class UserController {
     } */
 
 
-    @PostMapping
+   @PostMapping("/create")
     public ResponseEntity<UserResponse> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername(userCreateRequest.getUsername());
