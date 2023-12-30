@@ -3,13 +3,13 @@ package com.kenzie.capstone.service.model;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "taskList")
+@DynamoDBTable(tableName = "TaskList")
 public class TaskListRecord {
     private String userId;
     private String taskListName;
+//    private List<Task> tasks;
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {

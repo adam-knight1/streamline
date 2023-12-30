@@ -13,7 +13,7 @@ import java.util.List;
 public interface TaskRepository extends CrudRepository<TaskRecord, String> {
 
     //find tasks by userId
-    List<TaskRecord> findUserById (String userId);
+    List<TaskRecord> findByUserId (String userId);
 
     //delete tasks by userid
     void deleteByUserId(String userId);

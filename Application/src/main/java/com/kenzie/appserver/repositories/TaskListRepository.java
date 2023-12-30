@@ -1,10 +1,9 @@
 package com.kenzie.appserver.repositories;
+
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.scheduling.config.Task;
-
 import java.util.UUID;
 
 @EnableScan
