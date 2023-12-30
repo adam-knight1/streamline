@@ -7,7 +7,6 @@ import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.*;
-
 import java.util.List;
 
 public class TaskListDao {
@@ -22,21 +21,7 @@ public class TaskListDao {
         this.mapper = mapper;
     }
 
-    public TaskListRequest storeExampleData(TaskListRequest taskListRequest) {
-        try {
-            mapper.save(taskListRequest, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "userId",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("userId has already been used");
-        }
-
-        return taskListRequest;
-    }
-
-    public List<TaskListRecord> getTaskListData(String userId) {
+    public TaskListRecord getTaskListByUserId(String userId) {
         TaskListRecord taskListRecord = new TaskListRecord();
         taskListRecord.setUserId(userId);
 
@@ -44,39 +29,10 @@ public class TaskListDao {
                 .withHashKeyValues(taskListRecord)
                 .withConsistentRead(false);
 
-        return mapper.query(TaskListRecord.class, queryExpression);
+        return mapper.query(TaskListRecord.class, queryExpression).get(0);
     }
 
-    public TaskListRecord setTaskListData(String userId, String taskListName) {
-        TaskListRecord taskListRecord = new TaskListRecord();
-        taskListRecord.setUserId(userId);
-        taskListRecord.setTaskListName(taskListName);
-
-        try {
-            mapper.save(taskListRecord, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "userId",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("userId already exists");
-        }
-
-        return taskListRecord;
-    }
-
-    public List<TaskListRecord> getTaskListsByUserId(String userId) {
-        TaskListRecord taskListRecord = new TaskListRecord();
-        taskListRecord.setUserId(userId);
-
-        DynamoDBQueryExpression<TaskListRecord> queryExpression = new DynamoDBQueryExpression<TaskListRecord>()
-                .withHashKeyValues(taskListRecord)
-                .withConsistentRead(false);
-
-        return mapper.query(TaskListRecord.class, queryExpression);
-    }
-
-    public TaskListRecord getTaskListsByTaskListName(String userId, String taskListName) {
+    public TaskListRecord getTaskListByTaskListName(String userId, String taskListName) {
         TaskListRecord taskListRecord = new TaskListRecord();
         taskListRecord.setUserId(userId);
         taskListRecord.setTaskListName(taskListName);
@@ -123,4 +79,47 @@ public class TaskListDao {
 
         return new TaskListResponse(userId, taskListName);
     }
+
+    //    public TaskListRequest storeExampleData(TaskListRequest taskListRequest) {
+//        try {
+//            mapper.save(taskListRequest, new DynamoDBSaveExpression()
+//                    .withExpected(ImmutableMap.of(
+//                            "userId",
+//                            new ExpectedAttributeValue().withExists(false)
+//                    )));
+//        } catch (ConditionalCheckFailedException e) {
+//            throw new IllegalArgumentException("userId has already been used");
+//        }
+//
+//        return taskListRequest;
+//    }
+//
+//    public List<TaskListRecord> getTaskListData(String userId) {
+//        TaskListRecord taskListRecord = new TaskListRecord();
+//        taskListRecord.setUserId(userId);
+//
+//        DynamoDBQueryExpression<TaskListRecord> queryExpression = new DynamoDBQueryExpression<TaskListRecord>()
+//                .withHashKeyValues(taskListRecord)
+//                .withConsistentRead(false);
+//
+//        return mapper.query(TaskListRecord.class, queryExpression);
+//    }
+//
+//    public TaskListRecord setTaskListData(String userId, String taskListName) {
+//        TaskListRecord taskListRecord = new TaskListRecord();
+//        taskListRecord.setUserId(userId);
+//        taskListRecord.setTaskListName(taskListName);
+//
+//        try {
+//            mapper.save(taskListRecord, new DynamoDBSaveExpression()
+//                    .withExpected(ImmutableMap.of(
+//                            "userId",
+//                            new ExpectedAttributeValue().withExists(false)
+//                    )));
+//        } catch (ConditionalCheckFailedException e) {
+//            throw new IllegalArgumentException("userId already exists");
+//        }
+//
+//        return taskListRecord;
+//    }
 }
