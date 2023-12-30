@@ -21,6 +21,10 @@ import java.util.Objects;
        // @DynamoDBAttribute(attributeName = "password")
         private String password;
 
+        public UserRecord(){
+
+        }
+
         @DynamoDBHashKey(attributeName = "userId")
         public String getUserId() { return userId; }
 

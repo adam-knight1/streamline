@@ -8,6 +8,7 @@ class UserPage extends BaseClass {
         super();
         this.bindClassMethods(['onCreate', 'onUpdate', 'onDelete', 'onFind', 'renderUser'], this);
         this.dataStore = new DataStore();
+        this.client - new UserClient;
     }
 
     async mount() {
@@ -26,6 +27,7 @@ class UserPage extends BaseClass {
 
     async onCreate(event) {
         event.preventDefault();
+        console.log('Client:', this.client);
 
         this.dataStore.set("user", null);
 
