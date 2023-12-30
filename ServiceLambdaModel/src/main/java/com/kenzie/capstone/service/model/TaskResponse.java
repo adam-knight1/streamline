@@ -6,22 +6,21 @@ public class TaskResponse{
 
 
     private String userId;
-    private String taskListName;
     private String taskId;
-    private String name;
-    private String description;
+    private String taskName;
+    private String taskDescription;
+    private boolean taskStatus;
 
     public TaskResponse() {
     }
 
-    public TaskResponse(String userId, String taskListName, String taskId, String name, String description) {
+    public TaskResponse(String userId, String taskId, String taskName, String taskDescription, boolean taskStatus) {
         this.userId = userId;
-        this.taskListName = taskListName;
         this.taskId = taskId;
-        this.name = name;
-        this.description = description;
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskStatus = taskStatus;
     }
-
     public String getUserId() {
         return userId;
     }
@@ -30,13 +29,6 @@ public class TaskResponse{
         this.userId = userId;
     }
 
-    public String getTaskListName() {
-        return taskListName;
-    }
-
-    public void setTaskListName(String taskListName) {
-        this.taskListName = taskListName;
-    }
 
     public String getTaskId() {
         return taskId;
@@ -46,20 +38,28 @@ public class TaskResponse{
         this.taskId = taskId;
     }
 
-    public String getName() {
-        return name;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public boolean getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(boolean taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     @Override
@@ -67,25 +67,22 @@ public class TaskResponse{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskResponse that = (TaskResponse) o;
-        return Objects.equals(userId, that.userId) &&
-                Objects.equals(taskListName, that.taskListName) &&
-                Objects.equals(taskId, that.taskId) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(description, that.description);
+        return taskStatus == that.taskStatus && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskListName, taskId, name, description);
+        return Objects.hash(userId, taskId, taskName, taskDescription, taskStatus);
     }
 
     @Override
     public String toString() {
         return "TaskResponse{" +
                 "userId='" + userId + '\'' +
-                ", taskListName='" + taskListName + '\'' +
                 ", taskId='" + taskId + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", taskName='" + taskName + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskStatus=" + taskStatus +
                 '}';
     }
 }

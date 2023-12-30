@@ -11,72 +11,48 @@ import java.util.Objects;
 public class TaskRecord {
     private String userId;
     private String taskId;
-    private String taskListName;
     private String taskName;
-    private String description;
-    private boolean completed;
-
-    public TaskRecord(){
-    }
-
-    public TaskRecord(String userId, String taskId, String taskListName, String taskName, String description, boolean completed) {
-        this.userId = userId;
-        this.taskId = taskId;
-        this.taskListName = taskListName;
-        this.taskName = taskName;
-        this.description = description;
-        this.completed = completed;
-    }
-
+    private String taskDescription;
+    private boolean taskStatus;
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
 
-    @DynamoDBRangeKey(attributeName = "taskId")
-    public String getTaskId() {
-        return taskId;
-    }
-
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+    @DynamoDBAttribute(attributeName = "taskId")
+    public String getTaskId() {
+        return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
-
-    @DynamoDBAttribute(attributeName = "taskListname")
+    @DynamoDBAttribute(attributeName = "taskName")
     public String getTaskName() {
         return taskName;
     }
 
-    public void setTaskName(String taskListName) {
-        this.taskName = taskListName;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+    @DynamoDBAttribute(attributeName = "taskDescription")
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
-    @DynamoDBAttribute(attributeName = "description")
-    public String getDescription() {
-        return description;
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+    @DynamoDBAttribute(attributeName = "taskStatus")
+    public boolean isTaskStatus() {
+        return taskStatus;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-    @DynamoDBAttribute(attributeName = "taskListName")
-    public String getTaskListName() {
-        return taskName;
-    }
-    public void setTaskListName(String taskListName){
-        this.taskName = taskListName;
+    public void setTaskStatus(boolean taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     @Override
@@ -84,13 +60,11 @@ public class TaskRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return completed == that.completed && Objects.equals(userId, that.userId) &&
-                Objects.equals(taskId, that.taskId) && Objects.equals(taskListName, that.taskListName) &&
-                Objects.equals(taskName, that.taskName) && Objects.equals(description, that.description);
+        return taskStatus == that.taskStatus && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId, taskListName, taskName, description, completed);
+        return Objects.hash(userId, taskId, taskName, taskDescription, taskStatus);
     }
 }

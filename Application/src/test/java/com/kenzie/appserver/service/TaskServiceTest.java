@@ -19,7 +19,7 @@ public class TaskServiceTest {
     @Test
     public void testAddTask(){
         //GIVEN
-        Task task = new Task("Example Task", "Description of task", "Pending");
+        Task task = new Task("Example Task", "Description of task", true);
 
         //WHEN
         Task addedTask = taskService.addTask(task);
@@ -33,7 +33,7 @@ public class TaskServiceTest {
     @Test
     public void testDeleteTask(){
         //GIVEN
-        Task task = new Task("Task to Delete", "Description of task", "Pending");
+        Task task = new Task("Task to Delete", "Description of task", true);
 
         //WHEN
         Task addedTask = taskService.addTask(task);
@@ -41,7 +41,7 @@ public class TaskServiceTest {
 
         assertTrue(result);
 
-        Task deletedTask = taskService.updateTaskStatus(addedTask.getTaskId(), "Completed");
+        Task deletedTask = taskService.updateTaskStatus(addedTask.getTaskId(), true);
         assertNotNull(deletedTask);
 
     }

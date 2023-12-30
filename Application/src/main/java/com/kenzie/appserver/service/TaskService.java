@@ -40,7 +40,7 @@ public class TaskService {
         return null;
     }
 
-    public Task updateTaskStatus(String taskId, String newStatus){
+    public Task updateTaskStatus(String taskId, boolean newStatus){
         Task task = taskRepository.findById(taskId).orElse(null);
         if(task != null){
             task.setTaskStatus(newStatus);

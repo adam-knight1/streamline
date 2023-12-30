@@ -8,21 +8,23 @@ public class Task  {
     private String taskId;
     private String userId;
     private String taskDescription;
-    private boolean completed;
+    private boolean taskStatus;
+
 
     public Task() {
         this.taskId = UUID.randomUUID().toString();
     }
 
-    public Task(String taskName, String taskDescription, boolean completed) {
+
+    public Task(String taskName, String taskDescription, boolean taskStatus) {
         this();
         this.userId = userId;
         this.taskDescription = taskDescription;
         this.completed = completed;
     }
 
-    public void updateTaskStatus(boolean newStatus) {
-        this.completed = newStatus;
+    public void updateTaskStatus(boolean newStatus){
+        this.taskStatus = newStatus;
     }
 
     public String getTaskId() {
@@ -49,11 +51,12 @@ public class Task  {
         this.taskDescription = taskDescription;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public boolean getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setTaskStatus(boolean taskStatus) {
+        this.taskStatus = taskStatus;
+
     }
 }
