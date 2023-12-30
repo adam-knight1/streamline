@@ -1,5 +1,4 @@
- package com.kenzie.appserver.repositories;
-
+package com.kenzie.appserver.repositories;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
