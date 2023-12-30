@@ -1,9 +1,10 @@
-/*
+
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
+import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,11 @@ public class TaskService {
         this.taskListRepository = taskListRepository;
     }
 
-    public List<Task> getAllTasks() {
-        return (List<Task>) taskRepository.findAll();
+    public List<TaskRecord> getAllTasks() {
+        return (List<TaskRecord>) taskRepository.findAll();
     }
 
-    public Task addTask (Task task) {
+    public TaskRecord addTask (Task task) {
         return taskRepository.save(task);
     }
 
@@ -56,4 +57,4 @@ public class TaskService {
         }
         return false;
     }
-}*/
+}

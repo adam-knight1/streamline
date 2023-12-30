@@ -75,7 +75,7 @@ public class LambdaTaskListService {
         // Return the TaskResponse
         return new TaskResponse(
                 taskRecord.getUserId(), taskRecord.getTaskId(), taskRecord.getTaskName(),
-                taskRecord.getTaskDescription(), taskRecord.isTaskStatus()
+                taskRecord.getTaskDescription(), taskRecord.isCompleted()
         );
     }
     }
