@@ -27,11 +27,11 @@ public class TaskService {
         return (List<TaskRecord>) taskRepository.findAll();
     }
 
-    public TaskRecord addTask (Task task) {
+    public TaskRecord addTask (TaskRecord task) {
         return taskRepository.save(task);
     }
 
-    public Task addTaskToTaskList(String taskListId, Task task) {
+   /* public Task addTaskToTaskList(String taskListId, Task task) {
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
         if (taskListRecord != null) {
             taskListRecord.addTask(task);
@@ -41,13 +41,15 @@ public class TaskService {
         return null;
     }
 
-    public Task updateTaskStatus(String taskId, boolean newStatus){
-        Task task = taskRepository.findById(taskId).orElse(null);
+    */
+
+    public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
+        TaskRecord task = taskRepository.findById(taskId).orElse(null);
         if(task != null){
-            task.setTaskStatus(newStatus);
-            taskRepository.save(task);
+            task.setCompleted(newStatus);
+            return taskRepository.save(task);
         }
-        return task;
+        return null;
     }
 
     public boolean deleteTask(String taskId) {
