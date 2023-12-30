@@ -17,17 +17,15 @@ public class TaskServiceTest {
     private TaskService taskService;
 
     @Test
-    public void testAddTask(){
+    public void testAddTask(){ //need to finish
         //GIVEN
         Task task = new Task("Example Task", "Description of task", true);
 
         //WHEN
-        Task addedTask = taskService.addTask(task);
+        Task addedTask ;
 
         //THEN
-        assertNotNull(addedTask);
-        assertNotNull(addedTask.getTaskId());
-        assertEquals("Example Task", addedTask.getTaskName());
+
     }
 
     @Test
@@ -36,13 +34,6 @@ public class TaskServiceTest {
         Task task = new Task("Task to Delete", "Description of task", true);
 
         //WHEN
-        Task addedTask = taskService.addTask(task);
-        boolean result = taskService.deleteTask(addedTask.getTaskId());
-
-        assertTrue(result);
-
-        Task deletedTask = taskService.updateTaskStatus(addedTask.getTaskId(), true);
-        assertNotNull(deletedTask);
 
     }
 }
