@@ -6,18 +6,11 @@ import java.util.List;
 
 public class TaskRequest {
     private String userId;
+    private String taskId;
     private String taskName;
-   // private String name;
-    private String description;
-    private boolean completed;
+    private String taskDescription;
+    private boolean taskStatus;
 
-    public TaskRequest(String userId, String taskName) {
-        this.userId = userId;
-        this.taskName = taskName;
-    }
-
-    public TaskRequest() {
-    }
 
     public String getUserId() {
         return userId;
@@ -35,28 +28,38 @@ public class TaskRequest {
         this.taskName = taskName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public boolean isCompleted() {
-        return completed;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public boolean isTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(boolean taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     @Override
     public String toString() {
         return "TaskRequest{" +
                 "userId='" + userId + '\'' +
+                ", taskId='" + taskId + '\'' +
                 ", taskName='" + taskName + '\'' +
-                ", description='" + description + '\'' +
-                ", completed=" + completed +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", taskStatus=" + taskStatus +
                 '}';
     }
 }

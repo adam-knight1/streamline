@@ -31,7 +31,7 @@ public class TaskController {
     }
 
     @PostMapping("/{taskId}/update-status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam String newStatus) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam Boolean newStatus) {
         Task updatedTask = taskService.updateTaskStatus(taskId, newStatus);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);

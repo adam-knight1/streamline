@@ -7,20 +7,20 @@ public class Task  {
     private String taskId;
     private String taskName;
     private String taskDescription;
-    private String taskStatus;
+    private boolean taskStatus;
 
     public Task() {
         this.taskId = UUID.randomUUID().toString();
     }
 
-    public Task(String taskName, String taskDescription, String taskStatus) {
+    public Task(String taskName, String taskDescription, boolean taskStatus) {
         this();
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskStatus = taskStatus;
     }
 
-    public void updateTaskStatus(String newStatus){
+    public void updateTaskStatus(boolean newStatus){
         this.taskStatus = newStatus;
     }
 
@@ -48,13 +48,12 @@ public class Task  {
         this.taskDescription = taskDescription;
     }
 
-    public String getTaskStatus() {
+    public boolean getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(String taskStatus) {
+    public void setTaskStatus(boolean taskStatus) {
         this.taskStatus = taskStatus;
     }
-
 }
 
