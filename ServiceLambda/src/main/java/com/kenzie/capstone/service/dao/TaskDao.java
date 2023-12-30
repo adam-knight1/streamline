@@ -122,7 +122,7 @@ public class TaskDao {
             TaskRecord retrievedTask = mapper.load(TaskRecord.class,existingTask.getTaskId());
 
             if (retrievedTask != null){
-                retrievedTask.setDescription(existingTask.getDescription());
+                retrievedTask.setTaskDescription(existingTask.getTaskDescription());
                 retrievedTask.setCompleted(existingTask.isCompleted());
 
                 mapper.save(retrievedTask);

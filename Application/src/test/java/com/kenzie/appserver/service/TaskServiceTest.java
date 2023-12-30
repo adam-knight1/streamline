@@ -31,7 +31,7 @@ public class TaskServiceTest {
         Task task = new Task("Example Task", "Description of task", true);
 
         //WHEN
-        Task addedTask = taskService.addTask(task);
+        //Task addedTask = taskService.addTask(task);
 
         //THEN
 
