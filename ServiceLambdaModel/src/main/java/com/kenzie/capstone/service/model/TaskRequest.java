@@ -9,7 +9,7 @@ public class TaskRequest {
     private String taskId;
     private String taskName;
     private String taskDescription;
-    private boolean taskStatus;
+    private boolean completed;
 
 
     public String getUserId() {
@@ -44,12 +44,12 @@ public class TaskRequest {
         this.taskDescription = taskDescription;
     }
 
-    public boolean isTaskStatus() {
-        return taskStatus;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setTaskStatus(boolean taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class TaskRequest {
                 ", taskId='" + taskId + '\'' +
                 ", taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
-                ", taskStatus=" + taskStatus +
+                ", completed=" + completed +
                 '}';
     }
 }

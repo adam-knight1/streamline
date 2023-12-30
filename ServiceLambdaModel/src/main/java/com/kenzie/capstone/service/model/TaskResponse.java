@@ -9,17 +9,17 @@ public class TaskResponse{
     private String taskId;
     private String taskName;
     private String taskDescription;
-    private boolean taskStatus;
+    private boolean completed;
 
     public TaskResponse() {
     }
 
-    public TaskResponse(String userId, String taskId, String taskName, String taskDescription, boolean taskStatus) {
+    public TaskResponse(String userId, String taskId, String taskName, String taskDescription, boolean completed) {
         this.userId = userId;
         this.taskId = taskId;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.taskStatus = taskStatus;
+        this.completed = completed;
     }
     public String getUserId() {
         return userId;
@@ -54,12 +54,12 @@ public class TaskResponse{
         this.taskDescription = taskDescription;
     }
 
-    public boolean getTaskStatus() {
-        return taskStatus;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setTaskStatus(boolean taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     @Override
@@ -67,12 +67,12 @@ public class TaskResponse{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskResponse that = (TaskResponse) o;
-        return taskStatus == that.taskStatus && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
+        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId, taskName, taskDescription, taskStatus);
+        return Objects.hash(userId, taskId, taskName, taskDescription, completed);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class TaskResponse{
                 ", taskId='" + taskId + '\'' +
                 ", taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
-                ", taskStatus=" + taskStatus +
+                ", completed=" + completed +
                 '}';
     }
 }
