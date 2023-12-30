@@ -33,28 +33,21 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserResponse> createNewUser(@RequestBody  UserCreateRequest userCreateRequest) {
-        User user = new User(
-                userCreateRequest.getUsername(),
-                userCreateRequest.getPassword(),
-                userCreateRequest.getEmail()
-        );
+    public ResponseEntity<UserResponse> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername(userCreateRequest.getUsername());
         userRequest.setPassword(userCreateRequest.getPassword());
         userRequest.setEmail(userCreateRequest.getEmail());
 
-
         try {
-            userService.createNewUser(userRequest); //the methods takes a userRequest now
             UserResponse userResponse = userService.createNewUser(userRequest);
-            return ResponseEntity.ok(userResponse); // Return the response from the UserService
-
+            return ResponseEntity.ok(userResponse);
         } catch (Exception e) {
+            System.out.println("Something went wrong: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-       // return  ResponseEntity.ok(userToResponse(user));
     }
+
 
    /* @PutMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
