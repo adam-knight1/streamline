@@ -27,7 +27,7 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
 
-        // Logging the request json to make debugging easier.
+
         log.info(gson.toJson(input));
 
 
@@ -48,15 +48,12 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
                     .withBody("taskId is invalid");
         }
 
-        // Get the JSON payload for updating the task
         String requestBody = input.getBody();
         TaskRequest taskRequest = gson.fromJson(requestBody, TaskRequest.class);
 
         try {
-            // Perform the task update using TaskService
             TaskRecord updatedTask = lambdaTaskService.updateTask(id, taskRequest);
 
-            // Construct the response body with the updated task details
             String responseBody = gson.toJson(updatedTask);
 
             return response
