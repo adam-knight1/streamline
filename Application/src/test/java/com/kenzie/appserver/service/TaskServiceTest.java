@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +20,7 @@ public class TaskServiceTest {
     @Test
     public void testAddTask(){
         //GIVEN
-        Task task = new Task("Example Task", "Description of task", true);
+        Task task = new Task("Example taskName","Description of task", true);
 
         //WHEN
         Task addedTask = taskService.addTask(task);

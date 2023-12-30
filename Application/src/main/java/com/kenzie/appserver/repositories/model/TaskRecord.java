@@ -12,11 +12,13 @@ public class TaskRecord {
     @Id
     @DynamoDBHashKey(attributeName = "userId")
     private String userId;
-
+    @DynamoDBAttribute(attributeName = "taskId")
     private String taskId;
-
+    @DynamoDBAttribute(attributeName = "taskName")
     private String taskName;
+    @DynamoDBAttribute(attributeName = "taskDescription")
     private String taskDescription;
+    @DynamoDBAttribute(attributeName = "completed")
     private boolean completed;
 
     public String getUserId() {

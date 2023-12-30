@@ -7,6 +7,7 @@ import java.util.UUID;
 public class Task  {
     private String taskId;
     private String userId;
+    private String taskName;
     private String taskDescription;
     private boolean completed;
 
@@ -16,12 +17,21 @@ public class Task  {
     }
 
 
-    public Task(String taskName, String taskDescription, boolean completed) {
+    public Task(String taskName, String userId, String taskDescription, boolean completed) {
         this();
         this.userId = userId;
+        this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.completed = completed;
     }
+    public Task(String taskName, String taskDescription,boolean completed ) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.completed = completed;
+
+    }
+
+
 
     public void updateTaskStatus(boolean newStatus){
         this.completed = newStatus;
@@ -57,5 +67,13 @@ public class Task  {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 }
