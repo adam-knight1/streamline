@@ -27,6 +27,7 @@ public class UserDao {
                         "email", new ExpectedAttributeValue().withExists(false)
                 );
 
+
                 saveExpression.setExpected(expectedAttributes);
 
                 mapper.save(userRecord, saveExpression);
