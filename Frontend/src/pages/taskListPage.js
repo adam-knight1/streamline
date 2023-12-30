@@ -22,7 +22,7 @@ class TaskListPage extends BaseClass {
         event.preventDefault();
 
         let userId = document.getElementById("userId-field").value;
-        let name = document.getElementById("name-field").value;
+        let taskListName = document.getElementById("name-field").value;
 
         let createdTaskList = await this.client.createTaskList(userId, taskListName, this.errorHandler);
 
@@ -42,7 +42,7 @@ class TaskListPage extends BaseClass {
          let userId = document.getElementById("user-id-field").value;
          let newName = document.getElementById("updated-name-field").value;
 
-         let updatedTaskList = await this.client.updateUser(userId, updatedName);
+         let updatedTaskList = await this.client.updateTaskList(userId, updatedName);
 
          if (updatedTaskList) {
            this.showMessage("Task list updated successfully");

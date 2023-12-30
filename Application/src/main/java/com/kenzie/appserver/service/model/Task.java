@@ -1,23 +1,26 @@
 package com.kenzie.appserver.service.model;
 
 
-import java.util.UUID;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+import java.util.UUID;
 public class Task  {
     private String taskId;
-    private String taskName;
+    private String userId;
     private String taskDescription;
     private boolean taskStatus;
+
 
     public Task() {
         this.taskId = UUID.randomUUID().toString();
     }
 
+
     public Task(String taskName, String taskDescription, boolean taskStatus) {
         this();
-        this.taskName = taskName;
+        this.userId = userId;
         this.taskDescription = taskDescription;
-        this.taskStatus = taskStatus;
+        this.completed = completed;
     }
 
     public void updateTaskStatus(boolean newStatus){
@@ -32,12 +35,12 @@ public class Task  {
         this.taskId = taskId;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTaskDescription() {
@@ -54,6 +57,6 @@ public class Task  {
 
     public void setTaskStatus(boolean taskStatus) {
         this.taskStatus = taskStatus;
+
     }
 }
-

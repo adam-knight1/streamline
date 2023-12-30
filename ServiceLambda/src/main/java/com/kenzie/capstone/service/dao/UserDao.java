@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.UserRecord;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserDao {
     private DynamoDBMapper mapper;
@@ -19,16 +20,23 @@ public class UserDao {
 
         public UserRecord createUser(UserRecord userRecord) {
             try {
-                mapper.save(userRecord, new DynamoDBSaveExpression()
-                        .withExpected(ImmutableMap.of(
-                                "userId",
-                                new ExpectedAttributeValue().withExists(false)
-                        )));
+                DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
+
+                Map<String, ExpectedAttributeValue> expectedAttributes = ImmutableMap.of(
+                        "userId", new ExpectedAttributeValue().withExists(false),
+                        "email", new ExpectedAttributeValue().withExists(false)
+                );
+
+
+                saveExpression.setExpected(expectedAttributes);
+
+                mapper.save(userRecord, saveExpression);
             } catch (ConditionalCheckFailedException e) {
-                throw new IllegalArgumentException("User with ID " + userRecord.getUserId() + " already exists");
+                throw new IllegalArgumentException("User with ID " + userRecord.getUserId() + " and email " + userRecord.getEmail() + " already exists");
             }
             return userRecord;
         }
+
 
     public UserRecord findUserById(String userId) {
         return mapper.load(UserRecord.class, userId);

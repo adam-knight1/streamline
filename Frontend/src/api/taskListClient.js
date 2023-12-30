@@ -25,7 +25,7 @@ export default class TaskListClient extends BaseClass {
 
     async updateTaskList(userId, updatedName){
         try {
-            const response = await this.client.put('/taskList/${taskListId}', {
+            const response = await this.client.put(`/taskList/${taskListId}`, {
                 userId: userId,
                 updatedName: updatedName
             });
