@@ -8,7 +8,7 @@ public class Task  {
     private String taskId;
     private String userId;
     private String taskDescription;
-    private boolean taskStatus;
+    private boolean completed;
 
 
     public Task() {
@@ -16,7 +16,7 @@ public class Task  {
     }
 
 
-    public Task(String taskName, String taskDescription, boolean taskStatus) {
+    public Task(String taskName, String taskDescription, boolean completed) {
         this();
         this.userId = userId;
         this.taskDescription = taskDescription;
@@ -24,7 +24,7 @@ public class Task  {
     }
 
     public void updateTaskStatus(boolean newStatus){
-        this.taskStatus = newStatus;
+        this.completed = newStatus;
     }
 
     public String getTaskId() {
@@ -51,12 +51,11 @@ public class Task  {
         this.taskDescription = taskDescription;
     }
 
-    public boolean getTaskStatus() {
-        return taskStatus;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setTaskStatus(boolean taskStatus) {
-        this.taskStatus = taskStatus;
-
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

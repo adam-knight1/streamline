@@ -7,13 +7,13 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "task")
+@DynamoDBTable(tableName = "Task")
 public class TaskRecord {
     private String userId;
     private String taskId;
     private String taskName;
     private String taskDescription;
-    private boolean taskStatus;
+    private boolean completed;
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
@@ -46,13 +46,13 @@ public class TaskRecord {
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
-    @DynamoDBAttribute(attributeName = "taskStatus")
-    public boolean isTaskStatus() {
-        return taskStatus;
+    @DynamoDBAttribute(attributeName = "completed")
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setTaskStatus(boolean taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     @Override
@@ -60,11 +60,22 @@ public class TaskRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return taskStatus == that.taskStatus && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
+        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId, taskName, taskDescription, taskStatus);
+        return Objects.hash(userId, taskId, taskName, taskDescription, completed);
+    }
+
+    @Override
+    public String toString() {
+        return "TaskRecord{" +
+                "userId='" + userId + '\'' +
+                ", taskId='" + taskId + '\'' +
+                ", taskName='" + taskName + '\'' +
+                ", taskDescription='" + taskDescription + '\'' +
+                ", completed=" + completed +
+                '}';
     }
 }
