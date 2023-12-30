@@ -9,9 +9,6 @@ public class TaskListRequest {
         this.taskListName = taskListName;
     }
 
-    public TaskListRequest() {
-    }
-
     public String getUserId() {
         return userId;
     }
