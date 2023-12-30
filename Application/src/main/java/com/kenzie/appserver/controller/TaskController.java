@@ -1,4 +1,4 @@
-/*
+
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.service.TaskService;
@@ -32,7 +32,7 @@ public class TaskController {
     }
 
     @PostMapping("/{taskId}/update-status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam Boolean newStatus) {
+    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam boolean newStatus) {
         Task updatedTask = taskService.updateTaskStatus(taskId, newStatus);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
@@ -49,4 +49,4 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
-}*/
+}
