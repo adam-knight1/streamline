@@ -1,6 +1,7 @@
 
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.TaskService;
 import com.kenzie.appserver.service.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,19 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
+    public List<TaskRecord> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Task> addTask(@RequestBody Task task){
-        Task addedTask = taskService.addTask(task);
+    public ResponseEntity<TaskRecord> addTask(@RequestBody TaskRecord task){
+        TaskRecord addedTask = taskService.addTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
     }
 
+    //update task status by taskId
     @PostMapping("/{taskId}/update-status")
-    public ResponseEntity<Task> updateTaskStatus(@PathVariable String taskId, @RequestParam boolean newStatus) {
+    public ResponseEntity<TaskRecord> updateTaskStatus(@PathVariable String taskId, @RequestParam boolean newStatus) {
         Task updatedTask = taskService.updateTaskStatus(taskId, newStatus);
         if (updatedTask != null) {
             return ResponseEntity.ok(updatedTask);
