@@ -3,25 +3,25 @@ package com.kenzie.appserver.service.model;
 
 import java.util.UUID;
 
-public class Task  {
+public class Task {
     private String taskId;
-    private String taskName;
+    private String userId;
     private String taskDescription;
-    private String taskStatus;
+    private boolean completed;
 
     public Task() {
         this.taskId = UUID.randomUUID().toString();
     }
 
-    public Task(String taskName, String taskDescription, String taskStatus) {
+    public Task(String taskName, String taskDescription, boolean completed) {
         this();
-        this.taskName = taskName;
+        this.userId = userId;
         this.taskDescription = taskDescription;
-        this.taskStatus = taskStatus;
+        this.completed = completed;
     }
 
-    public void updateTaskStatus(String newStatus){
-        this.taskStatus = newStatus;
+    public void updateTaskStatus(boolean newStatus) {
+        this.completed = newStatus;
     }
 
     public String getTaskId() {
@@ -32,12 +32,12 @@ public class Task  {
         this.taskId = taskId;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTaskDescription() {
@@ -48,13 +48,11 @@ public class Task  {
         this.taskDescription = taskDescription;
     }
 
-    public String getTaskStatus() {
-        return taskStatus;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setTaskStatus(String taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
-
 }
-
