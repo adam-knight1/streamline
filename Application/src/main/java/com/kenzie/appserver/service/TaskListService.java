@@ -1,6 +1,5 @@
-/*
 package com.kenzie.appserver.service;
-
+/*
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
@@ -79,22 +78,5 @@ public class TaskListService {
     private TaskList transformToTaskList(TaskListRecord record){
         return new TaskList(record.getUserId(), record.getTaskListName());
     }
-//    createTaskList_taskListAlreadyExistsForId() {
-//        // GIVEN
-//        String userId = "user";
-//        String taskListName = "New List";
-//        TaskListCreateRequest request = new TaskListCreateRequest();
-//        request.setUserId(userId);
-//        request.setTaskListName(taskListName);
-//
-//        // Simulating an existing task list for the same user ID
-//        TaskListRecord existingRecord = new TaskListRecord(userId, "Existing List");
-//        when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
-//
-//        // WHEN & THEN
-//        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
-//                taskListService.createTaskList(request, userId, taskListName));
-//        Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatus());
-//        verify(taskListRepository, never()).save((TaskList) any());
 }
 */
