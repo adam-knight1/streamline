@@ -21,9 +21,6 @@ public class TaskListRecord {
         this.tasks = new ArrayList<>();
     }
 
-    public TaskListRecord() {
-    }
-
     @Id
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {

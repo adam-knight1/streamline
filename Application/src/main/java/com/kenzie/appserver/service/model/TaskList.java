@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
@@ -12,6 +13,7 @@ public class TaskList {
     public TaskList(String userId, String taskListName){
         this.userId = userId;
         this.taskListName = taskListName;
+        this.tasks = new ArrayList<>();
     }
 
     public void addTask(Task task){
