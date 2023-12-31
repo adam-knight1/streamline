@@ -5,11 +5,9 @@ import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.model.*;
 
 import javax.inject.Inject;
-import java.util.List;
 import java.util.UUID;
 
 public class LambdaTaskListService {
-    // Example template not edited yet
     private TaskListDao taskListDao;
     private TaskDao taskDao;
 
@@ -19,14 +17,14 @@ public class LambdaTaskListService {
         this.taskDao = taskDao;
     }
 
-    public TaskListRequest retrieveTaskListRequest(String userId) {
-        List<TaskListRecord> taskListRecords = taskListDao.getTaskListsByUserId(userId);
-        if (!taskListRecords.isEmpty()) {
-            TaskListRecord record = taskListRecords.get(0);
-            return new TaskListRequest(record.getUserId(), record.getTaskListName());
-        }
-        return null;
-    }
+//    public TaskListRequest retrieveTaskListRequest(String userId) {
+//        List<TaskListRecord> taskListRecords = taskListDao.getTaskListsByUserId(userId);
+//        if (!taskListRecords.isEmpty()) {
+//            TaskListRecord record = taskListRecords.get(0);
+//            return new TaskListRequest(record.getUserId(), record.getTaskListName());
+//        }
+//        return null;
+//    }
 
 //    public TaskListRequest createTaskListRequest(String userId, String taskListName) {
 //        TaskListRequest createdRecord = taskListDao.createTaskListRecord(userId, taskListName);
@@ -34,7 +32,7 @@ public class LambdaTaskListService {
 //    }
 
     public TaskListResponse createTaskList(TaskListRequest taskListRequest){
-        if(taskListDao.getTaskListsByUserId(taskListRequest.getUserId()) != null){
+        if(taskListDao.getTaskListByUserId(taskListRequest.getUserId()) != null){
             throw new IllegalArgumentException("TaskList with userId " + taskListRequest.getUserId() +
                     " already exists.");
         }
@@ -43,7 +41,7 @@ public class LambdaTaskListService {
 
     public TaskListResponse updateTaskList(String userId, TaskListRequest taskListRequest) {
         String taskListName = taskListRequest.getTaskListName();
-        TaskListRecord existingTaskList = taskListDao.getTaskListsByTaskListName(userId, taskListName);
+        TaskListRecord existingTaskList = taskListDao.getTaskListByTaskListName(userId, taskListName);
 
         if (existingTaskList == null) {
             throw new IllegalArgumentException("TaskList with userId " + userId + " and TaskListName " + taskListName
@@ -61,7 +59,7 @@ public class LambdaTaskListService {
         if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
             throw new IllegalArgumentException("Task name is required");
         }
-        TaskListRecord taskListRecord = (TaskListRecord) taskListDao.getTaskListsByUserId(userId);
+        TaskListRecord taskListRecord = (TaskListRecord) taskListDao.getTaskListByUserId(userId);
 
         if (taskListRecord == null) {
             throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
