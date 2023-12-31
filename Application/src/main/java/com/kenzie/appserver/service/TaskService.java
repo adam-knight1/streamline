@@ -27,9 +27,11 @@ public class TaskService {
         return (List<TaskRecord>) taskRepository.findAll();
     }
 
+
     public TaskRecord addTask (TaskRecord task) {
         return taskRepository.save(task);
     }
+
 
    /* public Task addTaskToTaskList(String taskListId, Task task) {
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
@@ -41,6 +43,7 @@ public class TaskService {
         return null;
     }
 
+
     */
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
@@ -51,6 +54,7 @@ public class TaskService {
         }
         return null;
     }
+
 
     public boolean deleteTask(String taskId) {
         if(taskRepository.existsById(taskId)) {
