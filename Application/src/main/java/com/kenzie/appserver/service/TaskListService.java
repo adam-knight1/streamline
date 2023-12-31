@@ -3,7 +3,6 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
-import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -54,16 +52,16 @@ public class TaskListService {
         return newTaskList;
     }
 
-    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
-        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-        TaskList updatedList;
-        if(taskListRecord.isPresent()){
-            updatedList = taskListRepository.updateListName(request.getTaskListName());
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
-        }
-        return updatedList;
-    }
+//    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
+//        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
+//        TaskList updatedList;
+//        if(taskListRecord.isPresent()){
+//            updatedList = taskListRepository.updateListName(request.getTaskListName());
+//        }else{
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
+//        }
+//        return updatedList;
+//    }
 
     public boolean deleteTaskListByUserId(String userId){
         Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
@@ -76,7 +74,7 @@ public class TaskListService {
     }
 
     private TaskList transformToTaskList(TaskListRecord record){
-        return new TaskList(record.getUserId(), record.getTaskListName());
+        return new TaskList(record.getId(), record.getTaskListName());
     }
 }
 

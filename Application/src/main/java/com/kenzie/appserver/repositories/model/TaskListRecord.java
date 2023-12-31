@@ -27,8 +27,6 @@ public class TaskListRecord {
         this.tasks = new ArrayList<>();
     }
 
-    @Id
-    @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
@@ -36,7 +34,6 @@ public class TaskListRecord {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
 
     public String getTaskListName() {
         return taskListName;
@@ -46,17 +43,25 @@ public class TaskListRecord {
         this.taskListName = taskListName;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TaskListRecord)) return false;
         TaskListRecord that = (TaskListRecord) o;
-        return getUserId().equals(that.getUserId()) && getTaskListName().equals(that.getTaskListName());
+        return getId().equals(that.getId()) && getTaskListName().equals(that.getTaskListName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getTaskListName());
+        return Objects.hash(getId(), getTaskListName());
     }
 
     public void addTask(Task task) {
@@ -64,13 +69,5 @@ public class TaskListRecord {
             tasks = new ArrayList<>();
         }
         tasks.add(task);
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 }
