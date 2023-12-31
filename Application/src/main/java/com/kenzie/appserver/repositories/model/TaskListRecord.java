@@ -13,7 +13,7 @@ import java.util.Objects;
 public class TaskListRecord {
     @Id
     @DynamoDBHashKey(attributeName = "userId")
-    public String id;
+    public String userId;
 
     @DynamoDBAttribute(attributeName = "taskListName")
     public String taskListName;
@@ -22,21 +22,18 @@ public class TaskListRecord {
     public List<Task> tasks;
 
     public TaskListRecord(String userId, String taskListName) {
-        this.id = userId;
+        this.userId = userId;
         this.taskListName = taskListName;
         this.tasks = new ArrayList<>();
     }
 
-    @Id
-    @DynamoDBHashKey(attributeName = "userId")
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-
 
     public String getTaskListName() {
         return taskListName;
@@ -44,6 +41,14 @@ public class TaskListRecord {
 
     public void setTaskListName(String taskListName) {
         this.taskListName = taskListName;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
@@ -64,13 +69,5 @@ public class TaskListRecord {
             tasks = new ArrayList<>();
         }
         tasks.add(task);
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 }

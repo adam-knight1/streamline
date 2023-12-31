@@ -52,16 +52,16 @@ public class TaskListService {
         return newTaskList;
     }
 
-    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
-        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-        TaskList updatedList;
-        if(taskListRecord.isPresent()){
-            updatedList = taskListRepository.setTaskListName(request.getTaskListName());
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
-        }
-        return updatedList;
-    }
+//    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
+//        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
+//        TaskList updatedList;
+//        if(taskListRecord.isPresent()){
+//            updatedList = taskListRepository.updateListName(request.getTaskListName());
+//        }else{
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
+//        }
+//        return updatedList;
+//    }
 
     public boolean deleteTaskListByUserId(String userId){
         Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
