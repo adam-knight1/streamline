@@ -1,18 +1,17 @@
 package com.kenzie.appserver.controller;
 
-/*
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.service.TaskListService;
 import com.kenzie.appserver.service.model.TaskList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collections;
 
 @RestController
 @RequestMapping("/taskList")
 public class TaskListController {
+    /*
     private TaskListService taskListService;
 
     TaskListController(TaskListService taskListService){this.taskListService = taskListService;}
@@ -67,5 +66,5 @@ public class TaskListController {
         }else{
             return ResponseEntity.notFound().build();
         }
-    }
-}*/
+    }*/
+}

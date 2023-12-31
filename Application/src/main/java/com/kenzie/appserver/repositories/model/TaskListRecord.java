@@ -27,8 +27,6 @@ public class TaskListRecord {
         this.tasks = new ArrayList<>();
     }
 
-    @Id
-    @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
@@ -44,6 +42,14 @@ public class TaskListRecord {
 
     public void setTaskListName(String taskListName) {
         this.taskListName = taskListName;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
@@ -64,13 +70,5 @@ public class TaskListRecord {
             tasks = new ArrayList<>();
         }
         tasks.add(task);
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 }

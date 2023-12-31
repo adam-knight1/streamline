@@ -1,8 +1,8 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import TaskListClient from "../api/TaskListClient";
+import TaskListClient from "../api/taskListClient";
 
-class TaskListPage extends BaseClass {
+class UserHomePage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList'], this);
@@ -53,8 +53,8 @@ class TaskListPage extends BaseClass {
 }
 
 const main = async () => {
-    const taskListPage = new TaskListPage();
-    taskListPage.mount();
+    const userHomePage = new UserHomePage();
+    userHomePage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
