@@ -64,7 +64,6 @@ export default class UserClient extends BaseClass {
             }
         }
 
-
     handleError(method, error) {
         console.error(method + " failed - " + error);
         if (error.response && error.response.data.message) {

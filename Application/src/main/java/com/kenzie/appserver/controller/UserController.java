@@ -49,6 +49,23 @@ public class UserController {
     }
 
 
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
+        try {
+            User authenticatedUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
+            if (authenticatedUser != null) {
+                return ResponseEntity.ok(userToResponse(authenticatedUser));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            }
+        } catch (Exception e) {
+            System.out.println("Login error: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
    /* @PutMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
         Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
@@ -66,6 +83,8 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }*/
+
+
 
     private UserResponse userToResponse(User user) {
         UserResponse userResponse = new UserResponse();

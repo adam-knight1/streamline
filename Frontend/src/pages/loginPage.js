@@ -6,6 +6,7 @@ class LoginPage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onLogin'], this);
+        this.dataStore = new DataStore();
         this.client = new UserClient();
     }
 
@@ -19,11 +20,13 @@ class LoginPage extends BaseClass {
         let password = document.getElementById("login-password-field").value;
 
         try {
-           //will fill this out soon - adam
+            const loginResponse = await this.client.loginUser(username, password);
+           //I'll handle the successful and unsuccessful logins here
         } catch (error) {
         }
     }
-}
+    }
+
 
 const main = async () => {
     const loginPage = new LoginPage();
