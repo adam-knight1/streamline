@@ -25,7 +25,9 @@ public class UserService {
     }
 
 
-    public User authenticateUser(String username, String password){}
+    public User authenticateUser(String username, String password){
+
+    }
 
 
    /* public User findByUserId(String userId) {
