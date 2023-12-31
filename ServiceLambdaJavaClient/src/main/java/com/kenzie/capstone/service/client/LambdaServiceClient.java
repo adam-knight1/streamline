@@ -41,6 +41,19 @@ public class LambdaServiceClient {
         return taskListResponse;
     }
 
+    public TaskListResponse updateTaskList(TaskListRequest taskListRequest) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String requestData = mapper.writeValueAsString(taskListRequest);
+        String response = endpointUtility.postEndpoint("taskList/update", requestData);
+        TaskListResponse taskListResponse;
+        try {
+            taskListResponse = mapper.readValue(response, TaskListResponse.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
+        return taskListResponse;
+    }
+
     public TaskResponse addTaskToTaskList (String userId, String taskListName,TaskRequest taskRequest)throws JsonProcessingException{
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRequest);
