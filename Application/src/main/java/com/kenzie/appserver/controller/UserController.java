@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.UserNotFoundException;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
+import com.kenzie.appserver.controller.model.UserLoginRequest;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
