@@ -14,7 +14,7 @@ public interface TaskListRepository extends CrudRepository<TaskListRecord, Strin
 
     TaskList save(TaskList taskList);
 
-    TaskList updateListName(String id);
+    TaskList setTaskListName(String id);
 
     void deleteById(UUID id);
 }
