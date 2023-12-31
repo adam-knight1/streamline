@@ -5,7 +5,6 @@ import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -116,7 +114,7 @@ public class TaskListServiceTest {
         TaskList updatedRepoTaskList = new TaskList(userId, newTaskListName);
 
         when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
-        when(taskListRepository.updateListName(request.getTaskListName())).thenReturn(updatedRepoTaskList);
+        when(taskListRepository.setTaskListName(request.getTaskListName())).thenReturn(updatedRepoTaskList);
 
         // WHEN
         TaskList updatedTasklist = taskListService.updateTaskListName(request, userId);
