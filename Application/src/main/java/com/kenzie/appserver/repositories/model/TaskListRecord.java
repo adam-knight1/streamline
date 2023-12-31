@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "TaskList")
 public class TaskListRecord {
+
     @Id
     @DynamoDBHashKey(attributeName = "userId")
     public String userId;
@@ -27,7 +28,6 @@ public class TaskListRecord {
         this.tasks = new ArrayList<>();
     }
 
-    @Id
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;

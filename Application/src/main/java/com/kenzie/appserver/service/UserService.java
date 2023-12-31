@@ -84,5 +84,4 @@ public class UserService {
         user.setPassword(userRecord.getPassword());
         return user;
     }
-
 }
