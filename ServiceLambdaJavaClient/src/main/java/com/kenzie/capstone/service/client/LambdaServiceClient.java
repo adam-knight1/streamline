@@ -2,10 +2,7 @@ package com.kenzie.capstone.service.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
-import com.kenzie.capstone.service.model.UserRequest;
-import com.kenzie.capstone.service.model.UserResponse;
+import com.kenzie.capstone.service.model.*;
 
 
 public class LambdaServiceClient {
@@ -29,6 +26,19 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return userResponse;
+    }
+
+    public TaskListResponse createTaskList(TaskListRequest taskListRequest) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String requestData = mapper.writeValueAsString(taskListRequest);
+        String response = endpointUtility.postEndpoint("taskList/create", requestData);
+        TaskListResponse taskListResponse;
+        try {
+            taskListResponse = mapper.readValue(response, TaskListResponse.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
+        return taskListResponse;
     }
 
     public TaskResponse addTaskToTaskList (String userId, String taskListName,TaskRequest taskRequest)throws JsonProcessingException{
