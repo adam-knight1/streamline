@@ -35,7 +35,6 @@ public class TaskListRecord {
         this.userId = userId;
     }
 
-
     public String getTaskListName() {
         return taskListName;
     }
@@ -57,12 +56,12 @@ public class TaskListRecord {
         if (this == o) return true;
         if (!(o instanceof TaskListRecord)) return false;
         TaskListRecord that = (TaskListRecord) o;
-        return getUserId().equals(that.getUserId()) && getTaskListName().equals(that.getTaskListName());
+        return getId().equals(that.getId()) && getTaskListName().equals(that.getTaskListName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getTaskListName());
+        return Objects.hash(getId(), getTaskListName());
     }
 
     public void addTask(Task task) {

@@ -3,7 +3,6 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
-import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -76,7 +74,7 @@ public class TaskListService {
     }
 
     private TaskList transformToTaskList(TaskListRecord record){
-        return new TaskList(record.getUserId(), record.getTaskListName());
+        return new TaskList(record.getId(), record.getTaskListName());
     }
 }
 
