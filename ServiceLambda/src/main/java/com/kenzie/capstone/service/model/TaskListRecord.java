@@ -9,7 +9,11 @@ import java.util.Objects;
 public class TaskListRecord {
     private String userId;
     private String taskListName;
+<<<<<<< HEAD
     // private List<Task> tasks;
+=======
+   private List<Task> tasks;
+>>>>>>> cbbbdef (cleaning up comments)
 
     @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {

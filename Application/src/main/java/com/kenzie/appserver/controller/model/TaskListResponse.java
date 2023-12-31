@@ -6,7 +6,7 @@ import com.kenzie.appserver.service.model.Task;
 import java.util.List;
 
 public class TaskListResponse {
-    @JsonProperty("id")
+    @JsonProperty("userId")
     private String userId;
 
     @JsonProperty("name")
