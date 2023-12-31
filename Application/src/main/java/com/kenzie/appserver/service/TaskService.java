@@ -34,10 +34,11 @@ public class TaskService {
 
 
    /* public Task addTaskToTaskList(String taskListId, Task task) {
+       //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
         if (taskListRecord != null) {
-            taskListRecord.addTask(task);
-            taskListRepository.save(taskListRecord);
+            taskListRecord.addTask(task);//set tasklist Id on task
+            taskListRepository.save(taskListRecord); //save updatedTask
             return task;
         }
         return null;
