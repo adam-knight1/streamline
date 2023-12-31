@@ -1,9 +1,5 @@
 package com.kenzie.appserver.controller;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbbbdef (cleaning up comments)
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.service.TaskListService;
@@ -15,7 +11,7 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/taskList")
 public class TaskListController {
-    /*
+
     private TaskListService taskListService;
 
     TaskListController(TaskListService taskListService){this.taskListService = taskListService;}
@@ -48,9 +44,25 @@ public class TaskListController {
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
     }
-
+//omer implemented original code
+//    @PutMapping("/userId/updateName")
+//    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
+//        TaskList taskList = taskListService.updateTaskListName(request, userId);
+//        if(taskList == null){
+//            return ResponseEntity.notFound().build();
+//        }
+//        TaskListResponse taskListResponse = new TaskListResponse();
+//        taskListResponse.setUserId(taskList.getUserId());
+//        taskListResponse.setTaskListName(taskList.getTaskListName());
+//        //This may need some more logic
+//        taskListResponse.setTasks(Collections.emptyList());
+//        return ResponseEntity.ok(taskListResponse);
+//    }
+    //i didnt want to delete omers original code. Just wanted to mess with this constructor. -alexis
     @PutMapping("/userId/updateName")
-    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
+    public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
+                                                               @PathVariable("userId") String userId){
+        String updatedTaskListName = request.getTaskListName();
         TaskList taskList = taskListService.updateTaskListName(request, userId);
         if(taskList == null){
             return ResponseEntity.notFound().build();
@@ -58,7 +70,6 @@ public class TaskListController {
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(taskList.getUserId());
         taskListResponse.setTaskListName(taskList.getTaskListName());
-        //This may need some more logic
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
     }
@@ -70,9 +81,7 @@ public class TaskListController {
         }else{
             return ResponseEntity.notFound().build();
         }
-<<<<<<< HEAD
-    }*/
-=======
+
     }
->>>>>>> cbbbdef (cleaning up comments)
+
 }

@@ -54,14 +54,14 @@ public class TaskListRecord {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TaskListRecord)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         TaskListRecord that = (TaskListRecord) o;
-        return getId().equals(that.getId()) && getTaskListName().equals(that.getTaskListName());
+        return Objects.equals(userId, that.userId) && Objects.equals(taskListName, that.taskListName) && Objects.equals(tasks, that.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTaskListName());
+        return Objects.hash(userId, taskListName, tasks);
     }
 
     public void addTask(Task task) {
