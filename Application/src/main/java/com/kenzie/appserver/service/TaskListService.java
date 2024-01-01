@@ -15,8 +15,10 @@ import java.util.Optional;
 @Service
 public class TaskListService {
 
-    private final TaskListRepository taskListRepository;
-    private final LambdaServiceClient lambdaServiceClient;
+   /* @Autowired
+    private TaskListRepository taskListRepository;
+    private LambdaServiceClient lambdaServiceClient;
+
 
     @Autowired
     public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient) {
@@ -52,16 +54,19 @@ public class TaskListService {
         return newTaskList;
     }
 
-    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
-        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-        TaskList updatedList;
-        if(taskListRecord.isPresent()){
-            updatedList = taskListRepository.updateListName(request.getUserId(), request.getTaskListName());
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
-        }
-        return updatedList;
-    }
+
+
+//    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
+//        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
+//        TaskList updatedList;
+//        if(taskListRecord.isPresent()){
+//            updatedList = taskListRepository.updateListName(request.getTaskListName());
+//        }else{
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
+//        }
+//        return updatedList;
+//    }
+
 
     public boolean deleteTaskListByUserId(String userId){
         Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
@@ -74,8 +79,11 @@ public class TaskListService {
     }
 
     private TaskList transformToTaskList(TaskListRecord record){
+
         return new TaskList(record.getUserId(), record.getTaskListName());
     }
+*/
+
 
 }
 

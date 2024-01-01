@@ -36,11 +36,13 @@ class UserPage extends BaseClass {
         let password = document.getElementById("password-field").value;
 
         let createdUser = await this.client.createUser(username, password, email, this.errorHandler);
+        console.log("Created user response:", createdUser);
 
         this.dataStore.set("user", createdUser);
 
         if (createdUser) {
             this.showMessage(`User ${createdUser.username} created successfully!`);
+            this.showMessage(`User ${createdUser.userId} created successfully!`);
             document.getElementById("created-user-id").innerHTML = `Your User ID is: ${createdUser.userId}`;
             document.getElementById("keep-it-safe").innerHTML = 'Please keep it somewhere safe!';
 

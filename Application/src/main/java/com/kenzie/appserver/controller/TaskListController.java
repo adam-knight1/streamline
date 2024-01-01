@@ -12,6 +12,10 @@ import java.util.Collections;
 @RequestMapping("/taskList")
 public class TaskListController {
 
+  /*
+
+
+
     private TaskListService taskListService;
 
     TaskListController(TaskListService taskListService){this.taskListService = taskListService;}
@@ -44,6 +48,11 @@ public class TaskListController {
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
     }
+
+
+    /*@PutMapping("/userId/updateName")
+    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
+
 //omer implemented original code
 //    @PutMapping("/userId/updateName")
 //    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
@@ -63,6 +72,7 @@ public class TaskListController {
     public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
                                                                @PathVariable("userId") String userId){
         String updatedTaskListName = request.getTaskListName();
+
         TaskList taskList = taskListService.updateTaskListName(request, userId);
         if(taskList == null){
             return ResponseEntity.notFound().build();
@@ -72,7 +82,7 @@ public class TaskListController {
         taskListResponse.setTaskListName(taskList.getTaskListName());
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
-    }
+    }*//*
 
     @DeleteMapping("/userId/delete")
     public ResponseEntity<String> deleteTaskListByUserId(String userId){
@@ -81,6 +91,8 @@ public class TaskListController {
         }else{
             return ResponseEntity.notFound().build();
         }
+
+}*/
 
     }
 

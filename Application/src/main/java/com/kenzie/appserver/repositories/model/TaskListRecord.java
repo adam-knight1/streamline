@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "TaskList")
 public class TaskListRecord {
+
     @Id
     @DynamoDBHashKey(attributeName = "userId")
     public String userId;
@@ -27,7 +28,8 @@ public class TaskListRecord {
         this.tasks = new ArrayList<>();
     }
 
-    public String getUserId() {
+    @DynamoDBHashKey(attributeName = "userId")
+     public String getUserId() {
         return userId;
     }
 
@@ -51,18 +53,27 @@ public class TaskListRecord {
         this.tasks = tasks;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskListRecord that = (TaskListRecord) o;
+        return getUserId().equals(that.getUserId()) && getTaskListName().equals(that.getTaskListName());
+    }*/
+
         return Objects.equals(userId, that.userId) && Objects.equals(taskListName, that.taskListName) && Objects.equals(tasks, that.tasks);
     }
 
-    @Override
+
+    /*@Override
     public int hashCode() {
+
+        return Objects.hash(getUserId(), getTaskListName());
+    }*/
+
         return Objects.hash(userId, taskListName, tasks);
     }
+
 
     public void addTask(Task task) {
         if(tasks == null){

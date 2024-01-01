@@ -12,11 +12,11 @@ public class TaskListResponse {
     @JsonProperty("name")
     private String taskListName;
 
-    private List<com.kenzie.appserver.service.model.Task> tasks;
+    private List<Task> tasks;
 
     public TaskListResponse(){}
 
-    public TaskListResponse(String userId, String taskListName, List<com.kenzie.appserver.service.model.Task> tasks){
+    public TaskListResponse(String userId, String taskListName, List<Task> tasks){
         this.userId = userId;
         this.taskListName = taskListName;
         this.tasks = tasks;
@@ -42,7 +42,7 @@ public class TaskListResponse {
         return tasks;
     }
 
-    public void setTasks(List<com.kenzie.appserver.service.model.Task> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

@@ -28,8 +28,11 @@ export default class UserClient extends BaseClass {
                 password: password,
                 email: email
             });
+            console.log("Axios response:", response);
+            console.log("Parsed data:", response.data);
             return response.data;
         } catch (error) {
+            console.error("Error in createUser:", error)
             return this.handleError("createUser", error);
         }
     }
@@ -51,6 +54,18 @@ export default class UserClient extends BaseClass {
             return this.handleError("deleteUser", error);
         }
     }
+
+        async loginUser(username, password) {
+            try {
+                const response = await this.client.post('/user/login', {
+                    username: username,
+                    password: password
+                });
+                return response.data;
+            } catch (error) {
+                return this.handleError("loginUser", error);
+            }
+        }
 
     handleError(method, error) {
         console.error(method + " failed - " + error);

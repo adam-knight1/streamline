@@ -14,18 +14,21 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public UserResponse createUser(UserRequest userRequest) throws JsonProcessingException {
+    public UserResponseLambda createUser(UserRequest userRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(userRequest);
         //write value as string since I'm using userRequest object rather than data string like example"
         String response = endpointUtility.postEndpoint("user/create", requestData);
-        UserResponse userResponse;
+
+        System.out.println("Response from /user/create: " + response);
+
+        UserResponseLambda userResponseLambda;
         try {
-            userResponse = mapper.readValue(response, UserResponse.class);
+            userResponseLambda = mapper.readValue(response, UserResponseLambda.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return userResponse;
+        return userResponseLambda;
     }
 
     public TaskListResponse createTaskList(TaskListRequest taskListRequest) throws JsonProcessingException {

@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.controller.UserController;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
@@ -11,23 +12,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
-    //private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
     @Autowired
-    public UserService(LambdaServiceClient lambdaServiceClient) {
+    public UserService(LambdaServiceClient lambdaServiceClient, UserRepository userRepository) {
         this.lambdaServiceClient = lambdaServiceClient;
+        this.userRepository = userRepository;
     }
 
 
-    /*@Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }*/
+    public User authenticateUser(String username, String password){
+
+        return new User();
+
+    }
 
 
    /* public User findByUserId(String userId) {
@@ -73,7 +77,14 @@ public class UserService {
         } catch (Exception e) {
             System.out.println("unsuccessful user creation");
         }
-        return new UserResponse();
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUserId(userRequest.getUserId());
+            if (userRequest.getUserId() == null){
+                userResponse.setUserId(UUID.randomUUID().toString());
+            } //just added this -adam 12/31
+        userResponse.setEmail(userRequest.getEmail());
+        userResponse.setUsername(userRequest.getUsername());
+        return userResponse;
     }
 
     public User transformToUser(UserRecord userRecord) {
@@ -84,5 +95,4 @@ public class UserService {
         user.setPassword(userRecord.getPassword());
         return user;
     }
-
 }
