@@ -14,20 +14,22 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    //private final UserRepository userRepository;
+    private UserRepository userRepository;
 
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
     @Autowired
-    public UserService(LambdaServiceClient lambdaServiceClient) {
+    public UserService(LambdaServiceClient lambdaServiceClient, UserRepository userRepository) {
         this.lambdaServiceClient = lambdaServiceClient;
+        this.userRepository = userRepository;
     }
 
 
-    /*@Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }*/
+    public User authenticateUser(String username, String password){
+
+        return new User();
+
+    }
 
 
    /* public User findByUserId(String userId) {
@@ -84,5 +86,4 @@ public class UserService {
         user.setPassword(userRecord.getPassword());
         return user;
     }
-
 }
