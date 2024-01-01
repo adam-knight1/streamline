@@ -100,7 +100,7 @@ Resources:
         CreateUserEvent:
           Type: Api
           Properties:
-            Path: /tasklist/create
+            Path: /taskList/create
             Method: post
 
   UpdateTaskListFunction:

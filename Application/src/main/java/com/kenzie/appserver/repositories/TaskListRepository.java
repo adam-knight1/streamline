@@ -8,7 +8,9 @@ import java.util.UUID;
 
 @EnableScan
 public interface TaskListRepository extends CrudRepository<TaskListRecord, String> {
-   /* *//*TaskList findById(UUID id);
+   /* TaskList findById(UUID id);
+   
+    void deleteById(UUID id);
 
     String findNameById(UUID id);
 
@@ -17,3 +19,4 @@ public interface TaskListRepository extends CrudRepository<TaskListRecord, Strin
     TaskList updateListName(String id);
 */
     }
+

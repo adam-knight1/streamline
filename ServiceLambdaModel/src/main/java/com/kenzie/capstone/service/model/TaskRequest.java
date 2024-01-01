@@ -7,6 +7,7 @@ import java.util.List;
 public class TaskRequest {
     private String userId;
     private String taskId;
+    // This may be superfluous since the task is just a simple sentence "take the dog out" - OB
     private String taskName;
     private String taskDescription;
     private boolean completed;
