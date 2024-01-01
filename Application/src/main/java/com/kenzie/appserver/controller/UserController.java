@@ -51,34 +51,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
-        try {
-            User authenticatedUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
-            if (authenticatedUser != null) {
-                return ResponseEntity.ok(new UserLoginResponse(authenticatedUser.getUserId(), authenticatedUser.getUsername()));
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-            }
-        } catch (Exception e) {
-            System.out.println("Login error: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
-        User authenticatedUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
-        if (authenticatedUser != null) {
-            return ResponseEntity.ok(new UserResponse(authenticatedUser.getUserId(), authenticatedUser.getUsername()));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-    }
-
-
-
-
    /* @PutMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
         Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
