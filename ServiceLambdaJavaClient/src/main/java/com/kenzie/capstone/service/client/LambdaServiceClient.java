@@ -19,6 +19,9 @@ public class LambdaServiceClient {
         String requestData = mapper.writeValueAsString(userRequest);
         //write value as string since I'm using userRequest object rather than data string like example"
         String response = endpointUtility.postEndpoint("user/create", requestData);
+
+        System.out.println("Response from /user/create: " + response);
+
         UserResponse userResponse;
         try {
             userResponse = mapper.readValue(response, UserResponse.class);

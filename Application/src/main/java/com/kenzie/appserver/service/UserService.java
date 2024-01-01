@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.controller.UserController;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
@@ -75,7 +76,11 @@ public class UserService {
         } catch (Exception e) {
             System.out.println("unsuccessful user creation");
         }
-        return new UserResponse();
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUserId(userRequest.getUserId());
+        userResponse.setEmail(userRequest.getEmail());
+        userResponse.setUsername(userRequest.getUsername());
+        return userResponse;
     }
 
     public User transformToUser(UserRecord userRecord) {
