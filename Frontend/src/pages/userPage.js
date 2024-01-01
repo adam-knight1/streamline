@@ -42,9 +42,8 @@ class UserPage extends BaseClass {
 
         if (createdUser) {
             this.showMessage(`User ${createdUser.username} created successfully!`);
+            this.showMessage(`User ${createdUser.userId} created successfully!`);
             document.getElementById("created-user-id").innerHTML = `Your User ID is: ${createdUser.userId}`;
-            document.getElementById("created-user-id").innerHTML = `Your Username is: ${createdUser.username}`;
-
             document.getElementById("keep-it-safe").innerHTML = 'Please keep it somewhere safe!';
 
         } else {

@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -41,12 +42,16 @@ public class UserController {
         userRequest.setUsername(userCreateRequest.getUsername());
         userRequest.setPassword(userCreateRequest.getPassword());
         userRequest.setEmail(userCreateRequest.getEmail());
+        if (userRequest.getUserId() == null) {
+            userRequest.setUserId(UUID.randomUUID().toString());
+        }
 
         try {
             UserResponse userResponse = userService.createNewUser(userRequest);
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
             userResponseLambda.setUserId(userResponse.getUserId());
+            System.out.println("hi adam!" + userResponse.getUserId());
             userResponseLambda.setUsername(userResponse.getUsername());
             userResponseLambda.setEmail(userResponse.getEmail());
 

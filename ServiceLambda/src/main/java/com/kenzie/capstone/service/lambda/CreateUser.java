@@ -40,7 +40,7 @@ public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, A
             UserRequest userRequest = gson.fromJson(input.getBody(), UserRequest.class);
 
             UserRecord userRecord = new UserRecord();
-            userRecord.setUserId(userRequest.getUserId());
+            //userRecord.setUserId(userRequest.getUserId());
             userRecord.setEmail(userRequest.getEmail());
             userRecord.setUsername(userRequest.getUsername());
             userRecord.setPassword(userRequest.getPassword());

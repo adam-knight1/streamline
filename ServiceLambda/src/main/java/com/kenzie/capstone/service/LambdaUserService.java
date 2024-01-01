@@ -29,6 +29,7 @@ public class LambdaUserService {
             log.error("The user record contains null values");
             throw new IllegalArgumentException("User record cannot contain null values");
         }
+        log.info("userid is " + userRecord.getUserId());
 
         if (userRecord.getUserId() == null) {
             userRecord.setUserId(UUID.randomUUID().toString());
