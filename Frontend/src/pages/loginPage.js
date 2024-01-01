@@ -21,12 +21,18 @@ class LoginPage extends BaseClass {
 
         try {
             const loginResponse = await this.client.loginUser(username, password);
-           //I'll handle the successful and unsuccessful logins here
+
+            if (loginResponse && loginResponse.userId) {
+                window.location.href = `userHomePage.html?userId=${loginResponse.userId}`;
+            } else {
+                this.showMessage("Invalid username or password.");
+            }
         } catch (error) {
+            this.showMessage("An error occurred during login. Please try again.");
         }
     }
-    }
 
+}
 
 const main = async () => {
     const loginPage = new LoginPage();
