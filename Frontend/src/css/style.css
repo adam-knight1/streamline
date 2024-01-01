@@ -12,6 +12,7 @@
 }
 
 
+
 .background {
     background-color: var(--background-color);
     color: var(--primary-color);
@@ -141,5 +142,4 @@ textarea {
     background-color: var(--hover-color);
     transform: scale(1.05);
 }
-
 
