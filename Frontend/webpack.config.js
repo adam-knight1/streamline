@@ -26,7 +26,7 @@ module.exports = {
         context: [
           '/example',
           '/user',
-          '/login'
+          '/login',
           '/userHome'
         ],
         target: 'http://localhost:5001'
@@ -39,22 +39,16 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
-
     new HtmlWebpackPlugin({
-                  template: './src/user.html',
-                  filename: 'user.html',
-                  inject: false
-                }),
-                new HtmlWebpackPlugin({
-                                  template: './src/login.html',
-                                  filename: 'login.html',
-                                  inject: false
-                                }),
       template: './src/user.html',
       filename: 'user.html',
       inject: false
     }),
-
+    new HtmlWebpackPlugin({
+      template: './src/login.html',
+      filename: 'login.html',
+      inject: false
+    }),
     new HtmlWebpackPlugin({
       template: './src/userHome.html',
       filename: 'userHome.html',
@@ -70,4 +64,5 @@ module.exports = {
     }),
     new CleanWebpackPlugin()
   ]
-}
+};
+

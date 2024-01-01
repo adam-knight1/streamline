@@ -36,6 +36,7 @@ class UserPage extends BaseClass {
         let password = document.getElementById("password-field").value;
 
         let createdUser = await this.client.createUser(username, password, email, this.errorHandler);
+        console.log("Created user response:", createdUser);
 
         this.dataStore.set("user", createdUser);
 

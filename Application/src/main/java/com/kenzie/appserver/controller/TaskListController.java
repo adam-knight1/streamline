@@ -11,7 +11,7 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/taskList")
 public class TaskListController {
-    /*
+  /*
     private TaskListService taskListService;
 
     TaskListController(TaskListService taskListService){this.taskListService = taskListService;}
@@ -57,7 +57,7 @@ public class TaskListController {
         //This may need some more logic
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
-    }*/
+    }*//*
 
     @DeleteMapping("/userId/delete")
     public ResponseEntity<String> deleteTaskListByUserId(String userId){
@@ -67,5 +67,5 @@ public class TaskListController {
             return ResponseEntity.notFound().build();
         }
 
-}
+}*/
 }
