@@ -33,7 +33,7 @@ public class TaskService {
     }
 
 
-   /* public Task addTaskToTaskList(String taskListId, Task task) {
+    public Task addTaskToTaskList(String taskListId, Task task) {
        //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
         if (taskListRecord != null) {
@@ -45,7 +45,7 @@ public class TaskService {
     }
 
 
-    */
+
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
         TaskRecord task = taskRepository.findById(taskId).orElse(null);

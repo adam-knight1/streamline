@@ -11,7 +11,11 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/taskList")
 public class TaskListController {
+
   /*
+
+
+
     private TaskListService taskListService;
 
     TaskListController(TaskListService taskListService){this.taskListService = taskListService;}
@@ -45,8 +49,30 @@ public class TaskListController {
         return ResponseEntity.ok(taskListResponse);
     }
 
+
     /*@PutMapping("/userId/updateName")
     public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
+
+//omer implemented original code
+//    @PutMapping("/userId/updateName")
+//    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
+//        TaskList taskList = taskListService.updateTaskListName(request, userId);
+//        if(taskList == null){
+//            return ResponseEntity.notFound().build();
+//        }
+//        TaskListResponse taskListResponse = new TaskListResponse();
+//        taskListResponse.setUserId(taskList.getUserId());
+//        taskListResponse.setTaskListName(taskList.getTaskListName());
+//        //This may need some more logic
+//        taskListResponse.setTasks(Collections.emptyList());
+//        return ResponseEntity.ok(taskListResponse);
+//    }
+    //i didnt want to delete omers original code. Just wanted to mess with this constructor. -alexis
+    @PutMapping("/userId/updateName")
+    public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
+                                                               @PathVariable("userId") String userId){
+        String updatedTaskListName = request.getTaskListName();
+
         TaskList taskList = taskListService.updateTaskListName(request, userId);
         if(taskList == null){
             return ResponseEntity.notFound().build();
@@ -54,7 +80,6 @@ public class TaskListController {
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(taskList.getUserId());
         taskListResponse.setTaskListName(taskList.getTaskListName());
-        //This may need some more logic
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
     }*//*
@@ -68,4 +93,7 @@ public class TaskListController {
         }
 
 }*/
+
+    }
+
 }

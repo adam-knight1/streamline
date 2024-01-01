@@ -14,9 +14,11 @@ import java.util.Optional;
 
 @Service
 public class TaskListService {
+
    /* @Autowired
     private TaskListRepository taskListRepository;
     private LambdaServiceClient lambdaServiceClient;
+
 
     @Autowired
     public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient) {
@@ -53,6 +55,7 @@ public class TaskListService {
     }
 
 
+
 //    public TaskList updateTaskListName(TaskListCreateRequest request, String userId){
 //        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
 //        TaskList updatedList;
@@ -63,6 +66,7 @@ public class TaskListService {
 //        }
 //        return updatedList;
 //    }
+
 
     public boolean deleteTaskListByUserId(String userId){
         Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
@@ -79,6 +83,7 @@ public class TaskListService {
         return new TaskList(record.getUserId(), record.getTaskListName());
     }
 */
+
 
 }
 

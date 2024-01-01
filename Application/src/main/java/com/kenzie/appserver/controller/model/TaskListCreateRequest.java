@@ -27,4 +27,5 @@ public class TaskListCreateRequest {
     public void setTaskListName(String taskListName) {
         this.taskListName = taskListName;
     }
+
 }
