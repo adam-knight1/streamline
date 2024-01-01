@@ -1,9 +1,5 @@
 package com.kenzie.appserver.controller;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cbbbdef (cleaning up comments)
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.service.TaskListService;
@@ -49,7 +45,7 @@ public class TaskListController {
         return ResponseEntity.ok(taskListResponse);
     }
 
-    @PutMapping("/userId/updateName")
+    /*@PutMapping("/userId/updateName")
     public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
         TaskList taskList = taskListService.updateTaskListName(request, userId);
         if(taskList == null){
@@ -61,7 +57,7 @@ public class TaskListController {
         //This may need some more logic
         taskListResponse.setTasks(Collections.emptyList());
         return ResponseEntity.ok(taskListResponse);
-    }
+    }*/
 
     @DeleteMapping("/userId/delete")
     public ResponseEntity<String> deleteTaskListByUserId(String userId){
@@ -70,9 +66,6 @@ public class TaskListController {
         }else{
             return ResponseEntity.notFound().build();
         }
-<<<<<<< HEAD
-    }*/
-=======
-    }
->>>>>>> cbbbdef (cleaning up comments)
+
+}
 }

@@ -52,6 +52,18 @@ export default class UserClient extends BaseClass {
         }
     }
 
+        async loginUser(username, password) {
+            try {
+                const response = await this.client.post('/user/login', {
+                    username: username,
+                    password: password
+                });
+                return response.data;
+            } catch (error) {
+                return this.handleError("loginUser", error);
+            }
+        }
+
     handleError(method, error) {
         console.error(method + " failed - " + error);
         if (error.response && error.response.data.message) {

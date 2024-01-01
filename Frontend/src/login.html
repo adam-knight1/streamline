@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="loginPage.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+<body class="background">
+<header class="header" id="header">
+  <div class="site-title">
+    <a class="header_home" href="index.html">Streamline - Login</a>
+  </div>
+</header>
+
+<div class="welcome-section">
+  <h2>Login to Streamline</h2>
+  <p>Please enter your username and password to access your todo list.</p>
+</div>
+
+<div class="card" id="login-form">
+  <h2>User Login</h2>
+  <form class="card-content" id="user-login">
+    <p class="form-field">
+      <label>Username</label>
+      <input type="text" required class="validated-field" id="login-username-field">
+    </p>
+    <p class="form-field">
+      <label>Password</label>
+      <input type="password" required class="validated-field" id="login-password-field">
+    </p>
+    <button type="submit">Login</button>
+    <div id="login-error-message"></div>
+  </form>
+</div>
+
+<a href="javascript:history.back()" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Go Back</a>
+</body>
+</html>

@@ -9,7 +9,8 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-    userPage: path.resolve(__dirname, 'src', 'pages', 'userPage.js'),
+    userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
+    userLoginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
     userHomePage: path.resolve(__dirname, 'src', 'pages', 'userHomePage.js')
   },
   output: {
@@ -25,6 +26,7 @@ module.exports = {
         context: [
           '/example',
           '/user',
+          '/login'
           '/userHome'
         ],
         target: 'http://localhost:5001'
@@ -39,6 +41,15 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
+                  template: './src/user.html',
+                  filename: 'user.html',
+                  inject: false
+                }),
+                new HtmlWebpackPlugin({
+                                  template: './src/login.html',
+                                  filename: 'login.html',
+                                  inject: false
+                                }),
       template: './src/user.html',
       filename: 'user.html',
       inject: false
