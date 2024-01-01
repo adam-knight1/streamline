@@ -8,6 +8,7 @@ import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.model.UserRequest;
+import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,8 @@ public class UserController {
     } */
 
 
-   @PostMapping("/create")
-    public ResponseEntity<UserResponse> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
+    @PostMapping("/create")
+    public ResponseEntity<UserResponseLambda> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername(userCreateRequest.getUsername());
         userRequest.setPassword(userCreateRequest.getPassword());
@@ -43,12 +44,19 @@ public class UserController {
 
         try {
             UserResponse userResponse = userService.createNewUser(userRequest);
-            return ResponseEntity.ok(userResponse);
+
+            UserResponseLambda userResponseLambda = new UserResponseLambda();
+            userResponseLambda.setUserId(userResponse.getUserId());
+            userResponseLambda.setUsername(userResponse.getUsername());
+            userResponseLambda.setEmail(userResponse.getEmail());
+
+            return ResponseEntity.ok(userResponseLambda);
         } catch (Exception e) {
             System.out.println("Something went wrong: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 
 
    /* @PutMapping("/{userId}")
