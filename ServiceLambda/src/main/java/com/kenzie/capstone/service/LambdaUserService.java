@@ -40,7 +40,11 @@ public class LambdaUserService {
         }
         log.info("Successfully created user");
 
-        return new UserResponse();
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUserId(userRecord.getUserId());
+        userResponse.setUsername(userRecord.getUsername());
+        userResponse.setEmail(userRecord.getEmail());
+        return userResponse;
     }
 
     public UserRecord updateUser(UserRecord userRecord) {

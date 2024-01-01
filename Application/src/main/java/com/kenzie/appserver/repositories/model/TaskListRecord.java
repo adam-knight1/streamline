@@ -53,18 +53,18 @@ public class TaskListRecord {
         this.tasks = tasks;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TaskListRecord)) return false;
         TaskListRecord that = (TaskListRecord) o;
-        return getId().equals(that.getId()) && getTaskListName().equals(that.getTaskListName());
-    }
+        re*//*turn getId().equals(that.getId()) && getTaskListName().equals(that.getTaskListName());
+    }*/
 
-    @Override
+    /*@Override
     public int hashCode() {
         return Objects.hash(getId(), getTaskListName());
-    }
+    }*/
 
     public void addTask(Task task) {
         if(tasks == null){

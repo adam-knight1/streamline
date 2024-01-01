@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class TaskListService {
-    @Autowired
+   /* @Autowired
     private TaskListRepository taskListRepository;
     private LambdaServiceClient lambdaServiceClient;
 
@@ -76,6 +76,6 @@ public class TaskListService {
 
     private TaskList transformToTaskList(TaskListRecord record){
         return new TaskList(record.getId(), record.getTaskListName());
-    }
+    }*/
 }
 

@@ -27,6 +27,8 @@ public class UserService {
 
     public User authenticateUser(String username, String password){
 
+        return new User();
+
     }
 
 
