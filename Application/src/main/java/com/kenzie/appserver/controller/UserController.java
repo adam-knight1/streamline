@@ -24,7 +24,7 @@ public class UserController {
     }
 
    /* @GetMapping("/{userId}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable("userId") String userId) {
+    public ResponseEntity<UserResponseLambda> getUser(@PathVariable("userId") String userId) {
         System.out.println("Received request to find user with userId: " + userId);
         User user = userService.findByUserId(userId);
         if (user == null) {
@@ -52,7 +52,7 @@ public class UserController {
 
 
    /* @PutMapping("/{userId}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
+    public ResponseEntity<UserResponseLambda> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
         Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
         return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user)))
                 .orElseGet(() -> ResponseEntity.notFound().build());

@@ -1,22 +1,17 @@
 package com.kenzie.capstone.service.lambda;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaUserService;
-import com.kenzie.capstone.service.dao.UserDao;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.UserRecord;
 import com.kenzie.capstone.service.model.UserRequest;
-import com.kenzie.capstone.service.model.UserResponse;
-import com.kenzie.capstone.service.util.DynamoDbClientProvider;
+import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,8 +46,8 @@ public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, A
             userRecord.setPassword(userRequest.getPassword());
 
 
-            UserResponse userResponse = lambdaUserService.createNewUser(userRecord);
-            String output = gson.toJson(userResponse);
+            UserResponseLambda userResponseLambda = lambdaUserService.createNewUser(userRecord);
+            String output = gson.toJson(userResponseLambda);
 
             return response
                     .withStatusCode(200)
