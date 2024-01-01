@@ -29,6 +29,8 @@ public class UserDao {
 
 
                 saveExpression.setExpected(expectedAttributes);
+                System.out.println("Saving userRecord: " + userRecord);
+
 
                 mapper.save(userRecord, saveExpression);
             } catch (ConditionalCheckFailedException e) {

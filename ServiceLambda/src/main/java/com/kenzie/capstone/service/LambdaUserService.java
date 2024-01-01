@@ -2,9 +2,10 @@ package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.UserDao;
 import com.kenzie.capstone.service.model.UserRecord;
-import com.kenzie.capstone.service.model.UserResponse;
+import com.kenzie.capstone.service.model.UserResponseLambda;
 
 import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +24,12 @@ public class LambdaUserService {
         return userDao.findUserById(userId);
     }
 
-    public UserResponse createNewUser(UserRecord userRecord) {
+    public UserResponseLambda createNewUser(UserRecord userRecord) {
         if (userRecord == null || userRecord.getEmail() == null || userRecord.getUsername() == null || userRecord.getPassword() == null) {
-            log.error("The user recordRecord contains null values");
+            log.error("The user record contains null values");
+            throw new IllegalArgumentException("User record cannot contain null values");
         }
+        log.info("userid is " + userRecord.getUserId());
 
         if (userRecord.getUserId() == null) {
             userRecord.setUserId(UUID.randomUUID().toString());
@@ -34,18 +37,19 @@ public class LambdaUserService {
 
         try {
             userDao.createUser(userRecord);
+            log.info("Successfully created user");
+
+            UserResponseLambda userResponseLambda = new UserResponseLambda();
+            userResponseLambda.setUserId(userRecord.getUserId());
+            userResponseLambda.setUsername(userRecord.getUsername());
+            userResponseLambda.setEmail(userRecord.getEmail());
+            return userResponseLambda;
         } catch (Exception e) {
             log.error("Error creating user: ", e);
-
+            throw new RuntimeException("Error creating user", e);
         }
-        log.info("Successfully created user");
-
-        UserResponse userResponse = new UserResponse();
-        userResponse.setUserId(userRecord.getUserId());
-        userResponse.setUsername(userRecord.getUsername());
-        userResponse.setEmail(userRecord.getEmail());
-        return userResponse;
     }
+
 
     public UserRecord updateUser(UserRecord userRecord) {
         return userDao.updateUser(userRecord);

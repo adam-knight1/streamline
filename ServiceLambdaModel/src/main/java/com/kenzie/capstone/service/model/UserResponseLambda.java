@@ -1,6 +1,6 @@
 package com.kenzie.capstone.service.model;
 
-public class UserResponse {
+public class UserResponseLambda {
     private String userId;
     private String username;
     private String email;

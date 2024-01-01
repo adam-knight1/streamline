@@ -28,8 +28,11 @@ export default class UserClient extends BaseClass {
                 password: password,
                 email: email
             });
+            console.log("Axios response:", response);
+            console.log("Parsed data:", response.data);
             return response.data;
         } catch (error) {
+            console.error("Error in createUser:", error)
             return this.handleError("createUser", error);
         }
     }
