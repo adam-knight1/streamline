@@ -11,10 +11,10 @@ class LoginPage extends BaseClass {
     }
 
     async mount() {
-        document.getElementById('user-login').addEventListener('submit', this.onLogin);
+      /*  document.getElementById('user-login').addEventListener('submit', this.onLogin);*/
     }
 
-    async onLogin(event) {
+    /*async onLogin(event) { //commented out due to implementing spring security
         event.preventDefault();
         let username = document.getElementById("login-username-field").value;
         let password = document.getElementById("login-password-field").value;
@@ -29,7 +29,7 @@ class LoginPage extends BaseClass {
             }
         } catch (error) {
             this.showMessage("An error occurred during login. Please try again.");
-        }
+        }*/
     }
 
 }
