@@ -1,5 +1,7 @@
 package com.kenzie.appserver.config;
 
+import com.kenzie.appserver.CustomLoginSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService dynamoDBUserDetailsService;
+    @Autowired
+    private CustomLoginSuccessHandler customLoginSuccessHandler;
+
 
     public WebSecurityConfig(UserDetailsService dynamoDBUserDetailsService) {
         this.dynamoDBUserDetailsService = dynamoDBUserDetailsService;
@@ -21,15 +26,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login.html").permitAll()
+                .antMatchers("/login.html", "/css/**", "/pages/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
+                .successHandler(customLoginSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll();
+
+
     }
 
     @Bean

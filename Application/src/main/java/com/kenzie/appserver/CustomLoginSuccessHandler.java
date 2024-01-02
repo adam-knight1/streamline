@@ -1,3 +1,5 @@
+package com.kenzie.appserver;
+
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,7 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, IOException {
-        
+        //this will auto verify against dynamo if it's set up right
         response.sendRedirect("/userHomePage.html");
     }
 }
