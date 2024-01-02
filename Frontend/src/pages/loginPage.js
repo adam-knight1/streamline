@@ -5,7 +5,7 @@ class LoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onLogin'], this);
+      //  this.bindClassMethods(['onLogin'], this);
         this.dataStore = new DataStore();
         this.client = new UserClient();
     }
@@ -29,8 +29,8 @@ class LoginPage extends BaseClass {
             }
         } catch (error) {
             this.showMessage("An error occurred during login. Please try again.");
-        }*/
-    }
+        }
+    }*/
 
 }
 
