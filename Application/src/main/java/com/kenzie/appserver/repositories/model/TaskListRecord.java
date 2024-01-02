@@ -22,6 +22,8 @@ public class TaskListRecord {
     @DynamoDBAttribute(attributeName = "tasks")
     public List<Task> tasks;
 
+    public TaskListRecord() {}
+
     public TaskListRecord(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
