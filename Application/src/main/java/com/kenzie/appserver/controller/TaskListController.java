@@ -90,6 +90,9 @@ omer implemented original code
     @PutMapping("/userId/updateName")
     public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
                                                                @PathVariable String userId) {
+        if (userId == null) {
+            return ResponseEntity.badRequest().build();
+        }
         TaskListRecord updatedRecord = taskListService.updateTaskListName(request, userId);
         if (updatedRecord == null) {
             return ResponseEntity.notFound().build();
