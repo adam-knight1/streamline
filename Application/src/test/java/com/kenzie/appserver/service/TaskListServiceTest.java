@@ -19,7 +19,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-/*
+
 public class TaskListServiceTest {
     @Mock
     private TaskListRepository taskListRepository;
@@ -35,10 +35,10 @@ public class TaskListServiceTest {
         taskListService = new TaskListService(taskListRepository, lambdaServiceClient);
     }
 
-    */
+
 /** ------------------------------------------------------------------------
      *  taskListService.createTaskList
-     *  ------------------------------------------------------------------------ **//*
+     *  ------------------------------------------------------------------------ **/
 
 
     @Test
@@ -100,14 +100,14 @@ public class TaskListServiceTest {
         verify(taskListRepository, never()).save((TaskList) any());
     }
 
-    */
+
 /** ------------------------------------------------------------------------
      *  taskListService.updateTaskList
-     *  ------------------------------------------------------------------------ **//*
+     *  ------------------------------------------------------------------------ **/
 
 
-  */
-/*  @Test
+
+     @Test
     public void updateTaskList_Exists_Succeeds() {
         // GIVEN
         String userId = "user";
@@ -130,11 +130,11 @@ public class TaskListServiceTest {
         // THEN
         Assertions.assertNotNull(updatedTasklist);
         Assertions.assertEquals(newTaskListName, updatedTasklist.getTaskListName());
-    }*//*
+    }
 
 
-   */
-/* @Test
+
+ @Test
     public void updateTaskList_DoesNotExist_Fails() {
         // GIVEN
         String userId = "user";
@@ -150,9 +150,9 @@ public class TaskListServiceTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
                 taskListService.updateTaskListName(request, userId));
         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-    }*//*
+    }
 
-}*/
+}
 //package com.kenzie.appserver.service;
 //
 //import com.kenzie.appserver.controller.model.TaskListCreateRequest;
