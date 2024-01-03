@@ -87,7 +87,7 @@ omer implemented original code
 
     */
 
-    @PutMapping("/userId/updateName")
+    @PutMapping("/{userId}/updateName")
     public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
                                                                @PathVariable String userId) {
         if (userId == null) {
