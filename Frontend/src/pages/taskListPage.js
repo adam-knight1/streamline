@@ -2,7 +2,7 @@ import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import TaskListClient from "../api/taskListClient";
 
-class UserHomePage extends BaseClass {
+class TaskListPage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList'], this);
@@ -39,10 +39,10 @@ class UserHomePage extends BaseClass {
     async onUpdate(event) {
         event.preventDefault();
 
-         let userId = document.getElementById("user-id-field").value;
-         let newName = document.getElementById("updated-name-field").value;
+         let userId = document.getElementById("update-task-list-user-id-field").value;
+         let newName = document.getElementById("update-task-list-name-field").value;
 
-         let updatedTaskList = await this.client.updateTaskList(userId, updatedName);
+         let updatedTaskList = await this.client.updateTaskList(userId, newName);
 
          if (updatedTaskList) {
            this.showMessage("Task list updated successfully");
@@ -53,8 +53,8 @@ class UserHomePage extends BaseClass {
 }
 
 const main = async () => {
-    const userHomePage = new UserHomePage();
-    userHomePage.mount();
+    const taskListPage = new TaskListPage();
+    taskListPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
