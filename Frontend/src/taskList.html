@@ -1,53 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script type="text/javascript" src="examplePage.js"></script>
-    <script type="text/javascript" src="userPage.js"></script>
     <script type="text/javascript" src="userHomePage.js"></script>
-
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-<body>
-<header class="header" id="header">
-
-    <div class="site-title">
-        <h1>Task List Settings</h1>
-    </div>
+<body class="background">
+<header class="header">
+    <h1 class="site-title">Welcome to the Streamline App</h1>
 </header>
 <div class="welcome-section">
-    <p>Here you can create, view, update, or delete your task list.</p>
+    <p>Welcome! Manage your task list here.</p>
 </div>
 
 <div class="card" id="create-taskList-form">
-    <h2>Create a Task List</h2>
+    <h2>Create a Task List - API check</h2>
     <form class="card-content" id="create-taskList">
         <p class="form-field">
-            <label>User ID</label>
-            <input type="text" required class="validated-field" id="userId-field">
-        </p>
-        <p class="form-field">
             <label>Task List Name</label>
-            <input type="text" required class="validated-field" id="name-field">
+            <input type="text" required class="validated-field" id="taskList-name-field">
         </p>
-        <button type="submit">Create</button>
-        <div id="created-taskList"></div>
+        <button type="submit">Create Task List</button>
     </form>
 </div>
 
-<div class="card" id="find-taskList-form">
-    <h2>Find Task List</h2>
-    <form class="card-content" id="find-taskList">
+<div class="card" id="create-task-form">
+    <h2>Add a New Task</h2>
+    <form class="card-content" id="create-task">
         <p class="form-field">
-            <label>User ID</label>
-            <input type="text" required class="validated-field" id="find-taskList-field">
-        <div id="error-message"></div>
-        <div id="taskList-details"></div>
+            <label>Task Description</label>
+            <input type="text" required class="validated-field" id="task-desc-field">
         </p>
-        <button type="submit">Search</button>
+        <button type="submit">Add Task</button>
     </form>
 </div>
 
+<<<<<<< HEAD:Frontend/src/userHome.html
+<div class="card" id="tasks-display">
+    <h2>Your Tasks</h2>
+    <div id="tasks-container">
+        <!-- tasks go here Omer -->
+    </div>
+=======
 <div class="card" id="update-taskList-form">
     <h2>Update Task List</h2>
     <form class="card-content" id="update-taskList">
@@ -61,20 +55,9 @@
         </p>
         <button type="submit">Update</button>
     </form>
+>>>>>>> main:Frontend/src/taskList.html
 </div>
 
-<div class="card" id="delete-taskList-form">
-    <h2>Delete Task List</h2>
-    <form class="card-content" id="delete-taskList">
-        <p class="form-field">
-            <label>User ID</label>
-            <input type="text" required class="validated-field" id="delete-taskList-record-field">
-        </p>
-        <button type="submit">Delete</button>
-    </form>
-</div>
-
-<a href="javascript:history.back()" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Go Back</a>
-
+<a href="javascript:history.back()" class="bubble-button">Go Back</a>
 </body>
 </html>

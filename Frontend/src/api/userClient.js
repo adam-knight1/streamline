@@ -55,7 +55,7 @@ export default class UserClient extends BaseClass {
         }
     }
 
-        async loginUser(username, password) {
+      /*  async loginUser(username, password) {
             try {
                 const response = await this.client.post('/user/login', {
                     username: username,
@@ -65,7 +65,7 @@ export default class UserClient extends BaseClass {
             } catch (error) {
                 return this.handleError("loginUser", error);
             }
-        }
+        }*/
 
     handleError(method, error) {
         console.error(method + " failed - " + error);
