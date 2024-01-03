@@ -22,6 +22,8 @@ public class TaskListRecord {
     @DynamoDBAttribute(attributeName = "tasks")
     public List<Task> tasks;
 
+    public TaskListRecord() {}
+
     public TaskListRecord(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
@@ -53,27 +55,18 @@ public class TaskListRecord {
         this.tasks = tasks;
     }
 
-    /*@Override
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskListRecord that = (TaskListRecord) o;
-        return getUserId().equals(that.getUserId()) && getTaskListName().equals(that.getTaskListName());
-    }*/
-
         return Objects.equals(userId, that.userId) && Objects.equals(taskListName, that.taskListName) && Objects.equals(tasks, that.tasks);
     }
 
-
-    /*@Override
+    @Override
     public int hashCode() {
-
-        return Objects.hash(getUserId(), getTaskListName());
-    }*/
-
         return Objects.hash(userId, taskListName, tasks);
     }
-
 
     public void addTask(Task task) {
         if(tasks == null){

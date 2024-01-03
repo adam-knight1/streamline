@@ -39,10 +39,10 @@ class UserHomePage extends BaseClass {
     async onUpdate(event) {
         event.preventDefault();
 
-         let userId = document.getElementById("user-id-field").value;
-         let newName = document.getElementById("updated-name-field").value;
+         let userId = document.getElementById("update-task-list-user-id-field").value;
+         let newName = document.getElementById("update-task-list-name-field").value;
 
-         let updatedTaskList = await this.client.updateTaskList(userId, updatedName);
+         let updatedTaskList = await this.client.updateTaskList(userId, newName);
 
          if (updatedTaskList) {
            this.showMessage("Task list updated successfully");
