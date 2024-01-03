@@ -2,7 +2,7 @@ import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import TaskListClient from "../api/taskListClient";
 
-class UserHomePage extends BaseClass {
+class TaskListPage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList'], this);
@@ -53,8 +53,8 @@ class UserHomePage extends BaseClass {
 }
 
 const main = async () => {
-    const userHomePage = new UserHomePage();
-    userHomePage.mount();
+    const taskListPage = new TaskListPage();
+    taskListPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
