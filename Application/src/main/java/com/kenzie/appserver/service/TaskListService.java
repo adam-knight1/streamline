@@ -1,16 +1,21 @@
 package com.kenzie.appserver.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
+import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.TaskListRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TaskListService {
@@ -36,22 +41,18 @@ public class TaskListService {
         }
     }
 
-    public TaskList createTaskList(TaskListCreateRequest request, String userId, String taskListName) {
-        String requestedUserId = request.getUserId();
-        //Check to ensure user id is correct
-        if(!requestedUserId.equals(userId)){
-            throw new IllegalArgumentException("Provided user id does not match the user id in the request.");
+    public TaskListResponse createTaskList(TaskListRequest request) throws JsonProcessingException {
+        TaskListResponse response = new TaskListResponse();
+        try {
+            com.kenzie.capstone.service.model.TaskListResponse taskListResponse =
+                    lambdaServiceClient.createTaskList(request);
+            response.setUserId(taskListResponse.getUserId());
+            response.setTaskListName(taskListResponse.getTaskListName());
+            response.setTasks(Collections.emptyList());
+        } catch (Exception e) {
+            System.out.println("Task list creation unsuccessful");
         }
-        //Check to ensure TaskList with same user id doesn't already exist
-        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-        if(taskListRecord.isPresent()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Task list already exists for the user.");
-        }
-        //Create the task list
-        TaskList newTaskList = new TaskList(userId, taskListName);
-        TaskListRecord newTaskListRecord = new TaskListRecord(userId, taskListName);
-        taskListRepository.save(newTaskListRecord);
-        return newTaskList;
+        return response;
     }
 
     public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {

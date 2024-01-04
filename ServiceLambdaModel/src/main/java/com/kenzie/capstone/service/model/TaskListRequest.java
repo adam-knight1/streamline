@@ -25,11 +25,11 @@ public class TaskListRequest {
         this.taskListName = taskListName;
     }
 
-    @Override
-    public String toString() {
-        return "TaskListRequest{" +
-                "userId='" + userId + '\'' +
-                ", taskListName='" + taskListName + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "TaskListRequest{" +
+//                "userId='" + userId + '\'' +
+//                ", taskListName='" + taskListName + '\'' +
+//                '}';
+//    }
 }

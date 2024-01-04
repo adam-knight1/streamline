@@ -21,25 +21,21 @@ class TaskListPage extends BaseClass {
     async onCreate(event) {
         event.preventDefault();
 
-        let userIdField = document.getElementById("userId-field");
-        let taskListNameField = document.getElementById("taskList-name-field");
+        let userId = document.getElementById("userId-field").value;
+        let taskListName = document.getElementById("taskList-name-field").value;
 
-        //checking if elements are found in DOM
-        if(userIdField && taskListNameField) {
-        let userId = userIdField.value;
-        let taskListName = taskListNameField.value;
+        this.showMessage('userId ${userId}');
 
        //Calling the createTaskList method with returned values
         let createdTaskList = await this.client.createTaskList(userId, taskListName, this.errorHandler);
+
+
 
         if (createdTaskList) {
             this.showMessage(`TaskList ${createdTaskList.taskListName} created successfully!`);
             document.getElementById("created-name").innerHTML = `Your task list name is: ${createdTaskList.taskListName}`;
         } else {
             this.errorHandler("Error creating task list! Try again...");
-        }
-        }else { //added additional console error if elements are not found
-            console.error("One or more elements not found");
         }
     }
 

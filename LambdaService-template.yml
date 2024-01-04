@@ -97,7 +97,7 @@ Resources:
         - AmazonDynamoDBFullAccess
       Tracing: Active
       Events:
-        CreateUserEvent:
+        CreateTaskListEvent:
           Type: Api
           Properties:
             Path: /taskList/create
