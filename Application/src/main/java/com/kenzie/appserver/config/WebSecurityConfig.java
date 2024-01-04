@@ -1,3 +1,4 @@
+/*
 package com.kenzie.appserver.config;
 
 import com.kenzie.appserver.CustomLoginSuccessHandler;
@@ -24,7 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-          /*  http
+          */
+/*  http
                     .authorizeRequests()
                     .antMatchers("/css/**", "/pages/**", "/api/**",
                             "/login.html", "/index.html",
@@ -38,7 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .and()
                     .logout()
-                    .permitAll();*/
+                    .permitAll();*//*
+
         }
 
 
@@ -47,3 +50,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return dynamoDBUserDetailsService;
     }
 }
+*/
