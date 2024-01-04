@@ -2,6 +2,7 @@ package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import org.springframework.data.annotation.Id;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
         @DynamoDBAttribute(attributeName = "email")
         private String email;
 
-        @DynamoDBAttribute(attributeName = "username")
+        @DynamoDBIndexHashKey(attributeName = "username", globalSecondaryIndexName = "UsernameIndex")
         private String username;
 
         @DynamoDBAttribute(attributeName = "password")
