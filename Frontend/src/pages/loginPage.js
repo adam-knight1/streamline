@@ -1,5 +1,7 @@
 import BaseClass from "../util/baseClass";
 import LoginClient from '../api/LoginClient';
+import DataStore from "../util/DataStore";
+
 
 class LoginPage extends BaseClass {
     constructor() {

@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
-    userLoginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
+    loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
     taskListPage: path.resolve(__dirname, 'src', 'pages', 'taskListPage.js')
   },
   output: {
