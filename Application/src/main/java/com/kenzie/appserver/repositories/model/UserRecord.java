@@ -13,6 +13,9 @@ import java.util.Objects;
         @Id
         @DynamoDBHashKey(attributeName = "userId")
         private String userId;
+        @DynamoDBIndexHashKey(attributeName = "username", globalSecondaryIndexName = "UsernameIndex")
+        private String username;
+
 
         //the last project had an issue setting sort keys
         //if possible we can change it this time
@@ -20,8 +23,6 @@ import java.util.Objects;
         @DynamoDBAttribute(attributeName = "email")
         private String email;
 
-        @DynamoDBIndexHashKey(attributeName = "username", globalSecondaryIndexName = "UsernameIndex")
-        private String username;
 
         @DynamoDBAttribute(attributeName = "password")
         private String password;
