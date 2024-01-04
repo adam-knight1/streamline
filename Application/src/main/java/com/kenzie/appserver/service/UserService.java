@@ -36,6 +36,16 @@ public class UserService {
         System.out.println("failed to authenticate, sorry!");
         return null;
     }
+        public String getUsernameByUserId(String userId) {
+        Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
+        if (userRecordOpt.isPresent()) {
+            UserRecord userRecord = userRecordOpt.get();
+            return userRecord.getUsername();
+        }
+            System.out.println("couldn't find userId");
+        return null;
+    }
+
 
 
 
