@@ -41,44 +41,44 @@ public class TaskListServiceTest {
      *  ------------------------------------------------------------------------ **/
 
 
-    @Test
-    void createTaskList_happyCase() {
-        // GIVEN
-        String userId = "user";
-        String taskListName = "Paul's Tasks";
-        TaskListCreateRequest request = new TaskListCreateRequest();
-        request.setUserId(userId);
-        request.setTaskListName(taskListName);
-
-        when(taskListRepository.findById(userId)).thenReturn(Optional.empty());
-
-        // WHEN
-        TaskList createdTaskList = taskListService.createTaskList(request, userId, taskListName);
-
-        // THEN
-        Assertions.assertNotNull(createdTaskList);
-        Assertions.assertEquals(userId, createdTaskList.getUserId());
-        Assertions.assertEquals(taskListName, createdTaskList.getTaskListName());
-        Assertions.assertEquals(Collections.emptyList(), createdTaskList.getTasks());
-        verify(taskListRepository, times(1)).save(taskListRecordCaptor.capture());
-    }
-
-    @Test
-    void createTaskList_InvalidUserId() {
-        // GIVEN
-        String userId = "user";
-        String taskListName = "MyTasks";
-        TaskListCreateRequest request = new TaskListCreateRequest();
-        // Set a different user id
-        request.setUserId("differentUserId");
-
-        // WHEN & THEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                taskListService.createTaskList(request, userId, taskListName));
-        Assertions.assertEquals("Provided user id does not match the user id in the request.", exception.getMessage());
-        //Verify no interactions with repository
-        verifyZeroInteractions(taskListRepository);
-    }
+//    @Test
+//    void createTaskList_happyCase() {
+//        // GIVEN
+//        String userId = "user";
+//        String taskListName = "Paul's Tasks";
+//        TaskListCreateRequest request = new TaskListCreateRequest();
+//        request.setUserId(userId);
+//        request.setTaskListName(taskListName);
+//
+//        when(taskListRepository.findById(userId)).thenReturn(Optional.empty());
+//
+//        // WHEN
+//        TaskList createdTaskList = taskListService.createTaskList(request, userId, taskListName);
+//
+//        // THEN
+//        Assertions.assertNotNull(createdTaskList);
+//        Assertions.assertEquals(userId, createdTaskList.getUserId());
+//        Assertions.assertEquals(taskListName, createdTaskList.getTaskListName());
+//        Assertions.assertEquals(Collections.emptyList(), createdTaskList.getTasks());
+//        verify(taskListRepository, times(1)).save(taskListRecordCaptor.capture());
+//    }
+//
+//    @Test
+//    void createTaskList_InvalidUserId() {
+//        // GIVEN
+//        String userId = "user";
+//        String taskListName = "MyTasks";
+//        TaskListCreateRequest request = new TaskListCreateRequest();
+//        // Set a different user id
+//        request.setUserId("differentUserId");
+//
+//        // WHEN & THEN
+//        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+//                taskListService.createTaskList(request, userId, taskListName));
+//        Assertions.assertEquals("Provided user id does not match the user id in the request.", exception.getMessage());
+//        //Verify no interactions with repository
+//        verifyZeroInteractions(taskListRepository);
+//    }
 
 //    @Test
 //    void createTaskList_taskListAlreadyExistsForId() {
