@@ -21,19 +21,6 @@ public class LambdaTaskService {
         this.taskDao =taskDao;
     }
 
-//    public TaskRecord updateTask(String taskId, TaskRequest taskRequest) {
-//        TaskRecord existingTask = taskDao.getTaskRecordById(taskId);
-//
-//        if (existingTask == null) {
-//            throw new IllegalArgumentException("Task with ID " + taskId + " does not exist");
-//        }
-//
-//        existingTask.setTaskName(taskRequest.getTaskName());
-//        existingTask.setTaskDescription(taskRequest.getTaskDescription());
-//
-//        return taskDao.updateTaskRecord(existingTask);
-//    }
-
     public TaskResponse updateTask(String taskId, TaskRequest task){
         if (task == null || taskId == null || task.getTaskId().length() ==0){
             throw new InvalidDataException("Request must contain a valid task ID");
