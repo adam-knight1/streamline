@@ -97,7 +97,7 @@ public class TaskListServiceTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
                 taskListService.createTaskList(request, userId, taskListName));
         Assertions.assertEquals(HttpStatus.CONFLICT, exception.getStatus());
-        verify(taskListRepository, never()).save((TaskList) any());
+        verify(taskListRepository, never()).save((TaskListRecord) any());
     }
 
 
@@ -122,14 +122,15 @@ public class TaskListServiceTest {
         TaskList updatedRepoTaskList = new TaskList(userId, newTaskListName);
 
         when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
-        when(taskListRepository.updateListName(request.getTaskListName())).thenReturn(updatedRepoTaskList);
+        // Method commented out in service currently - OB
+        //when(taskListRepository.updateListName(request.getTaskListName())).thenReturn(updatedRepoTaskList);
 
         // WHEN
-        TaskList updatedTasklist = taskListService.updateTaskListName(request, userId);
+        TaskListRecord updatedTaskList = taskListService.updateTaskListName(request, userId);
 
         // THEN
-        Assertions.assertNotNull(updatedTasklist);
-        Assertions.assertEquals(newTaskListName, updatedTasklist.getTaskListName());
+        Assertions.assertNotNull(updatedTaskList);
+        Assertions.assertEquals(newTaskListName, updatedTaskList.getTaskListName());
     }
 
 
