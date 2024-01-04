@@ -1,5 +1,4 @@
 import BaseClass from "../util/baseClass";
-import UserClient from "../api/UserClient";
 import axios from 'axios';
 
 class LoginPage extends BaseClass {
@@ -7,8 +6,6 @@ class LoginPage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['onLogin'], this);
-        this.dataStore = new DataStore();
-        this.client = new UserClient();
     }
 
     async mount() {
@@ -21,12 +18,13 @@ class LoginPage extends BaseClass {
         let password = document.getElementById("login-password-field").value;
 
         try {
-            const response = await axios.post('/login', {
+            const response = await axios.post('/login/loginUser', {
                 username: username,
                 password: password
             });
 
             if (response.status === 200) {
+
                 window.location.href = '/taskList.html';
             } else {
                 this.showMessage("Invalid username or password.");

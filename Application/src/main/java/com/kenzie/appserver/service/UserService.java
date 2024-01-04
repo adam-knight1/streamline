@@ -26,17 +26,18 @@ public class UserService {
     }
 
 
-    public UserRecord authenticateUser(String username, String password){
+    public Optional<UserRecord> authenticateUser(String username, String password){
         Optional<UserRecord> userRecord = userRepository.findByUsername(username);
-        System.out.println(userRecord.toString());
 
         if (userRecord.isPresent() && userRecord.get().getPassword().equals(password)) {
-            return userRecord.get();
+            return userRecord;
+        } else {
+            System.out.println("Authentication failed");
+            return Optional.empty();
         }
-        System.out.println("failed to authenticate, sorry!");
-        return null;
     }
-        public String getUsernameByUserId(String userId) {
+
+    public String getUsernameByUserId(String userId) {
         Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
         if (userRecordOpt.isPresent()) {
             UserRecord userRecord = userRecordOpt.get();

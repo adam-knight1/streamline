@@ -11,7 +11,7 @@ Resources:
       KeySchema:
         - AttributeName: "userId"
           KeyType: "HASH"
-      GlobalSecondaryIndexes:  # Define the GSI
+      GlobalSecondaryIndexes:
         - IndexName: "UsernameIndex"
           KeySchema:
             - AttributeName: "username"
