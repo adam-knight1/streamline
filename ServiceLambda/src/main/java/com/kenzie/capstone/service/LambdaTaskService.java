@@ -15,8 +15,6 @@ public class LambdaTaskService {
 
     private TaskDao taskDao;
 
-
-
     public LambdaTaskService(TaskDao taskDao){
         this.taskDao =taskDao;
     }
