@@ -4,23 +4,28 @@
     <script type="text/javascript" src="taskListPage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="background">
 <header class="header">
     <h1 class="site-title">Welcome to the Streamline App</h1>
 </header>
 <div class="welcome-section">
-    <p>Welcome! Manage your task list here.</p>
+    <p>Here you can mnage your task list.</p>
 </div>
 
 <div class="card" id="create-taskList-form">
-    <h2>Create a Task List - API check</h2>
+    <h2>Create a Task List</h2>
     <form class="card-content" id="create-taskList">
+        <p class="form-field">
+            <label>User ID</label>
+            <input type="text" required class="validated-field" id="userId-field">
+        </p>
         <p class="form-field">
             <label>Task List Name</label>
             <input type="text" required class="validated-field" id="taskList-name-field">
         </p>
-        <button type="submit">Create Task List</button>
+        <button type="submit">Create</button>
     </form>
 </div>
 
@@ -31,7 +36,7 @@
             <label>Task Description</label>
             <input type="text" required class="validated-field" id="task-desc-field">
         </p>
-        <button type="submit">Add Task</button>
+        <button type="submit">Add</button>
     </form>
 </div>
 
