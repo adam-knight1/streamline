@@ -27,9 +27,18 @@ public class UserService {
 
 
     public Optional<UserRecord> authenticateUser(String username, String password){
+        if (username == null || password == null) {
+            System.out.println("Username or Password is null");
+            return Optional.empty();
+        }
+
         Optional<UserRecord> userRecord = userRepository.findByUsername(username);
 
-        if (userRecord.isPresent() && userRecord.get().getPassword().equals(password)) {
+        if (userRecord.isEmpty()) {
+            System.out.println("User not found - authenticateUser");
+            return Optional.empty();
+        }
+        if (userRecord.get().getPassword().equals(password)) {
             return userRecord;
         } else {
             System.out.println("Authentication failed");
