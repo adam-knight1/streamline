@@ -21,14 +21,9 @@ class TaskListPage extends BaseClass {
     async onCreate(event) {
         event.preventDefault();
 
-        //checking if the element exists first
-        let taskListNameField = document.getElementById("taskList-name-field");
-
-        if(taskListNameField) {
         let userId = document.getElementById("userId-field").value;
-        let taskListName = taskListNameField.value;
+        let taskListName = document.getElementById("name-field").value;
 
-       // let taskListName = document.getElementById("name-field").value;
         let createdTaskList = await this.client.createTaskList(userId, taskListName, this.errorHandler);
 
         this.dataStore.set("taskList", createdTaskList);
@@ -38,9 +33,6 @@ class TaskListPage extends BaseClass {
             document.getElementById("created-name").innerHTML = `Your task list name is: ${createdTaskList.taskListName}`;
         } else {
             this.errorHandler("Error creating task list! Try again...");
-        }
-        } else {
-            console.error("Element with ID 'taskList-name-field' not found"); //added logging
         }
     }
 
