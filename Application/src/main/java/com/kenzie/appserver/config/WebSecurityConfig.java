@@ -24,23 +24,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/css/**", "/pages/**", "/api/**").permitAll()
-                .antMatchers("/login.html", "/index.html", "/supportTriage.html", "/user.html", "/userHome.html").permitAll()
+          /*  http
+                    .authorizeRequests()
+                    .antMatchers("/css/**", "/pages/**", "/api/**",
+                            "/login.html", "/index.html",
+                            "/supportTriage.html", "/user.html",
+                            "/taskList.html", "/user/**", "/task/**", "/taskList/**").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/login.html")
+                    .successHandler(customLoginSuccessHandler)
+                    .permitAll()
+                    .and()
+                    .logout()
+                    .permitAll();*/
+        }
 
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login.html")
-                .successHandler(customLoginSuccessHandler)
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
-
-
-    }
 
     @Bean
     public UserDetailsService customUserDetailsService() {
