@@ -45,7 +45,7 @@ public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, A
             userRecord.setUsername(userRequest.getUsername());
             userRecord.setPassword(userRequest.getPassword());
 
-
+            //adding comment to debug git push
             UserResponseLambda userResponseLambda = lambdaUserService.createNewUser(userRecord);
             String output = gson.toJson(userResponseLambda);
 
