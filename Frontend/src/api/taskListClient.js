@@ -12,7 +12,7 @@ export default class TaskListClient extends BaseClass {
 
     async createTaskList(userId, taskListName){
         try {
-            const response = await this.client.post('/taskList/create', {
+            const response = await this.client.post('/taskList', {
                 userId: userId,
                 taskListName: taskListName
             });
@@ -25,7 +25,7 @@ export default class TaskListClient extends BaseClass {
 
     async updateTaskList(userId, updatedName){
         try {
-            const response = await this.client.put(`/taskList/update/${userId}`, {
+            const response = await this.client.put(`/taskList/${userId}`, {
                 userId: userId,
                 updatedName: updatedName
             });
