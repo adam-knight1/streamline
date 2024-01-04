@@ -1,4 +1,7 @@
 package com.kenzie.appserver.service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.UserResponse;
@@ -16,6 +19,7 @@ import java.util.UUID;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
@@ -28,20 +32,21 @@ public class UserService {
 
     public Optional<UserRecord> authenticateUser(String username, String password){
         if (username == null || password == null) {
-            System.out.println("Username or Password is null");
+            logger.error("Username or Password is null");
             return Optional.empty();
         }
 
         Optional<UserRecord> userRecord = userRepository.findByUsername(username);
 
         if (userRecord.isEmpty()) {
-            System.out.println("User not found - authenticateUser");
+            logger.warn("User not found - authenticateUser: {}", username);
             return Optional.empty();
         }
         if (userRecord.get().getPassword().equals(password)) {
+            logger.info("User authenticated successfully: {}", username);
             return userRecord;
         } else {
-            System.out.println("Authentication failed");
+            logger.warn("Authentication failed for user: {}", username);
             return Optional.empty();
         }
     }
