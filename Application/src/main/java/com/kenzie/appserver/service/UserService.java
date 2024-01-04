@@ -1,7 +1,6 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kenzie.appserver.controller.UserController;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
@@ -27,11 +26,18 @@ public class UserService {
     }
 
 
-    public User authenticateUser(String username, String password){
+    public UserRecord authenticateUser(String username, String password){
+        Optional<UserRecord> userRecord = userRepository.findByUsername(username);
+        System.out.println(userRecord.toString());
 
-        return new User();
-
+        if (userRecord.isPresent() && userRecord.get().getPassword().equals(password)) {
+            return userRecord.get();
+        }
+        System.out.println("failed to authenticate, sorry!");
+        return null;
     }
+
+
 
 
    /* public User findByUserId(String userId) {

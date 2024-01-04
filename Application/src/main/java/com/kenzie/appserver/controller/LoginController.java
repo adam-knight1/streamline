@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.UserLoginRequest;
 import com.kenzie.appserver.controller.model.UserLoginResponse;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.http.HttpStatus;
@@ -23,14 +24,14 @@ public class LoginController {
     }
 */
 
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
         try {
-            User authenticatedUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
+            UserRecord authenticatedUser = userService.authenticateUser(loginRequest.getUsername(), loginRequest.getPassword());
             if (authenticatedUser != null) {
                 return ResponseEntity.ok(new UserLoginResponse(authenticatedUser.getUserId(), authenticatedUser.getUsername()));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials dude");
             }
         } catch (Exception e) {
             System.out.println("Login error: " + e.getMessage());
