@@ -23,14 +23,6 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LambdaServiceTest {
-
-    /**
-     * ------------------------------------------------------------------------
-     * expenseService.getExpenseById
-     * ------------------------------------------------------------------------
-     **/
-//Commented out these tests since the example classes no longer exist, kept this for reference - OB
-
     private TaskDao taskDao;
     private TaskListDao taskListDao;
     private LambdaTaskService lambdaTaskService;
@@ -76,21 +68,20 @@ class LambdaServiceTest {
 //         assertEquals(taskRequest.getDescription(), result.getDescription());
 //     }
 
-//this test passes
     @Test
    public void updateTask_ValidTaskId() {
         String taskId = UUID.randomUUID().toString();
-      TaskRequest validTaskRequest = new TaskRequest();
-      validTaskRequest.setTaskId(taskId);
-      validTaskRequest.setTaskName("Updated Task Name");
-      validTaskRequest.setTaskDescription("Updated Task Description");
+        TaskRequest validTaskRequest = new TaskRequest();
+        validTaskRequest.setTaskId(taskId);
+        validTaskRequest.setTaskName("Updated Task Name");
+        validTaskRequest.setTaskDescription("Updated Task Description");
 
-      TaskRecord updatedTaskRecord = new TaskRecord();
-      updatedTaskRecord.setTaskId(taskId);
-      updatedTaskRecord.setTaskName(validTaskRequest.getTaskName());
-      updatedTaskRecord.setTaskDescription(validTaskRequest.getTaskDescription());
+        TaskRecord updatedTaskRecord = new TaskRecord();
+        updatedTaskRecord.setTaskId(taskId);
+        updatedTaskRecord.setTaskName(validTaskRequest.getTaskName());
+        updatedTaskRecord.setTaskDescription(validTaskRequest.getTaskDescription());
 
-      //WHEN
+        //WHEN
         when(taskDao.getTaskRecordById(taskId)).thenReturn(updatedTaskRecord);
         when(taskDao.updateTaskRecord(any(TaskRecord.class))).thenReturn(updatedTaskRecord);
 
@@ -102,10 +93,9 @@ class LambdaServiceTest {
 
     }
 
-    //this test passes
     @Test
     public void updateTask_InvalidTaskId() {
-    String invalidTaskId = "";
+        String invalidTaskId = "";
         TaskRequest invalidTaskRequest = new TaskRequest();
         invalidTaskRequest.setTaskId(invalidTaskId);
         invalidTaskRequest.setTaskName("invalid Task Name");
@@ -118,7 +108,7 @@ class LambdaServiceTest {
             assertEquals("Request must contain a valid task ID", exception.getMessage());
         }
     }
-    //this test passes
+
     @Test
     public void createTask_MissingTaskName_ThrowsException() {
         //GIVEN
@@ -130,7 +120,7 @@ class LambdaServiceTest {
             lambdaTaskListService.createTask(userId,taskRequest);
         });
     }
-    //this test passes
+
     @Test
     public void createTask_NonExistingTaskList_ThrowsException() {
     //GIVEN
@@ -150,6 +140,7 @@ class LambdaServiceTest {
         String userId = "testUserId";
         TaskRequest taskRequest = new TaskRequest();
         taskRequest.setTaskName("Test Task");
+        taskRequest.setTaskDescription("Test Description");
 
         TaskListRecord taskListRecord = new TaskListRecord();
         when(taskListDao.getTaskListByUserId(userId)).thenReturn(taskListRecord);
@@ -163,7 +154,7 @@ class LambdaServiceTest {
         assertEquals(userId, response.getUserId());
         assertNotNull(response.getTaskId());
         assertEquals(taskRequest.getTaskName(), response.getTaskName());
-        assertEquals("",response.getTaskDescription());
+        assertEquals(taskRequest.getTaskDescription(),response.getTaskDescription());
         assertFalse(response.isCompleted());
 
     }

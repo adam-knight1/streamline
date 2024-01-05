@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 
 public class TaskDao {
 
-    //this is not completed. I needed to use it in my taskservice -am
     private DynamoDBMapper mapper;
 
     /**
@@ -25,7 +24,6 @@ public class TaskDao {
     public TaskDao(DynamoDBMapper mapper) {
         this.mapper = mapper;
     }
-
 
     public TaskRecord storeTaskData(TaskRecord taskRequest) {
         try {
@@ -98,7 +96,6 @@ public class TaskDao {
         return taskRecord;
         
     }
-
     public TaskRecord getTaskRecordById(String taskId) {
         if (taskId == null || taskId.isEmpty()){
             throw new IllegalArgumentException("Task ID cannot be null or empty");
