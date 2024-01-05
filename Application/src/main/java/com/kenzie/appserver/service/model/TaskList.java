@@ -1,13 +1,15 @@
 package com.kenzie.appserver.service.model;
 
 
+import com.kenzie.appserver.repositories.model.TaskRecord;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
     public String userId;
     public String taskListName;
-    public List<Task> tasks;
+    public List<TaskRecord> tasks;
 
     public TaskList(String userId, String taskListName){
         this.userId = userId;
@@ -15,7 +17,7 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    public void addTask(Task task){
+    public void addTask(TaskRecord task){
         if(task != null){
             this.tasks.add(task);
         }
@@ -37,11 +39,11 @@ public class TaskList {
         this.taskListName = taskListName;
     }
 
-    public List<Task> getTasks() {
+    public List<TaskRecord> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TaskRecord> tasks) {
         this.tasks = tasks;
     }
 }

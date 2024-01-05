@@ -33,7 +33,7 @@ public class TaskService {
     }
 
 
-    public Task addTaskToTaskList(String taskListId, Task task) {
+    public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
         if (taskListRecord != null) {
