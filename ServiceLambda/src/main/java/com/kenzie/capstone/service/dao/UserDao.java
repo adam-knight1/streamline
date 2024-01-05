@@ -3,11 +3,13 @@ package com.kenzie.capstone.service.dao;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.UserRecord;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,4 +72,17 @@ public class UserDao {
                 mapper.delete(userRecord);
             }
         }
+    public List<UserRecord> findByUsername(String username) {
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUsername(username);
+
+        DynamoDBQueryExpression<UserRecord> queryExpression = new DynamoDBQueryExpression<UserRecord>()
+                .withIndexName("UsernameIndex") //gonna query the GSI!
+                .withConsistentRead(false)
+                .withHashKeyValues(userRecord);
+
+        PaginatedQueryList<UserRecord> result = mapper.query(UserRecord.class, queryExpression);
+        return new ArrayList<>(result);
     }
+
+}
