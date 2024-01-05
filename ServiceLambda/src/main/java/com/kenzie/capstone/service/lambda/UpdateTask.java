@@ -12,6 +12,7 @@ import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,6 +55,7 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         TaskRequest taskRequest;
 
         try {
+
             taskRequest = gson.fromJson(requestBody, TaskRequest.class);
         } catch (JsonSyntaxException e ) {
             log.error("Invalid JSON Syntax in request body:" + e.getMessage());
@@ -62,7 +64,10 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
                     .withBody("Invalid JSON Syntax in request body");
         }
         try {
-            TaskRecord updatedTask = lambdaTaskService.updateTask(id, taskRequest);
+           
+
+            TaskResponse updatedTask = lambdaTaskService.updateTask(id, taskRequest);
+
             String responseBody = gson.toJson(updatedTask);
             return response
                     .withStatusCode(200)
