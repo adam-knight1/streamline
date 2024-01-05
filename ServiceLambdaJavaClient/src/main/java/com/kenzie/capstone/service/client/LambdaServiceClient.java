@@ -57,9 +57,9 @@ public class LambdaServiceClient {
         return taskListResponse;
     }
 
-    public TaskResponse addTaskToTaskList (String userId, String taskListName,TaskRequest taskRequest)throws JsonProcessingException{
+    public TaskResponse addTaskToTaskList (String userId, String taskListName,TaskRecord taskRecord)throws JsonProcessingException{
         EndpointUtility endpointUtility = new EndpointUtility();
-        String requestData = mapper.writeValueAsString(taskRequest);
+        String requestData = mapper.writeValueAsString(taskRecord);
         String response = endpointUtility.postEndpoint("task/add", requestData);
         TaskResponse taskResponse;
         //deserializing response into a TaskResponse object
@@ -88,3 +88,5 @@ public class LambdaServiceClient {
     }
 
 }
+
+

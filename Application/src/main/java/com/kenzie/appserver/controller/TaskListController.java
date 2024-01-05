@@ -1,10 +1,12 @@
 package com.kenzie.appserver.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.TaskListService;
 import com.kenzie.appserver.service.model.TaskList;
+import com.kenzie.capstone.service.model.TaskListRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
@@ -34,9 +36,8 @@ public class TaskListController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TaskListResponse> createTaskList(TaskListCreateRequest request,
-                                                           String userId, String taskListName) {
-        TaskList taskList = taskListService.createTaskList(request, userId, taskListName);
+    public ResponseEntity<TaskListResponse> createTaskList(TaskListRequest request) throws JsonProcessingException {
+        TaskListResponse taskList = taskListService.createTaskList(request);
         if (taskList == null) {
             return ResponseEntity.notFound().build();
         }
@@ -87,9 +88,12 @@ omer implemented original code
 
     */
 
-    @PutMapping("/userId/updateName")
+    @PutMapping("/{userId}/updateName")
     public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
                                                                @PathVariable String userId) {
+        if (userId == null) {
+            return ResponseEntity.badRequest().build();
+        }
         TaskListRecord updatedRecord = taskListService.updateTaskListName(request, userId);
         if (updatedRecord == null) {
             return ResponseEntity.notFound().build();

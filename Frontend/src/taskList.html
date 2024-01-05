@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="taskListPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="background">
+<header class="header">
+    <h1 class="site-title">Welcome to the Streamline App</h1>
+</header>
+<div class="welcome-section">
+    <p>Here you can mnage your task list.</p>
+</div>
+
+<div class="card" id="create-taskList-form">
+    <h2>Create a Task List</h2>
+    <form class="card-content" id="create-taskList">
+        <p class="form-field">
+            <label>User ID</label>
+            <input type="text" required class="validated-field" id="userId-field">
+        </p>
+        <p class="form-field">
+            <label>Task List Name</label>
+            <input type="text" required class="validated-field" id="taskList-name-field">
+        </p>
+        <button type="submit">Create</button>
+    </form>
+</div>
+
+<div class="card" id="create-task-form">
+    <h2>Add a New Task</h2>
+    <form class="card-content" id="create-task">
+        <p class="form-field">
+            <label>Task Description</label>
+            <input type="text" required class="validated-field" id="task-desc-field">
+        </p>
+        <button type="submit">Add</button>
+    </form>
+</div>
+
+<div class="card" id="tasks-display">
+    <h2>Your Tasks</h2>
+    <div id="tasks-container">
+        <!-- tasks go here Omer -->
+    </div>
+</div>
+
+<div class="card" id="update-taskList-form">
+    <h2>Update Task List</h2>
+    <form class="card-content" id="update-taskList">
+        <p class="form-field">
+            <label>User ID of Existing User</label>
+            <input type="text" required class="validated-field" id="update-task-list-user-id-field">
+        </p>
+        <p class="form-field">
+            <label>New List Name</label>
+            <input type="text" class="validated-field" id="update-task-list-name-field">
+        </p>
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+<a href="javascript:history.back()" class="bubble-button">Go Back</a>
+</body>
+</html>

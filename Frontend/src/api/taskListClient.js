@@ -12,7 +12,7 @@ export default class TaskListClient extends BaseClass {
 
     async createTaskList(userId, taskListName){
         try {
-            const response = await this.client.post('/taskList', {
+            const response = await this.client.post('/taskList/create', {
                 userId: userId,
                 taskListName: taskListName
             });

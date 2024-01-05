@@ -10,8 +10,8 @@ module.exports = {
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
-    userLoginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
-    userHomePage: path.resolve(__dirname, 'src', 'pages', 'userHomePage.js')
+    loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
+    taskListPage: path.resolve(__dirname, 'src', 'pages', 'taskListPage.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -27,7 +27,7 @@ module.exports = {
           '/example',
           '/user',
           '/login',
-          '/userHome'
+          '/taskList'
         ],
         target: 'http://localhost:5001'
       }
@@ -50,8 +50,8 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
-      template: './src/userHome.html',
-      filename: 'userHome.html',
+      template: './src/taskList.html',
+      filename: 'taskList.html',
       inject: false
     }),
     new CopyPlugin({
