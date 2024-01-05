@@ -24,12 +24,10 @@ class TaskListPage extends BaseClass {
         let userId = document.getElementById("userId-field").value;
         let taskListName = document.getElementById("taskList-name-field").value;
 
-        this.showMessage('userId ${userId}');
+        this.showMessage(`userId ${userId}`);
 
        //Calling the createTaskList method with returned values
         let createdTaskList = await this.client.createTaskList(userId, taskListName, this.errorHandler);
-
-
 
         if (createdTaskList) {
             this.showMessage(`TaskList ${createdTaskList.taskListName} created successfully!`);
