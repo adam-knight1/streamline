@@ -1,11 +1,14 @@
 package com.kenzie.appserver.service;
 
 
+import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Task;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -15,27 +18,40 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class TaskServiceTest {
 
-    @Mock
     private TaskRepository taskRepository;
     private TaskService taskService;
+    private TaskListRepository taskListRepository;
+    private TaskListService taskListService;
+    private LambdaServiceClient lambdaServiceClient;
 
-    @Captor
-    private ArgumentCaptor<TaskRecord> taskRecordCaptor;
-
+    @BeforeEach
+    void setup(){
+        taskRepository = mock(TaskRepository.class);
+        taskService = new TaskService(taskRepository,taskListRepository);
+        taskListRepository = mock(TaskListRepository.class);
+        taskListService = new TaskListService(taskListRepository,lambdaServiceClient);
+    }
     @Test
-    public void AddTask_Sucessful(){
+    public void addTask_Successful(){
         //GIVEN
-        Task task = new Task("Example taskName","Description of task", true);
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setTaskDescription("Description of task");
+        taskRecord.setTaskName("Sample taskName");
+        taskRecord.setCompleted(true);
 
-        //WHEN
-        //Task addedTask = taskService.addTask(task);
+        when(taskRepository.save(any(TaskRecord.class))).thenReturn(taskRecord);
 
-        //THEN
+        TaskRecord addedTask = taskService.addTask(taskRecord);
+
+        assertNotNull(addedTask);
+        assertEquals("Sample taskName", addedTask.getTaskName());
+        assertEquals("Description of task",addedTask.getTaskDescription());
+        assertTrue(addedTask.isCompleted());
 
     }
 

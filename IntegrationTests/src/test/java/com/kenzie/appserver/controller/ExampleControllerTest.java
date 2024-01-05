@@ -35,14 +35,14 @@
 //
 //        String name = mockNeat.strings().valStr();
 //
-////        Example persistedExample = exampleService.addNewExample(name);
-////        mvc.perform(get("/example/{id}", persistedExample.getId())
-////                        .accept(MediaType.APPLICATION_JSON))
-////                .andExpect(jsonPath("id")
-////                        .isString())
-////                .andExpect(jsonPath("name")
-////                        .value(is(name)))
-////                .andExpect(status().is2xxSuccessful());
+//        Example persistedExample = exampleService.addNewExample(name);
+//        mvc.perform(get("/example/{id}", persistedExample.getId())
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("id")
+//                        .isString())
+//                .andExpect(jsonPath("name")
+//                        .value(is(name)))
+//                .andExpect(status().is2xxSuccessful());
 ////    }
 //
 //    @Test
