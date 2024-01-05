@@ -1,4 +1,5 @@
 package com.kenzie.appserver.service;
+import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,6 +102,11 @@ public class UserService {
             return null;
         }
     }*/
+
+    public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
+        return lambdaServiceClient.findUserByUserId(userId);
+    }
+
 
     public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
         try {

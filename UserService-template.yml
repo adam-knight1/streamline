@@ -52,7 +52,7 @@ Resources:
         FindUserByIdEvent:
           Type: Api
           Properties:
-            Path: /user/findById
+            Path: /user/{userId}
             Method: get
 
 
