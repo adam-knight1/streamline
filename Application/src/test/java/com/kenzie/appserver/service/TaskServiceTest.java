@@ -1,28 +1,21 @@
 package com.kenzie.appserver.service;
 
-
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
-
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Task;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 public class TaskServiceTest {
-
     private TaskRepository taskRepository;
     private TaskService taskService;
     private TaskListRepository taskListRepository;
@@ -37,7 +30,7 @@ public class TaskServiceTest {
         taskListService = new TaskListService(taskListRepository,lambdaServiceClient);
     }
     @Test
-    public void addTask_Successful(){
+    void addTask_Successful(){
         //GIVEN
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setTaskDescription("Description of task");
@@ -55,12 +48,12 @@ public class TaskServiceTest {
 
     }
 
-    @Test
-    public void testDeleteTask(){
-        //GIVEN
-        Task task = new Task("Task to Delete", "Description of task", true);
-
-        //WHEN
-
-    }
+//    @Test
+//    public void testDeleteTask(){
+//        //GIVEN
+//        Task task = new Task("Task to Delete", "Description of task", true);
+//
+//        //WHEN
+//
+//    }
 }
