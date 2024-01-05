@@ -21,6 +21,7 @@ public class LambdaUserService {
     }
 
     public UserRecord findByUserId(String userId) {
+        //I need to add more logging statements here
         return userDao.findUserById(userId);
     }
 

@@ -25,15 +25,21 @@ public class UserController {
         this.userService = userService;
     }
 
-   /* @GetMapping("/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserResponseLambda> getUser(@PathVariable("userId") String userId) {
         System.out.println("Received request to find user with userId: " + userId);
-        User user = userService.findByUserId(userId);
-        if (user == null) {
-            throw new UserNotFoundException("User not found"); //see custom exception -adam
+        try {
+            UserResponseLambda userResponseLambda = userService.findUserByUserId(userId);
+            if (userResponseLambda == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.ok(userResponseLambda);
+        } catch (Exception e) {
+            System.out.println("Error in fetching user: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return ResponseEntity.ok(userToResponse(user));
-    } */
+    }
+
 
 
     @PostMapping("/create")

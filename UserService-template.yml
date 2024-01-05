@@ -6,7 +6,6 @@ Parameters:
     Type: String
     Default: dev
 
-#CreateUser
 Resources:
   CreateUserFunction:
     Type: AWS::Serverless::Function
@@ -17,7 +16,6 @@ Resources:
       Description: Create a new user
       MemorySize: 512
       Timeout: 240
-      # Function's execution role
       Policies:
         - AWSLambdaBasicExecutionRole
         - AWSLambda_ReadOnlyAccess
@@ -27,11 +25,35 @@ Resources:
         - AmazonDynamoDBFullAccess
       Tracing: Active
       Events:
-        UpdateResource:
+        CreateUserEvent:
           Type: Api
           Properties:
             Path: /user/create
             Method: post
+
+  FindUserByUserIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.FindUserByUserId
+      Runtime: java11
+      Description: Find a user by user Id
+      MemorySize: 512
+      Timeout: 240
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        FindUserByIdEvent:
+          Type: Api
+          Properties:
+            Path: /user/{userId}
+            Method: get
 
 
 

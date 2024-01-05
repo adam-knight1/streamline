@@ -87,6 +87,20 @@ public class LambdaServiceClient {
         return taskResponse;
     }
 
+    public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String response = endpointUtility.getEndpoint("user/" + userId);
+
+        UserResponseLambda userResponse;
+        try {
+            userResponse = mapper.readValue(response, UserResponseLambda.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
+        return userResponse;
+    }
+
+
 }
 
 
