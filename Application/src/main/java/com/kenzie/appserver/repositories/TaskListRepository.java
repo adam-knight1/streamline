@@ -13,11 +13,12 @@ public interface TaskListRepository extends CrudRepository<TaskListRecord, Strin
 
     Optional<TaskListRecord> findById(String id);
 
-    String findNameByUserId(String id);
+    //String findNameByUserId(String id);
 
     TaskListRecord save(TaskListRecord taskListRecord);
 
     //TaskList updateListName(String id);
-    void deleteById(String id);
+
+    //void deleteById(String id);
 }
 
