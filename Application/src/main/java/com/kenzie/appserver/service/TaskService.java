@@ -71,16 +71,21 @@ public class TaskService {
         return false;
     }
 
-    public TaskResponse updateTask (String taskId, TaskRequest taskRequest) {
-        try {
-            lambdaServiceClient.updateTask(taskId, taskRequest);
-        }catch (Exception e){
-            System.out.println("Task name did not update:" + e.getMessage());
-        }
+    public TaskResponse updateTask (int taskId, String takName, String taskDescription) {
         TaskResponse taskResponse = new TaskResponse();
-        taskResponse.setTaskName(taskRequest.getTaskName());
-        if (taskRequest.getTaskName() == null){
-            taskResponse.setTaskName(taskResponse.getTaskName());
+
+        try{
+            boolean updateSuccessful = lambdaServiceClient.updateTask(taskId,takName,taskDescription);
+            if (updateSuccessful){
+                taskResponse.setTaskId(taskId);
+                taskResponse.setTaskName(takName);
+                taskResponse.setTaskDescription(taskDescription);
+                taskResponse.setMessage("Task updated successfully");
+            }else{
+                taskResponse.setMessage("Failed to update task details");
+            }
+        }catch (Exception exception){
+            taskResponse.setMessage("Error updating task: " + exception.getMessage());
         }
         return taskResponse;
     }

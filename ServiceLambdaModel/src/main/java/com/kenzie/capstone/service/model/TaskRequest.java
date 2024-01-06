@@ -1,16 +1,22 @@
 package com.kenzie.capstone.service.model;
 
-import com.amazonaws.services.lambda.runtime.events.S3BatchEvent;
-
-import java.util.List;
-
 public class TaskRequest {
     private String userId;
-    private String taskId;
+    private int taskId;
     // This may be superfluous since the task is just a simple sentence "take the dog out" - OB
     private String taskName;
     private String taskDescription;
     private boolean completed;
+
+    public TaskRequest(int taskId, String taskName, String taskDescription) {
+        this.taskName = taskName;
+        this.taskDescription = taskDescription;
+        this.taskId = taskId;
+    }
+
+    public TaskRequest() {
+
+    }
 
 
     public String getUserId() {
@@ -29,11 +35,11 @@ public class TaskRequest {
         this.taskName = taskName;
     }
 
-    public String getTaskId() {
+    public int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
 
@@ -53,14 +59,4 @@ public class TaskRequest {
         this.completed = completed;
     }
 
-    @Override
-    public String toString() {
-        return "TaskRequest{" +
-                "userId='" + userId + '\'' +
-                ", taskId='" + taskId + '\'' +
-                ", taskName='" + taskName + '\'' +
-                ", taskDescription='" + taskDescription + '\'' +
-                ", completed=" + completed +
-                '}';
-    }
 }

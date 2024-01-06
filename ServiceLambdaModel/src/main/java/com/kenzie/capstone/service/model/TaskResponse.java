@@ -6,7 +6,7 @@ public class TaskResponse{
 
 
     private String userId;
-    private String taskId;
+    private int taskId;
     // This may be superfluous since the task is just a simple sentence "take the dog out" - OB
     private String taskName;
     private String taskDescription;
@@ -15,7 +15,7 @@ public class TaskResponse{
     public TaskResponse() {
     }
 
-    public TaskResponse(String userId, String taskId, String taskName, String taskDescription, boolean completed) {
+    public TaskResponse(String userId, int taskId, String taskName, String taskDescription, boolean completed) {
         this.userId = userId;
         this.taskId = taskId;
         this.taskName = taskName;
@@ -31,11 +31,11 @@ public class TaskResponse{
     }
 
 
-    public String getTaskId() {
+    public int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
 

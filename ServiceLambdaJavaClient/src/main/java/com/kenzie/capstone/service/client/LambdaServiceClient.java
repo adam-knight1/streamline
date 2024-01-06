@@ -74,21 +74,6 @@ public class LambdaServiceClient {
         return taskResponse;
 
     }
-    public TaskResponse updateTask (String taskId, TaskRequest taskRequest) throws JsonProcessingException {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String requestData = mapper.writeValueAsString(taskRequest);
-        String endpoint = "task/update/" + taskId;
-
-        String response = endpointUtility.postEndpoint(endpoint,requestData);
-
-        TaskResponse taskResponse;
-        try {
-            taskResponse = mapper.readValue(response,TaskResponse.class);
-        }catch (Exception e){
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-        }
-        return taskResponse;
-    }
 
     public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
@@ -104,7 +89,24 @@ public class LambdaServiceClient {
     }
 
 
+    public boolean updateTask(int taskId, String taskName, String taskDescription) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
 
+        TaskRequest taskRequest = new TaskRequest(taskId,taskName,taskDescription);
+
+        try {
+            String requestData = mapper.writeValueAsString(taskRequest);
+            String endpoint = "task/update/" + taskId;
+
+            String response = endpointUtility.postEndpoint(endpoint, requestData);
+            TaskResponse taskResponse = mapper.readValue(response, TaskResponse.class);
+            return taskResponse.isCompleted();
+        }catch (JsonProcessingException e){
+            throw e;
+        }catch (Exception e){
+            throw new ApiGatewayException("Error updating task: " + e.getMessage());
+        }
+    }
 }
 
 

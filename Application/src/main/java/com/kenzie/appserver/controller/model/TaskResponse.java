@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TaskResponse {
     @JsonProperty("taskId")
-    private String taskId;
+    private int taskId;
     @JsonProperty("userId")
     private String userId;
     @JsonProperty("taskName")
@@ -14,11 +14,15 @@ public class TaskResponse {
     @JsonProperty("completed")
     private boolean completed;
 
-    public String getTaskId() {
+    @JsonProperty("message")
+    private String message;
+
+
+    public int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
 
@@ -52,5 +56,13 @@ public class TaskResponse {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

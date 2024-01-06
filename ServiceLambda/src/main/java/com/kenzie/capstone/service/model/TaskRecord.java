@@ -2,7 +2,6 @@ package com.kenzie.capstone.service.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
@@ -10,7 +9,7 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Task")
 public class TaskRecord {
     private String userId;
-    private String taskId;
+    private int taskId;
     private String taskName;
     private String taskDescription;
     private boolean completed;
@@ -23,13 +22,14 @@ public class TaskRecord {
         this.userId = userId;
     }
     @DynamoDBAttribute(attributeName = "taskId")
-    public String getTaskId() {
+    public int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
+
     @DynamoDBAttribute(attributeName = "taskName")
     public String getTaskName() {
         return taskName;
