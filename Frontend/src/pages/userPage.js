@@ -115,7 +115,7 @@ class UserPage extends BaseClass {
         event.preventDefault();
         let username = document.getElementById("find-user-by-username-field");
         try {
-            const foundUser = await.this.client.getUserByUsername(username, this.errorHandler);
+            const foundUser = await this.client.getUserByUsername(username, this.errorHandler);
             if (foundUser) {
                 this.displayUserDetails(foundUser)
             } else {

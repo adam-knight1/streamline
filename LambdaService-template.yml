@@ -167,10 +167,10 @@ Resources:
         - AmazonDynamoDBFullAccess
       Tracing: Active
       Events:
-        FindUserByIdEvent:
+        FindUserByUsernameEvent:
           Type: Api
           Properties:
-            Path: /user/{username}
+            Path: /user/by-username/{username}
             Method: get
 
 
