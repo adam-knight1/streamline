@@ -43,6 +43,9 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseEntity<UserResponseLambda> getUserByUsername(@PathVariable("username") String username){
         System.out.println("Received request to find user with username: " + username);
+        try {
+            UserResponseLambda userResponseLambda = userService.fin
+        }
 
     }
 

@@ -124,6 +124,10 @@ public class UserService {
         return lambdaServiceClient.findUserByUserId(userId);
     }
 
+    public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException{
+        return lambdaServiceClient.findUserByUsername(username);
+    }
+
 
     public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
         try {

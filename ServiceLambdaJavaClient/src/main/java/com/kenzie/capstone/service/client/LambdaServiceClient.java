@@ -100,6 +100,21 @@ public class LambdaServiceClient {
         return userResponse;
     }
 
+    public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String response = endpointUtility.getEndpoint("user/" + username); //this lines up with the {username} in controller I think
+
+        UserResponseLambda userResponse;
+        try {
+            userResponse = mapper.readValue(response, UserResponseLambda.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
+        return userResponse;
+    }
+
+    }
+
 
 }
 
