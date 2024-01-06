@@ -39,6 +39,8 @@ public class LambdaUserService {
         try {
             userDao.createUser(userRecord);
             log.info("Successfully created user");
+//            localLoginMap.put(userRecord.getUsername(), userRecord);
+
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
             userResponseLambda.setUserId(userRecord.getUserId());

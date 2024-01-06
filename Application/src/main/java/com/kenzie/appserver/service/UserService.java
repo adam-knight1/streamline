@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserService {
@@ -23,6 +24,8 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
+    private ConcurrentHashMap<String, UserRecord> localLoginMap = new ConcurrentHashMap<>(); //added this threadsafe map for the local login
+
 
     @Autowired
     public UserService(LambdaServiceClient lambdaServiceClient, UserRepository userRepository) {
