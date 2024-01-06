@@ -1,12 +1,16 @@
 
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.controller.model.TaskCreateRequest;
+import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +20,13 @@ import java.util.List;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
+    private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository) {
+    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,LambdaServiceClient lambdaServiceClient) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
 
     public List<TaskRecord> getAllTasks() {
@@ -63,5 +69,19 @@ public class TaskService {
             return true;
         }
         return false;
+    }
+
+    public TaskResponse updateTask (String taskId, TaskRequest taskRequest) {
+        try {
+            lambdaServiceClient.updateTask(taskId, taskRequest);
+        }catch (Exception e){
+            System.out.println("Task name did not update:" + e.getMessage());
+        }
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setTaskName(taskRequest.getTaskName());
+        if (taskRequest.getTaskName() == null){
+            taskResponse.setTaskName(taskResponse.getTaskName());
+        }
+        return taskResponse;
     }
 }

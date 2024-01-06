@@ -31,7 +31,7 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: /task/update/{id}
+            Path: /task/update/{userId}
             Method: put
 
   #CreateTask

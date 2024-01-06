@@ -25,7 +25,7 @@ public class TaskServiceTest {
     @BeforeEach
     void setup(){
         taskRepository = mock(TaskRepository.class);
-        taskService = new TaskService(taskRepository,taskListRepository);
+        taskService = new TaskService(taskRepository,taskListRepository,lambdaServiceClient);
         taskListRepository = mock(TaskListRepository.class);
         taskListService = new TaskListService(taskListRepository,lambdaServiceClient);
     }

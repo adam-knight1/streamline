@@ -8,6 +8,10 @@ import com.kenzie.capstone.service.model.*;
 public class LambdaServiceClient {
     private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
     private static final String SET_EXAMPLE_ENDPOINT = "example";
+    private static final String CREATE_USER_ENDPOINT = "/user/create";
+    private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
+    private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
+   // private static final String ADD_TASKTOTASKLIST_ENDPOINT = ""
     private ObjectMapper mapper;
 
     public LambdaServiceClient() {
@@ -62,7 +66,6 @@ public class LambdaServiceClient {
         String requestData = mapper.writeValueAsString(taskRecord);
         String response = endpointUtility.postEndpoint("task/add", requestData);
         TaskResponse taskResponse;
-        //deserializing response into a TaskResponse object
         try {
             taskResponse = mapper.readValue(response, TaskResponse.class);
         } catch (Exception e) {
@@ -71,9 +74,9 @@ public class LambdaServiceClient {
         return taskResponse;
 
     }
-    public TaskResponse updateTask (String taskId, TaskRequest updatedTaskRequest) throws JsonProcessingException {
+    public TaskResponse updateTask (String taskId, TaskRequest taskRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String requestData = mapper.writeValueAsString(updatedTaskRequest);
+        String requestData = mapper.writeValueAsString(taskRequest);
         String endpoint = "task/update/" + taskId;
 
         String response = endpointUtility.postEndpoint(endpoint,requestData);
@@ -99,6 +102,7 @@ public class LambdaServiceClient {
         }
         return userResponse;
     }
+
 
 
 }
