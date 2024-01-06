@@ -35,7 +35,7 @@ public class FindUserByUsername implements RequestHandler<APIGatewayProxyRequest
             try {
                 String username = input.getPathParameters().get("username");
 
-                UserRecord foundUser = lambdaUserService.findByUsername(username);
+                UserRecord foundUser = lambdaUserService.findByUserName(username);
                 if (foundUser == null) {
                     return response
                             .withStatusCode(404)

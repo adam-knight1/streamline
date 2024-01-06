@@ -46,6 +46,8 @@ public class UserDao {
         return mapper.load(UserRecord.class, userId);
     }
 
+    public UserRecord findUserByUsername(String username) { return mapper.load(UserRecord.class,username); }
+
 
         /*public List<UserRecord> findUserByEmail(String email) {
             UserRecord userRecord = new UserRecord();
@@ -72,17 +74,24 @@ public class UserDao {
                 mapper.delete(userRecord);
             }
         }
-    public List<UserRecord> findByUsername(String username) {
+    public UserRecord findByUsername(String username) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUsername(username);
 
         DynamoDBQueryExpression<UserRecord> queryExpression = new DynamoDBQueryExpression<UserRecord>()
-                .withIndexName("UsernameIndex") //gonna query the GSI!
+                .withIndexName("UsernameIndex")
                 .withConsistentRead(false)
                 .withHashKeyValues(userRecord);
 
         PaginatedQueryList<UserRecord> result = mapper.query(UserRecord.class, queryExpression);
-        return new ArrayList<>(result);
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        System.out.println("no user was found with that username -userdao");
+        return null;
     }
+
+}
+
 
 }
