@@ -25,6 +25,11 @@ public class LambdaUserService {
         return userDao.findUserById(userId);
     }
 
+    public UserRecord findByUserName(String username) {
+        //I need to add more logging statements here
+        return userDao.findUserByUsername(username);
+    }
+
     public UserResponseLambda createNewUser(UserRecord userRecord) {
         if (userRecord == null || userRecord.getEmail() == null || userRecord.getUsername() == null || userRecord.getPassword() == null) {
             log.error("The user record contains null values");
