@@ -80,7 +80,7 @@ public class LambdaTaskListService {
         if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
             throw new IllegalArgumentException("Task name is required");
         }
-        TaskListRecord taskListRecord = (TaskListRecord) taskListDao.getTaskListByUserId(userId);
+        TaskListRecord taskListRecord = taskListDao.getTaskListByUserId(userId);
 
         if (taskListRecord == null) {
             throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
@@ -88,6 +88,11 @@ public class LambdaTaskListService {
 
         String taskId = UUID.randomUUID().toString();
         TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setUserId(userId);
+        taskRecord.setTaskName(taskRequest.getTaskName());
+        taskRecord.setTaskDescription(taskRequest.getTaskDescription());
+        taskRecord.setTaskId(taskId);
+        taskRecord.setCompleted(false);
 
         taskDao.storeTaskData(taskRecord);
 

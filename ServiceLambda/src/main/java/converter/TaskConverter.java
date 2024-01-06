@@ -29,11 +29,4 @@ public class TaskConverter {
         return referral;
     }
 
-//    public static S3BatchEvent.Task fromRecordToReferral(ReferralRecord record) {
-//        Referral referral = new Referral();
-//        referral.setCustomerId(record.getCustomerId());
-//        referral.setReferrerId(record.getReferrerId());
-//        referral.setReferralDate(new ZonedDateTimeConverter().convert(record.getDateReferred()));
-//        return referral;
-//    }
 }

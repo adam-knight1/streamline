@@ -31,8 +31,6 @@ public class Task  {
 
     }
 
-
-
     public void updateTaskStatus(boolean newStatus){
         this.completed = newStatus;
     }
