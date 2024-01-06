@@ -68,22 +68,22 @@ public class TaskListDao {
         return taskListRecord;
     }
 
-    public TaskListResponse updateTaskListRecord(String userId, String taskListName) {
+    public TaskListResponse updateTaskListRecord(String userId, String existingTaskListName, String newTaskListName) {
         TaskListRecord taskListRecord = new TaskListRecord();
         taskListRecord.setUserId(userId);
-        taskListRecord.setTaskListName(taskListName);
+        taskListRecord.setTaskListName(newTaskListName);
 
         try {
             mapper.save(taskListRecord, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
-                            "userId",
-                            new ExpectedAttributeValue().withExists(true)
+                            "userId", new ExpectedAttributeValue().withExists(true),
+                            "existingTaskListName", new ExpectedAttributeValue().withExists(true)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("userId and or taskListName does not exist");
         }
 
-        return new TaskListResponse(userId, taskListName, Collections.emptyList());
+        return new TaskListResponse(userId, newTaskListName, Collections.emptyList());
     }
 
     //    public TaskListRequest storeExampleData(TaskListRequest taskListRequest) {
