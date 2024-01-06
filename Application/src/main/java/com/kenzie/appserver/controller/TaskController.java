@@ -4,6 +4,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.TaskService;
 import com.kenzie.appserver.service.model.Task;
+import com.kenzie.capstone.service.model.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,4 +52,9 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
+//    @PutMapping("/{taskId}")
+//    public ResponseEntity<TaskRecord> updateTask(@PathVariable String taskId, TaskRequest taskRequest){
+//
+//    }
+
 }

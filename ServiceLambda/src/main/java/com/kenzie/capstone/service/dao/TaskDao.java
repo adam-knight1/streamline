@@ -50,7 +50,7 @@ public class TaskDao {
         return mapper.query(TaskRecord.class, queryExpression);
     }
 
-    public TaskRecord setTaskData(String userId, String taskId) {
+    public TaskRecord setTaskData(String userId, int taskId) {
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setUserId(userId);
         taskRecord.setTaskId(taskId);
@@ -79,25 +79,21 @@ public class TaskDao {
         return mapper.query(TaskRecord.class, queryExpression);
     }
 
-    public TaskRecord createTaskRecord(String userId, String taskId) {
-        TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskId(taskId);
-        taskRecord.setUserId(userId);
-        
+    public TaskRecord createTaskRecord(String userId, int taskId) {
         if (userId == null || userId.isEmpty()){
             throw new IllegalArgumentException("User ID cannot be null or empty");
         }
 
-        if (taskId == null || taskId.isEmpty()){
+        if (taskId <=0 ){
             throw new IllegalArgumentException("Task ID cannot be null or empty");
         }
-        
-        mapper.save(taskRecord);
+        TaskRecord taskRecord = new TaskRecord();
+        taskRecord.setTaskId(taskId);
+        taskRecord.setUserId(userId);
         return taskRecord;
-        
     }
-    public TaskRecord getTaskRecordById(String taskId) {
-        if (taskId == null || taskId.isEmpty()){
+    public TaskRecord getTaskRecordById(int taskId) {
+        if (taskId <=0 ){
             throw new IllegalArgumentException("Task ID cannot be null or empty");
         }
         TaskRecord taskRecord = null;
@@ -112,8 +108,8 @@ public class TaskDao {
     }
 
     public TaskRecord updateTaskRecord(TaskRecord existingTask) {
-        if (existingTask == null || existingTask.getTaskId() == null || existingTask.getTaskId().isEmpty()){
-            throw new IllegalArgumentException("Existing TaskRecord or its ID cannot be null or empty");
+        if (existingTask == null){
+            throw new IllegalArgumentException("Existing TaskRecord cannot be null");
         }
         try {
             TaskRecord retrievedTask = mapper.load(TaskRecord.class,existingTask.getTaskId());

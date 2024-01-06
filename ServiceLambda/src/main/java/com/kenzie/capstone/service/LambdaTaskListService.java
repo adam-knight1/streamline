@@ -89,12 +89,11 @@ public class LambdaTaskListService {
             throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
         }
 
-        String taskId = UUID.randomUUID().toString();
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setUserId(userId);
         taskRecord.setTaskName(taskRequest.getTaskName());
         taskRecord.setTaskDescription(taskRequest.getTaskDescription());
-        taskRecord.setTaskId(taskId);
+        taskRecord.setTaskId(taskRequest.getTaskId());
         taskRecord.setCompleted(false);
 
         taskDao.storeTaskData(taskRecord);
