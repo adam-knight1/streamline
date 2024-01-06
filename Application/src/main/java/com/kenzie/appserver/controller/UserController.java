@@ -53,10 +53,7 @@ public class UserController {
             System.out.println("Error in fetching user by username: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
-
 
 
     @PostMapping("/create")

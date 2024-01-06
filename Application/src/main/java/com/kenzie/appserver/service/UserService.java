@@ -115,13 +115,11 @@ public class UserService {
         }
     }*/
 
-      /*public Optional<UserRecord> authenticateUser(String username, String password){
+      public Optional<UserRecord> authenticateUser(String username, String password){
         if (username == null || password == null) {
             logger.error("Username or Password is null");
             return Optional.empty();
         }
-
-
 
         Optional<UserRecord> userRecord = userRepository.findByUsername(username);
 
@@ -136,7 +134,7 @@ public class UserService {
             logger.warn("Authentication failed for user: {}", username);
             return Optional.empty();
         }
-    }*/
+    }
 
     /*public boolean authenticateUser(String username, String submittedPassword) {
         UserRecord user;
