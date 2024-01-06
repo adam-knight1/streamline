@@ -43,9 +43,11 @@ public class TaskListService {
 //    }
 
     public TaskListResponse createTaskList(TaskListRequest request) throws JsonProcessingException {
+        com.kenzie.capstone.service.model.TaskListResponse response = new com.kenzie.capstone.service.model.TaskListResponse();
         try {
-            lambdaServiceClient.createTaskList(request);
+            response = lambdaServiceClient.createTaskList(request);
         } catch (Exception e) {
+            System.out.println(response);
             System.out.println("Task list creation unsuccessful.");
         }
         TaskListResponse taskListResponse = new TaskListResponse();
@@ -53,17 +55,6 @@ public class TaskListService {
         taskListResponse.setTaskListName(request.getTaskListName());
         taskListResponse.setTasks(Collections.emptyList());
         return taskListResponse;
-//        TaskListResponse response = new TaskListResponse();
-//        try {
-//            com.kenzie.capstone.service.model.TaskListResponse taskListResponse =
-//                    lambdaServiceClient.createTaskList(request);
-//            response.setUserId(taskListResponse.getUserId());
-//            response.setTaskListName(taskListResponse.getTaskListName());
-//            response.setTasks(Collections.emptyList());
-//        } catch (Exception e) {
-//            System.out.println("Task list creation unsuccessful");
-//        }
-//        return response;
     }
 
     public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {
