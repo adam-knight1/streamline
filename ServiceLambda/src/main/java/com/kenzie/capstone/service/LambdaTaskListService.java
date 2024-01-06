@@ -3,13 +3,17 @@ package com.kenzie.capstone.service;
 import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.UUID;
 
 public class LambdaTaskListService {
     private TaskListDao taskListDao;
     private TaskDao taskDao;
+    private static final Logger log = LoggerFactory.getLogger(LambdaTaskListService.class);
 
     @Inject
     public LambdaTaskListService(TaskListDao taskListDao, TaskDao taskDao) {
@@ -31,12 +35,29 @@ public class LambdaTaskListService {
 //        return new TaskListRequest(userId, taskListName);
 //    }
 
-    public TaskListResponse createTaskList(TaskListRequest taskListRequest){
-        if(taskListDao.getTaskListByUserId(taskListRequest.getUserId()) != null){
-            throw new IllegalArgumentException("TaskList with userId " + taskListRequest.getUserId() +
-                    " already exists.");
+    public TaskListResponse createTaskList(TaskListRecord taskListRecord){
+        if (taskListRecord == null || taskListRecord.getUserId() == null || taskListRecord.getTaskListName() == null
+        || taskListRecord.getTasks() == null) {
+            log.error("The task list record contains null values");
+            throw new IllegalArgumentException("The task list record cannot contain null values");
         }
-        return taskListDao.createTaskListRecord(taskListRequest.getUserId(), taskListRequest.getTaskListName());
+        log.info("User id is " + taskListRecord.getUserId());
+
+        try {
+            taskListDao.createTaskList(taskListRecord);
+            log.info("Successfully created task list.");
+            return new TaskListResponse(taskListRecord.getUserId(),
+                    taskListRecord.getTaskListName(), Collections.emptyList());
+        } catch (Exception e) {
+            log.error("Error creating task list: ", e);
+            throw new RuntimeException("Error creating task list", e);
+        }
+//        if(taskListDao.getTaskListByUserId(taskListRequest.getUserId()) != null){
+//            throw new IllegalArgumentException("TaskList with userId " + taskListRequest.getUserId() +
+//                    " already exists.");
+//        }
+//        return taskListDao.createTaskListRecord(taskListRequest.getUserId(),
+//                taskListRequest.getTaskListName(), Collections.emptyList());
     }
 
     public TaskListResponse updateTaskList(String userId, TaskListRequest taskListRequest) {

@@ -7,7 +7,10 @@ import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.*;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class TaskListDao {
 
@@ -22,14 +25,15 @@ public class TaskListDao {
     }
 
     public TaskListRecord getTaskListByUserId(String userId) {
-        TaskListRecord taskListRecord = new TaskListRecord();
-        taskListRecord.setUserId(userId);
-
-        DynamoDBQueryExpression<TaskListRecord> queryExpression = new DynamoDBQueryExpression<TaskListRecord>()
-                .withHashKeyValues(taskListRecord)
-                .withConsistentRead(false);
-
-        return mapper.query(TaskListRecord.class, queryExpression).get(0);
+        return mapper.load(TaskListRecord.class, userId);
+//        TaskListRecord taskListRecord = new TaskListRecord();
+//        taskListRecord.setUserId(userId);
+//
+//        DynamoDBQueryExpression<TaskListRecord> queryExpression = new DynamoDBQueryExpression<TaskListRecord>()
+//                .withHashKeyValues(taskListRecord)
+//                .withConsistentRead(false);
+//
+//        return mapper.query(TaskListRecord.class, queryExpression).get(0);
     }
 
     public TaskListRecord getTaskListByTaskListName(String userId, String taskListName) {
@@ -44,22 +48,24 @@ public class TaskListDao {
         return  mapper.query(TaskListRecord.class, queryExpression).get(0);
     }
 
-    public TaskListResponse createTaskListRecord(String userId, String taskListName) {
-        TaskListRecord taskListRecord = new TaskListRecord();
-        taskListRecord.setUserId(userId);
-        taskListRecord.setTaskListName(taskListName);
-
+    public TaskListRecord createTaskList(TaskListRecord taskListRecord) {
         try {
-            mapper.save(taskListRecord, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "userId",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("userId already exists");
-        }
+            DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
 
-        return new TaskListResponse(userId, taskListName);
+            Map<String, ExpectedAttributeValue> expectedAttributes = ImmutableMap.of(
+                    "userId", new ExpectedAttributeValue().withExists(false),
+                    "taskListName", new ExpectedAttributeValue().withExists(false)
+            );
+
+            saveExpression.setExpected(expectedAttributes);
+            System.out.println("Saving taskListRecord: " + taskListRecord);
+
+            mapper.save(taskListRecord, saveExpression);
+        } catch (ConditionalCheckFailedException e) {
+            throw new IllegalArgumentException("Task list for user with ID " +
+                    taskListRecord.getUserId() + " already exists.");
+        }
+        return taskListRecord;
     }
 
     public TaskListResponse updateTaskListRecord(String userId, String taskListName) {
@@ -77,7 +83,7 @@ public class TaskListDao {
             throw new IllegalArgumentException("userId and or taskListName does not exist");
         }
 
-        return new TaskListResponse(userId, taskListName);
+        return new TaskListResponse(userId, taskListName, Collections.emptyList());
     }
 
     //    public TaskListRequest storeExampleData(TaskListRequest taskListRequest) {

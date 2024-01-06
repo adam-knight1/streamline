@@ -3,6 +3,7 @@ package com.kenzie.appserver.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
+import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
@@ -31,28 +32,38 @@ public class TaskListService {
         this.lambdaServiceClient = lambdaServiceClient;
     }
 
-    public TaskList findTaskListByUserId(String userId){
-        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-        if(taskListRecord.isPresent()){
-            TaskListRecord record = taskListRecord.get();
-            return transformToTaskList(record);
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list does not exist.");
-        }
-    }
+//    public TaskList findTaskListByUserId(String userId){
+//        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
+//        if(taskListRecord.isPresent()){
+//            TaskListRecord record = taskListRecord.get();
+//            return transformToTaskList(record);
+//        }else{
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list does not exist.");
+//        }
+//    }
 
     public TaskListResponse createTaskList(TaskListRequest request) throws JsonProcessingException {
-        TaskListResponse response = new TaskListResponse();
         try {
-            com.kenzie.capstone.service.model.TaskListResponse taskListResponse =
-                    lambdaServiceClient.createTaskList(request);
-            response.setUserId(taskListResponse.getUserId());
-            response.setTaskListName(taskListResponse.getTaskListName());
-            response.setTasks(Collections.emptyList());
+            lambdaServiceClient.createTaskList(request);
         } catch (Exception e) {
-            System.out.println("Task list creation unsuccessful");
+            System.out.println("Task list creation unsuccessful.");
         }
-        return response;
+        TaskListResponse taskListResponse = new TaskListResponse();
+        taskListResponse.setUserId(request.getUserId());
+        taskListResponse.setTaskListName(request.getTaskListName());
+        taskListResponse.setTasks(Collections.emptyList());
+        return taskListResponse;
+//        TaskListResponse response = new TaskListResponse();
+//        try {
+//            com.kenzie.capstone.service.model.TaskListResponse taskListResponse =
+//                    lambdaServiceClient.createTaskList(request);
+//            response.setUserId(taskListResponse.getUserId());
+//            response.setTaskListName(taskListResponse.getTaskListName());
+//            response.setTasks(Collections.emptyList());
+//        } catch (Exception e) {
+//            System.out.println("Task list creation unsuccessful");
+//        }
+//        return response;
     }
 
     public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {
@@ -80,15 +91,15 @@ public class TaskListService {
 
      */
 
-    public boolean deleteTaskListByUserId(String userId){
-        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-        if(taskListRecord.isPresent()){
-            taskListRepository.deleteById(userId);
-            return true;
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
-        }
-    }
+//    public boolean deleteTaskListByUserId(String userId){
+//        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
+//        if(taskListRecord.isPresent()){
+//            taskListRepository.deleteById(userId);
+//            return true;
+//        }else{
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
+//        }
+//    }
 
     private TaskList transformToTaskList(TaskListRecord record){
 

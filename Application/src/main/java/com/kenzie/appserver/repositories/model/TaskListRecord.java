@@ -20,7 +20,7 @@ public class TaskListRecord {
     public String taskListName;
 
     @DynamoDBAttribute(attributeName = "tasks")
-    public List<Task> tasks;
+    public List<TaskRecord> tasks;
 
     public TaskListRecord() {}
 
@@ -47,11 +47,11 @@ public class TaskListRecord {
         this.taskListName = taskListName;
     }
 
-    public List<Task> getTasks() {
+    public List<TaskRecord> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<TaskRecord> tasks) {
         this.tasks = tasks;
     }
 
@@ -68,7 +68,7 @@ public class TaskListRecord {
         return Objects.hash(userId, taskListName, tasks);
     }
 
-    public void addTask(Task task) {
+    public void addTask(TaskRecord task) {
         if(tasks == null){
             tasks = new ArrayList<>();
         }

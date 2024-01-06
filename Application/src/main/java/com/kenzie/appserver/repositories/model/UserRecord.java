@@ -2,6 +2,7 @@ package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import org.springframework.data.annotation.Id;
 
@@ -12,6 +13,9 @@ import java.util.Objects;
         @Id
         @DynamoDBHashKey(attributeName = "userId")
         private String userId;
+        @DynamoDBIndexHashKey(attributeName = "username", globalSecondaryIndexName = "UsernameIndex")
+        private String username;
+
 
         //the last project had an issue setting sort keys
         //if possible we can change it this time
@@ -19,8 +23,6 @@ import java.util.Objects;
         @DynamoDBAttribute(attributeName = "email")
         private String email;
 
-        @DynamoDBAttribute(attributeName = "username")
-        private String username;
 
         @DynamoDBAttribute(attributeName = "password")
         private String password;

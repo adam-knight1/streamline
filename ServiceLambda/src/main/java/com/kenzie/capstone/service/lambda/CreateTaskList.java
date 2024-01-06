@@ -9,7 +9,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.model.TaskListRecord;
 import com.kenzie.capstone.service.model.TaskListRequest;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -32,19 +35,30 @@ public class CreateTaskList implements RequestHandler<APIGatewayProxyRequestEven
 
         String requestBody = input.getBody();
 
-        //Deserialize JSON to TaskListRequest object
-        TaskListRequest taskListRequest = gson.fromJson(requestBody, TaskListRequest.class);
-
         try{
-            lambdaTaskListService.createTaskList(taskListRequest);
-            return response.withStatusCode(200).withBody("Task list successfully created.");
+            TaskListRequest taskListRequest = gson.fromJson(requestBody, TaskListRequest.class);
+
+            TaskListRecord taskListRecord = new TaskListRecord();
+            taskListRecord.setUserId(taskListRequest.getUserId());
+            taskListRecord.setTaskListName(taskListRequest.getTaskListName());
+            taskListRecord.setTasks(Collections.emptyList());
+
+            lambdaTaskListService.createTaskList(taskListRecord);
+
+            return response
+                    .withStatusCode(200)
+                    .withBody("Task list successfully created.");
         }catch(IllegalArgumentException e){
             log.error("Invalid argument: " + e.getMessage());
-            return response.withStatusCode(400).withBody("Invalid argument.");
-        }//More specific error handling might be helpful
+            return response
+                    .withStatusCode(400)
+                    .withBody("Invalid argument.");
+        }
         catch(Exception e){
             log.error("Error creating task list: " + e.getMessage());
-            return response.withStatusCode(500).withBody("Error creating task list.");
+            return response
+                    .withStatusCode(500)
+                    .withBody("Error creating task list.");
         }
     }
 }
