@@ -111,6 +111,21 @@ class UserPage extends BaseClass {
         }
     }
 
+    async onFindByUsername(event){
+        event.preventDefault();
+        let username = document.getElementById("find-user-by-username-field");
+        try {
+            const foundUser = await.this.client.getUserByUsername(username, this.errorHandler);
+            if (foundUser) {
+                this.displayUserDetails(foundUser)
+            } else {
+                this.showMessage("User not found by username")
+             }
+           } catch (error) {
+                this.errorHandler("An error occurred while fetching user by username")
+        }
+    }
+
 
 displayUserDetails(user) {
     const userDetails = document.getElementById("user-details");
