@@ -34,11 +34,13 @@ public class UserService {
     }
 
 
-    public Optional<UserRecord> authenticateUser(String username, String password){
+    /*public Optional<UserRecord> authenticateUser(String username, String password){
         if (username == null || password == null) {
             logger.error("Username or Password is null");
             return Optional.empty();
         }
+
+
 
         Optional<UserRecord> userRecord = userRepository.findByUsername(username);
 
@@ -53,9 +55,20 @@ public class UserService {
             logger.warn("Authentication failed for user: {}", username);
             return Optional.empty();
         }
-    }
+    }*/
+
+    /*public boolean authenticateUser(String username, String submittedPassword) {
+        UserRecord user;
+        if (user != null) {
+            String storedHashedPassword = user.getPassword();
+            return checkPassword(submittedPassword, storedHashedPassword);
+        }
+        return false;
+    }*/
+
 
     public String getUsernameByUserId(String userId) {
+        //this method will apparently not work given the configuration of the project.
         Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
         if (userRecordOpt.isPresent()) {
             UserRecord userRecord = userRecordOpt.get();
@@ -63,6 +76,7 @@ public class UserService {
         }
             System.out.println("couldn't find userId");
         return null;
+
     }
 
 

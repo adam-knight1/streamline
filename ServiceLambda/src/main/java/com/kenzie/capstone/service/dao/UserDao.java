@@ -46,8 +46,6 @@ public class UserDao {
         return mapper.load(UserRecord.class, userId);
     }
 
-    public UserRecord findUserByUsername(String username) { return mapper.load(UserRecord.class,username); }
-
 
         /*public List<UserRecord> findUserByEmail(String email) {
             UserRecord userRecord = new UserRecord();
@@ -74,7 +72,7 @@ public class UserDao {
                 mapper.delete(userRecord);
             }
         }
-    public UserRecord findByUsername(String username) {
+    public UserRecord findUserByUsername(String username) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUsername(username);
 
@@ -90,8 +88,5 @@ public class UserDao {
         System.out.println("no user was found with that username -userdao");
         return null;
     }
-
-}
-
 
 }
