@@ -33,40 +33,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-
-    /*public Optional<UserRecord> authenticateUser(String username, String password){
-        if (username == null || password == null) {
-            logger.error("Username or Password is null");
-            return Optional.empty();
-        }
-
-
-
-        Optional<UserRecord> userRecord = userRepository.findByUsername(username);
-
-        if (userRecord.isEmpty()) {
-            logger.warn("User not found - authenticateUser: {}", username);
-            return Optional.empty();
-        }
-        if (userRecord.get().getPassword().equals(password)) {
-            logger.info("User authenticated successfully: {}", username);
-            return userRecord;
-        } else {
-            logger.warn("Authentication failed for user: {}", username);
-            return Optional.empty();
-        }
-    }*/
-
-    /*public boolean authenticateUser(String username, String submittedPassword) {
-        UserRecord user;
-        if (user != null) {
-            String storedHashedPassword = user.getPassword();
-            return checkPassword(submittedPassword, storedHashedPassword);
-        }
-        return false;
-    }*/
-
-
     public String getUsernameByUserId(String userId) {
         //this method will apparently not work given the configuration of the project.
         Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
@@ -79,11 +45,40 @@ public class UserService {
 
     }
 
+    public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
+        return lambdaServiceClient.findUserByUserId(userId);
+    }
+
+    public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException{
+        return lambdaServiceClient.findUserByUsername(username);
+    }
 
 
+    public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
+        try {
+            lambdaServiceClient.createUser(userRequest);
+        } catch (Exception e) {
+            System.out.println("unsuccessful user creation");
+        }
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUserId(userRequest.getUserId());
+            if (userRequest.getUserId() == null){
+                userResponse.setUserId(UUID.randomUUID().toString());
+            } //just added this -adam 12/31
+        userResponse.setEmail(userRequest.getEmail());
+        userResponse.setUsername(userRequest.getUsername());
+        return userResponse;
+    }
 
-
-   /* public User findByUserId(String userId) {
+    public User transformToUser(UserRecord userRecord) {
+        User user = new User();
+        user.setUserId(userRecord.getUserId());
+        user.setEmail(userRecord.getEmail());
+        user.setUsername(userRecord.getUsername());
+        user.setPassword(userRecord.getPassword());
+        return user;
+    }
+     /* public User findByUserId(String userId) {
         System.out.println("Searching for userId: " + userId);
         User user = userRepository
                 .findById(userId)
@@ -120,37 +115,36 @@ public class UserService {
         }
     }*/
 
-    public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
-        return lambdaServiceClient.findUserByUserId(userId);
-    }
-
-    public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException{
-        return lambdaServiceClient.findUserByUsername(username);
-    }
-
-
-    public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
-        try {
-            lambdaServiceClient.createUser(userRequest);
-        } catch (Exception e) {
-            System.out.println("unsuccessful user creation");
+      /*public Optional<UserRecord> authenticateUser(String username, String password){
+        if (username == null || password == null) {
+            logger.error("Username or Password is null");
+            return Optional.empty();
         }
-        UserResponse userResponse = new UserResponse();
-        userResponse.setUserId(userRequest.getUserId());
-            if (userRequest.getUserId() == null){
-                userResponse.setUserId(UUID.randomUUID().toString());
-            } //just added this -adam 12/31
-        userResponse.setEmail(userRequest.getEmail());
-        userResponse.setUsername(userRequest.getUsername());
-        return userResponse;
-    }
 
-    public User transformToUser(UserRecord userRecord) {
-        User user = new User();
-        user.setUserId(userRecord.getUserId());
-        user.setEmail(userRecord.getEmail());
-        user.setUsername(userRecord.getUsername());
-        user.setPassword(userRecord.getPassword());
-        return user;
-    }
+
+
+        Optional<UserRecord> userRecord = userRepository.findByUsername(username);
+
+        if (userRecord.isEmpty()) {
+            logger.warn("User not found - authenticateUser: {}", username);
+            return Optional.empty();
+        }
+        if (userRecord.get().getPassword().equals(password)) {
+            logger.info("User authenticated successfully: {}", username);
+            return userRecord;
+        } else {
+            logger.warn("Authentication failed for user: {}", username);
+            return Optional.empty();
+        }
+    }*/
+
+    /*public boolean authenticateUser(String username, String submittedPassword) {
+        UserRecord user;
+        if (user != null) {
+            String storedHashedPassword = user.getPassword();
+            return checkPassword(submittedPassword, storedHashedPassword);
+        }
+        return false;
+    }*/
+
 }
