@@ -23,11 +23,12 @@ export default class TaskListClient extends BaseClass {
         }
     }
 
-    async updateTaskList(userId, updatedName){
+    async updateTaskList(userId, existingName, newName){
         try {
             const response = await this.client.put(`/taskList/${userId}`, {
                 userId: userId,
-                updatedName: updatedName
+                existingName: existingName,
+                updatedName: newName
             });
             return response.data;
         } catch (error) {

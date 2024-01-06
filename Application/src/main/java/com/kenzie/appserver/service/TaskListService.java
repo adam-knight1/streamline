@@ -3,7 +3,6 @@ package com.kenzie.appserver.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
-import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
@@ -16,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class TaskListService {
@@ -52,7 +50,7 @@ public class TaskListService {
         }
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(request.getUserId());
-        taskListResponse.setTaskListName(request.getTaskListName());
+        taskListResponse.setTaskListName(request.getNewTaskListName());
         taskListResponse.setTasks(Collections.emptyList());
         return taskListResponse;
     }

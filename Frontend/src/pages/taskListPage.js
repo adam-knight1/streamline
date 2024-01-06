@@ -41,12 +41,16 @@ class TaskListPage extends BaseClass {
         event.preventDefault();
 
          let userId = document.getElementById("update-task-list-user-id-field").value;
-         let newName = document.getElementById("update-task-list-name-field").value;
+         let existingName = document.getElementById("update-task-list-existing-name-field").value;
+         let newName = document.getElementById("update-task-list-new-name-field").value;
 
-         let updatedTaskList = await this.client.updateTaskList(userId, newName);
+         this.showMessage(`userId ${userId}`);
+
+         let updatedTaskList = await this.client.updateTaskList(userId, existingName, newName);
 
          if (updatedTaskList) {
            this.showMessage("Task list updated successfully");
+           document.getElementById("updated-name").innerHTML = `Your task list name is now: ${createdTaskList.taskListName}`;
          } else {
            this.errorHandler("Error updating task list! Try again...");
          }
