@@ -22,7 +22,7 @@ public class LambdaTaskListService {
 
     public TaskListRecord findTaskListByUserId(String userId) {
         //I need to add more logging statements here
-        return taskListDao.findTaskListByUserById(userId);
+        return taskListDao.getTaskListByUserId(userId);
     }
 
 //    public TaskListRequest retrieveTaskListRequest(String userId) {
