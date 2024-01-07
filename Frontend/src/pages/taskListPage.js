@@ -5,13 +5,14 @@ import TaskListClient from "../api/taskListClient";
 class TaskListPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList'], this);
+        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList', 'onFind'], this);
         this.dataStore = new DataStore();
     }
 
     async mount() {
         document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
         document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
+        document.getElementById('find-task-list').addEventListener('submit', this.onFind);
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
     }
@@ -58,7 +59,7 @@ class TaskListPage extends BaseClass {
 
      async onFind(event) {
            event.preventDefault();
-           let userId = document.getElementById("find-taskList-id-field").value;
+           let userId = document.getElementById("find-task-list-by-user-id-field").value;
            try {
                const foundTaskList = await this.client.getTaskListByUserId(userId, this.errorHandler);
                if (foundTaskList) {
