@@ -56,6 +56,12 @@ class TaskListPage extends BaseClass {
          }
    }
 
+<<<<<<< HEAD
+=======
+   async onCreateTask(event) {
+   }
+
+>>>>>>> 2ccd333 (update task)
 }
 
 const main = async () => {
