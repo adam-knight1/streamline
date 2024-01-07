@@ -1,15 +1,10 @@
 package com.kenzie.capstone.service;
 import com.kenzie.capstone.service.dao.TaskDao;
 
-import com.kenzie.capstone.service.model.TaskListRecord;
 import com.kenzie.capstone.service.model.TaskRecord;
-import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
+import com.kenzie.capstone.service.model.TaskResponseLambda;
 import converter.TaskConverter;
 import exceptions.InvalidDataException;
-
-import java.util.List;
-import java.util.UUID;
 
 public class LambdaTaskService {
 
@@ -19,16 +14,20 @@ public class LambdaTaskService {
         this.taskDao =taskDao;
     }
 
-    public TaskResponse updateTask(int taskId,  String taskName, String taskDescription){
-        if (taskId <= 0 || taskName == null || taskName.isEmpty()){
+    public TaskResponseLambda updateTask(String taskId, String taskName, String taskDescription, boolean completed){
+        if (taskId == null || taskName == null || taskName.isEmpty()){
             throw new InvalidDataException("Invalid task details");
         }
-        TaskRecord existingRecord = taskDao.getTaskRecordById(taskId);
+        TaskRecord existingRecord = taskDao.getTaskRecordByName(taskName);
         if (existingRecord == null){
-            throw new InvalidDataException("Task with Id " + taskId + "not found");
+            throw new InvalidDataException("Task with Name " + taskName + "not found");
         }
-        existingRecord.setTaskName(taskName);
+        if (!existingRecord.getTaskId().equals(taskId)){
+            throw new InvalidDataException("Task ID does not match Task Name");
+        }
+       // existingRecord.setTaskName(taskName);
         existingRecord.setTaskDescription(taskDescription);
+        existingRecord.setCompleted(completed);
         taskDao.updateTaskRecord(existingRecord);
         return TaskConverter.fromRecordToResponse(existingRecord);
     }

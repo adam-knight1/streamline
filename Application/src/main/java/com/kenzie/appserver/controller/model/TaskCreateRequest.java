@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 
 public class TaskCreateRequest {
-    @NotEmpty
+
     @JsonProperty("taskName")
     private String taskName;
 

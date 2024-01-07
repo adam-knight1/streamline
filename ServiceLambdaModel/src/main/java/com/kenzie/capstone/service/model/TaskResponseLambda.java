@@ -2,20 +2,20 @@ package com.kenzie.capstone.service.model;
 
 import java.util.Objects;
 
-public class TaskResponse{
+public class TaskResponseLambda {
 
 
     private String userId;
-    private int taskId;
+    private String taskId;
     // This may be superfluous since the task is just a simple sentence "take the dog out" - OB
     private String taskName;
     private String taskDescription;
     private boolean completed;
 
-    public TaskResponse() {
+    public TaskResponseLambda() {
     }
 
-    public TaskResponse(String userId, int taskId, String taskName, String taskDescription, boolean completed) {
+    public TaskResponseLambda(String userId, String taskId, String taskName, String taskDescription, boolean completed) {
         this.userId = userId;
         this.taskId = taskId;
         this.taskName = taskName;
@@ -31,11 +31,11 @@ public class TaskResponse{
     }
 
 
-    public int getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 
@@ -67,7 +67,7 @@ public class TaskResponse{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TaskResponse that = (TaskResponse) o;
+        TaskResponseLambda that = (TaskResponseLambda) o;
         return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 

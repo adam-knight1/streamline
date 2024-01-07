@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: 'AWS::Serverless-2016-10-31'
+Transform: AWS::Serverless-2016-10-31
 Description: An AWS Lambda application that calls the Lambda API.
 Parameters:
   EnvironmentName:
@@ -12,7 +12,7 @@ Resources:
   UpdateTaskFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      CodeUri: s3://capstone-streamteam-artifacts/8970e2892f22b93a0a0b486675111413
       Handler: com.kenzie.capstone.service.lambda.UpdateTask
       Runtime: java11
       Description: Update a Task
@@ -28,18 +28,18 @@ Resources:
         - AmazonDynamoDBFullAccess
       Tracing: Active
       Events:
-        UpdateResource:
+        UpdateResourceEvent:
           Type: Api
           Properties:
-            Path: /task/update/{userId}
-            Method: put
+            Path: /task/update/{taskName}
+            Method: post
 
   #CreateTask
   Resources:
     CreateTaskFunction:
       Type: AWS::Serverless::Function
       Properties:
-        CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+        CodeUri: s3://capstone-streamteam-artifacts/8970e2892f22b93a0a0b486675111413
         Handler: com.kenzie.capstone.service.lambda.CreateTask
         Runtime: java11
         Description: Create a new task
@@ -55,7 +55,7 @@ Resources:
           - AmazonDynamoDBFullAccess
         Tracing: Active
         Events:
-          UpdateResource:
+          UpdateResourceEvent:
             Type: Api
             Properties:
               Path: /task/create
