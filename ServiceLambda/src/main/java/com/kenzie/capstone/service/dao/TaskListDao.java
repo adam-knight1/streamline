@@ -69,15 +69,15 @@ public class TaskListDao {
     }
 
     public TaskListResponse updateTaskListRecord(String userId, String existingTaskListName, String newTaskListName) {
-        TaskListRecord taskListRecord = new TaskListRecord();
-        taskListRecord.setUserId(userId);
-        taskListRecord.setTaskListName(newTaskListName);
+        TaskListRecord newTaskListRecord = new TaskListRecord();
+        newTaskListRecord.setUserId(userId);
+        newTaskListRecord.setTaskListName(newTaskListName);
 
         try {
-            mapper.save(taskListRecord, new DynamoDBSaveExpression()
+            mapper.save(newTaskListRecord, new DynamoDBSaveExpression()
                     .withExpected(ImmutableMap.of(
                             "userId", new ExpectedAttributeValue().withExists(true),
-                            "existingTaskListName", new ExpectedAttributeValue().withExists(true)
+                            "taskListName", new ExpectedAttributeValue().withExists(true)
                     )));
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("userId and or taskListName does not exist");

@@ -3,18 +3,15 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
-import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.Collections;
+
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -104,8 +101,6 @@ public class TaskListServiceTest {
 ///** ------------------------------------------------------------------------
 //     *  taskListService.updateTaskList
 //     *  ------------------------------------------------------------------------ **/
-//
-//
 
 //    passing
      @Test
@@ -116,7 +111,7 @@ public class TaskListServiceTest {
         String newTaskListName = "NewName";
         TaskListCreateRequest request = new TaskListCreateRequest();
         request.setUserId(userId);
-        request.setTaskListName(newTaskListName);
+        request.setExistingTaskListName(newTaskListName);
 
         // simulating an existing tasklist for the same user
         TaskListRecord existingRecord = new TaskListRecord(userId, taskListName);
@@ -142,7 +137,7 @@ public class TaskListServiceTest {
         String newTaskListName = "NewName";
         TaskListCreateRequest request = new TaskListCreateRequest();
         request.setUserId(userId);
-        request.setTaskListName(newTaskListName);
+        request.setExistingTaskListName(newTaskListName);
 
         when(taskListRepository.findById(userId)).thenReturn(Optional.empty());
 
