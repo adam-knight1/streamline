@@ -56,6 +56,8 @@ public class TaskListService {
     }
 
     public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {
+        // can't query DynamoDB/taskListRepo from backend, need to use findTaskListByUserId or
+        // findTaskListByTaskListName
         Optional<TaskListRecord> optionalTaskListRecord = taskListRepository.findById(userId);
 
         if (optionalTaskListRecord.isPresent()) {
