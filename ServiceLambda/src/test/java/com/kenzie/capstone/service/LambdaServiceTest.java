@@ -1,22 +1,18 @@
 package com.kenzie.capstone.service;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
-import com.kenzie.capstone.service.model.TaskListRecord;
-import com.kenzie.capstone.service.model.TaskRecord;
-import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
+import com.kenzie.capstone.service.model.*;
 import exceptions.InvalidDataException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,78 +31,42 @@ class LambdaServiceTest {
         this.taskListDao = mock(TaskListDao.class);
         this.lambdaTaskListService = new LambdaTaskListService(taskListDao,taskDao);
     }
-//
-//     @Test
-//     void addTaskToTaskListTest() {
-//         TaskDao taskDao = mock(TaskDao.class);
-//         TaskService taskService = new TaskService(taskDao);
-//
-//         //Given
-//         String userId = "testUserId";
-//         String taskListName = "testTaskList";
-//         TaskRequest taskRequest = new TaskRequest();
-//
-//         taskRequest.setName("Test task");
-//         taskRequest.setDescription("This is a test description");
-//
-//         TaskRecord expectedTaskRecord = new TaskRecord();
-//         expectedTaskRecord.setUserId(userId);
-//         expectedTaskRecord.setTaskListName(taskListName);
-//         expectedTaskRecord.setTaskId(anyString());
-//         expectedTaskRecord.setName(taskRequest.getName());
-//         expectedTaskRecord.setDescription(taskRequest.getDescription());
-//
-//         //When
-//         when(taskDao.setTaskData(any(TaskRecord.class))).thenReturn(expectedTaskRecord);
-//         TaskResponse result = taskService.addTaskToTaskList(userId, taskListName, taskRequest);
-//
-//         //then
-//         assertEquals(userId, result.getUserId());
-//         assertEquals(taskListName, result.getTaskListName());
-//         assertNotNull(result.getTaskId());
-//         assertEquals(taskRequest.getName(), result.getName());
-//         assertEquals(taskRequest.getDescription(), result.getDescription());
-//     }
 
     @Test
-   public void updateTask_ValidTaskId() {
-        String taskId = UUID.randomUUID().toString();
-        TaskRequest validTaskRequest = new TaskRequest();
-        validTaskRequest.setTaskId(taskId);
-        validTaskRequest.setTaskName("Updated Task Name");
-        validTaskRequest.setTaskDescription("Updated Task Description");
+   public void updateTask_Success() {
+        int taskId = 123;
+        String updatedTaskName = "Updated Task Name";
+        String updatedTaskDescription = "Updated Task Description";
+
 
         TaskRecord updatedTaskRecord = new TaskRecord();
         updatedTaskRecord.setTaskId(taskId);
-        updatedTaskRecord.setTaskName(validTaskRequest.getTaskName());
-        updatedTaskRecord.setTaskDescription(validTaskRequest.getTaskDescription());
+        updatedTaskRecord.setTaskName(updatedTaskName);
+        updatedTaskRecord.setTaskDescription(updatedTaskDescription);
 
         //WHEN
         when(taskDao.getTaskRecordById(taskId)).thenReturn(updatedTaskRecord);
         when(taskDao.updateTaskRecord(any(TaskRecord.class))).thenReturn(updatedTaskRecord);
 
-        TaskResponse result = lambdaTaskService.updateTask(taskId,validTaskRequest);
+        TaskResponse result = lambdaTaskService.updateTask(taskId,updatedTaskName,updatedTaskDescription);
 
         assertNotNull(result);
-        assertEquals(validTaskRequest.getTaskName(),result.getTaskName());
-        assertEquals(validTaskRequest.getTaskDescription(), result.getTaskDescription());
+        assertEquals(updatedTaskName,result.getTaskName());
+        assertEquals(updatedTaskDescription,result.getTaskDescription());
 
     }
 
     @Test
-    public void updateTask_InvalidTaskId() {
-        String invalidTaskId = "";
-        TaskRequest invalidTaskRequest = new TaskRequest();
-        invalidTaskRequest.setTaskId(invalidTaskId);
-        invalidTaskRequest.setTaskName("invalid Task Name");
-        invalidTaskRequest.setTaskDescription("Invalid Task Description");
+    public void updateTask_Unsuccessful() {
+        int taskId = 123;
+        String taskName = "Updated Task Name";
+        String taskDescription = "Updated Task Description";
 
-        try {
-            lambdaTaskService.updateTask(invalidTaskId,invalidTaskRequest);
-            fail("Expected an InvalidDataException to be thrown");
-        } catch (InvalidDataException exception){
-            assertEquals("Request must contain a valid task ID", exception.getMessage());
-        }
+        when(taskDao.getTaskRecordById(taskId)).thenReturn(null);
+
+        assertThrows(InvalidDataException.class, () -> {
+            lambdaTaskService.updateTask(taskId,taskName, taskDescription);
+        });
     }
 
     @Test
@@ -157,6 +117,42 @@ class LambdaServiceTest {
         assertEquals(taskRequest.getTaskDescription(),response.getTaskDescription());
         assertFalse(response.isCompleted());
 
+    }
+
+//    Passes
+    @Test
+    public void updateTaskList_ValidUserId_UpdatesSuccessfully() {
+        String userId = "UserId";
+        String existingTaskListName = "Existing List";
+        String newTaskListName = "Updated List";
+        TaskListRequest taskListRequest = new TaskListRequest(userId, newTaskListName, existingTaskListName);
+
+        TaskListRecord taskListRecord = new TaskListRecord();
+        taskListRecord.setUserId(userId);
+        taskListRecord.setTaskListName(newTaskListName);
+
+        when(taskListDao.getTaskListByTaskListName(userId, existingTaskListName)).thenReturn(taskListRecord);
+        when(taskListDao.updateTaskListRecord(userId, existingTaskListName, newTaskListName)).thenReturn(new TaskListResponse(userId,
+                newTaskListName));
+
+        TaskListResponse response = lambdaTaskListService.updateTaskList(userId,taskListRequest);
+
+        assertNotNull(response);
+        assertEquals(userId, response.getUserId());
+        assertEquals(taskListRequest.getNewTaskListName(), response.getTaskListName());
+    }
+
+//    Passes
+    @Test
+    public void updateTaskList_InvalidUserId_ThrowsException(){
+        String userId = "badUserId";
+        TaskListRequest taskListRequest = new TaskListRequest(userId, "Task List");
+
+        when(taskListDao.getTaskListByUserId(userId)).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            lambdaTaskListService.updateTaskList(userId,taskListRequest);
+        });
     }
 }
 

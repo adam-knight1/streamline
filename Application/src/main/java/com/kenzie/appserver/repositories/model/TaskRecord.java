@@ -13,7 +13,7 @@ public class TaskRecord {
     @DynamoDBHashKey(attributeName = "userId")
     private String userId;
     @DynamoDBAttribute(attributeName = "taskId")
-    private String taskId;
+    private int taskId;
     @DynamoDBAttribute(attributeName = "taskName")
     private String taskName;
     @DynamoDBAttribute(attributeName = "taskDescription")
@@ -29,11 +29,11 @@ public class TaskRecord {
         this.userId = userId;
     }
 
-    public String getTaskId() {
+    public int getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
+    public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
 
@@ -66,7 +66,7 @@ public class TaskRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
+        return taskId == that.taskId && completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class TaskRecord {
     public String toString() {
         return "TaskRecord{" +
                 "userId='" + userId + '\'' +
-                ", taskId='" + taskId + '\'' +
+                ", taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", completed=" + completed +

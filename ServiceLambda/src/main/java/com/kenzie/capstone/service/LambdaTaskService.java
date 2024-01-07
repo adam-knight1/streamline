@@ -19,13 +19,18 @@ public class LambdaTaskService {
         this.taskDao =taskDao;
     }
 
-    public TaskResponse updateTask(String taskId, TaskRequest task){
-        if (task == null || taskId == null || task.getTaskId().length() ==0){
-            throw new InvalidDataException("Request must contain a valid task ID");
+    public TaskResponse updateTask(int taskId,  String taskName, String taskDescription){
+        if (taskId <= 0 || taskName == null || taskName.isEmpty()){
+            throw new InvalidDataException("Invalid task details");
         }
-        TaskRecord record = TaskConverter.fromRequestToRecord(task);
-        taskDao.updateTaskRecord(record);
-        return TaskConverter.fromRecordToResponse(record);
+        TaskRecord existingRecord = taskDao.getTaskRecordById(taskId);
+        if (existingRecord == null){
+            throw new InvalidDataException("Task with Id " + taskId + "not found");
+        }
+        existingRecord.setTaskName(taskName);
+        existingRecord.setTaskDescription(taskDescription);
+        taskDao.updateTaskRecord(existingRecord);
+        return TaskConverter.fromRecordToResponse(existingRecord);
     }
 
 }

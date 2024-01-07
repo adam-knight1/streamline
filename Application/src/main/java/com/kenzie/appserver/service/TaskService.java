@@ -1,12 +1,16 @@
 
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.controller.model.TaskCreateRequest;
+import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +20,13 @@ import java.util.List;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
+    private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
     @Autowired
-    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository) {
+    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,LambdaServiceClient lambdaServiceClient) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
 
     public List<TaskRecord> getAllTasks() {
@@ -63,5 +69,24 @@ public class TaskService {
             return true;
         }
         return false;
+    }
+
+    public TaskResponse updateTask (int taskId, String takName, String taskDescription) {
+        TaskResponse taskResponse = new TaskResponse();
+
+        try{
+            boolean updateSuccessful = lambdaServiceClient.updateTask(taskId,takName,taskDescription);
+            if (updateSuccessful){
+                taskResponse.setTaskId(taskId);
+                taskResponse.setTaskName(takName);
+                taskResponse.setTaskDescription(taskDescription);
+                taskResponse.setMessage("Task updated successfully");
+            }else{
+                taskResponse.setMessage("Failed to update task details");
+            }
+        }catch (Exception exception){
+            taskResponse.setMessage("Error updating task: " + exception.getMessage());
+        }
+        return taskResponse;
     }
 }

@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskListResponse {
@@ -13,6 +14,12 @@ public class TaskListResponse {
         this.userId = userId;
         this.taskListName = taskListName;
         this.tasks = tasks;
+    }
+
+    public TaskListResponse(String userId, String taskListName) {
+        this.userId = userId;
+        this.taskListName = taskListName;
+        this.tasks = new ArrayList<>();
     }
 
     public String getUserId() {

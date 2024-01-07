@@ -66,7 +66,8 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
         try {
            
 
-            TaskResponse updatedTask = lambdaTaskService.updateTask(id, taskRequest);
+            TaskResponse updatedTask = lambdaTaskService.updateTask(taskRequest.getTaskId(), taskRequest.getTaskName(),
+                    taskRequest.getTaskDescription());
 
             String responseBody = gson.toJson(updatedTask);
             return response
