@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.Collections;
-import java.util.UUID;
 
 public class LambdaTaskListService {
     private TaskListDao taskListDao;
@@ -79,7 +78,7 @@ public class LambdaTaskListService {
         return taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskListName, newTaskListName);
     }
 
-    public TaskResponse createTask(String userId, TaskRequest taskRequest) {
+    public TaskResponseLambda createTask(String userId, TaskRequest taskRequest) {
         if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
             throw new IllegalArgumentException("Task name is required");
         }
@@ -99,7 +98,7 @@ public class LambdaTaskListService {
         taskDao.storeTaskData(taskRecord);
 
         // Return the TaskResponse
-        return new TaskResponse(
+        return new TaskResponseLambda(
                 taskRecord.getUserId(), taskRecord.getTaskId(), taskRecord.getTaskName(),
                 taskRecord.getTaskDescription(), taskRecord.isCompleted()
         );

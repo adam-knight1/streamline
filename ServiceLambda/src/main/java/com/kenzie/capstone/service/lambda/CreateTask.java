@@ -4,14 +4,13 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.amazonaws.services.lambda.runtime.events.S3BatchEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
+import com.kenzie.capstone.service.model.TaskResponseLambda;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,10 +44,10 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
                     .withBody("Task name is required");
         }
         try {
-            TaskResponse taskResponse = lambdaTaskListService.createTask(userId , taskRequest);
+            TaskResponseLambda taskResponseLambda = lambdaTaskListService.createTask(userId , taskRequest);
             return response
                     .withStatusCode(200)
-                    .withBody(gson.toJson(taskResponse));
+                    .withBody(gson.toJson(taskResponseLambda));
         } catch (IllegalArgumentException e){
             return response
                     .withStatusCode(400)

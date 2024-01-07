@@ -9,11 +9,20 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Task")
 public class TaskRecord {
     private String userId;
-    private int taskId;
+    private String taskId;
     private String taskName;
     private String taskDescription;
     private boolean completed;
-    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBHashKey(attributeName = "taskName")
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    @DynamoDBAttribute(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
@@ -22,22 +31,14 @@ public class TaskRecord {
         this.userId = userId;
     }
     @DynamoDBAttribute(attributeName = "taskId")
-    public int getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 
-    @DynamoDBAttribute(attributeName = "taskName")
-    public String getTaskName() {
-        return taskName;
-    }
-
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
     @DynamoDBAttribute(attributeName = "taskDescription")
     public String getTaskDescription() {
         return taskDescription;

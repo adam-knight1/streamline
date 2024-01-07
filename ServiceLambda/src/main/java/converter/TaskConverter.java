@@ -1,11 +1,8 @@
 package converter;
 
-import com.amazonaws.services.lambda.runtime.events.S3BatchEvent;
 import com.kenzie.capstone.service.model.TaskRecord;
 import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
-
-import java.time.ZonedDateTime;
+import com.kenzie.capstone.service.model.TaskResponseLambda;
 
 public class TaskConverter {
 
@@ -19,8 +16,8 @@ public class TaskConverter {
         return record;
     }
 
-    public static TaskResponse fromRecordToResponse(TaskRecord record) {
-        TaskResponse referral = new TaskResponse();
+    public static TaskResponseLambda fromRecordToResponse(TaskRecord record) {
+        TaskResponseLambda referral = new TaskResponseLambda();
         referral.setTaskDescription(record.getTaskDescription());
         referral.setTaskId(record.getTaskId());
         referral.setTaskName(record.getTaskName());

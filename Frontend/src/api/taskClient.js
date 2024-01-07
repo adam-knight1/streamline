@@ -1,8 +1,10 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
+import Toastify from "toastify-js";
 
-export default class TaskClient {
+export default class TaskClient extends BaseClass {
     constructor(baseURL) {
+        super();
         this.client = axios.create({
             baseURL: baseURL
         });
@@ -18,9 +20,11 @@ export default class TaskClient {
            throw error;
    }
    }
-   async updateTask(taskId, updatedInfo) {
+   async updateTask(taskId) {
           try {
-              const response = await this.client.put(`/task/update/{id}`, updatedInfo);
+              const response = await this.client.put(`/task/update/${taskId}`, {
+               taskId: taskId
+              });
               return response.data;
           } catch (error) {
               console.error("Failed to update task:", error);

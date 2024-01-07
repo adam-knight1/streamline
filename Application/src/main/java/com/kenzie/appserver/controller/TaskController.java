@@ -1,10 +1,9 @@
 
 package com.kenzie.appserver.controller;
 
+import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.TaskService;
-import com.kenzie.appserver.service.model.Task;
-import com.kenzie.capstone.service.model.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/task")
 public class TaskController {
     private final TaskService taskService;
 
@@ -27,6 +26,11 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+//    @PostMapping("/create")
+//    public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
+//        TaskRecord createdTask = taskService.createTask(task);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+//    }
     @PostMapping("/add")
     public ResponseEntity<TaskRecord> addTask(@RequestBody TaskRecord task){
         TaskRecord addedTask = taskService.addTask(task);
@@ -52,9 +56,19 @@ public class TaskController {
             return ResponseEntity.notFound().build();
         }
     }
-//    @PutMapping("/{taskId}")
-//    public ResponseEntity<TaskRecord> updateTask(@PathVariable String taskId, TaskRequest taskRequest){
-//
-//    }
+
+    @PostMapping("/{taskId}")
+    public ResponseEntity<TaskResponse> updateTask(@PathVariable String taskId,
+                                                   @RequestParam String taskName,
+                                                   @RequestParam String taskDescription){
+
+        TaskResponse taskResponse = taskService.updateTask(taskId,taskName,taskDescription);
+
+        if (taskResponse != null){
+            return ResponseEntity.ok(taskResponse);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
