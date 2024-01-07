@@ -60,7 +60,7 @@ public class TaskListService {
 
         if (optionalTaskListRecord.isPresent()) {
             TaskListRecord taskListRecord = optionalTaskListRecord.get();
-            taskListRecord.setTaskListName(request.getTaskListName());
+            taskListRecord.setTaskListName(request.getNewTaskListName());
             return taskListRepository.save(taskListRecord);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
