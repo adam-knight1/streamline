@@ -56,6 +56,37 @@ class TaskListPage extends BaseClass {
          }
    }
 
+     async onFind(event) {
+           event.preventDefault();
+           let userId = document.getElementById("find-taskList-id-field").value;
+           try {
+               const foundTaskList = await this.client.getTaskListByUserId(userId, this.errorHandler);
+               if (foundTaskList) {
+                   this.displayTaskListDetails(foundTaskList);
+               } else {
+                   this.showMessage("Task list not found");
+               }
+           } catch (error) {
+               this.errorHandler("An error occurred while fetching the task list");
+           }
+       }
+
+       displayTaskListDetails(taskList) {
+           const taskListDetails = document.getElementById("task-list-details");
+           let tasksHtml = '';
+
+           if(taskList.tasks && taskList.tasks.length) {
+               tasksHtml = '<ul>' + taskList.tasks.map(task => `<li>${task}</li>`).join('') + '</ul>';
+           }
+
+           taskListDetails.innerHTML = `
+               <p><strong>User ID:</strong> ${taskList.userId}</p>
+               <p><strong>Task List Name:</strong> ${taskList.taskListName}</p>
+               <p><strong>Tasks:</strong> ${tasksHtml}</p>
+           `;
+       }
+
+
 
    async onCreateTask(event) {
    }
