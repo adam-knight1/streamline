@@ -112,7 +112,7 @@ public class LambdaServiceClient {
 
         String response;
         try {
-            response = endpointUtility.getEndpoint("user/by-username/" + username);
+            response = endpointUtility.getEndpoint("user/name/" + username);
             log.info("Received response from endpoint: " + response); //
         } catch (Exception e) {
             log.error("Error calling endpoint: " + e.getMessage(), e);

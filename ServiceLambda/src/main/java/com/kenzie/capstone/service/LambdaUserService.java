@@ -27,7 +27,12 @@ public class LambdaUserService {
 
     public UserRecord findByUserName(String username) {
         //I need to add more logging statements here
-        return userDao.findUserByUsername(username);
+        try {
+            return userDao.findUserByUsername(username);
+        } catch (Exception e) {
+            System.out.println("Error from userDao showing up in lambdaUserService");
+        }
+        return null;
     }
 
     public UserResponseLambda createNewUser(UserRecord userRecord) {

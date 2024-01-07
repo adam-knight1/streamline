@@ -40,13 +40,13 @@ public class UserController {
         }
     }
 
-    @GetMapping("/by-username/{username}")
+    @GetMapping("/name/{username}")
     public ResponseEntity<UserResponseLambda> getUserByUsername(@PathVariable("username") String username){
         System.out.println("Received request to find user with username: " + username);
         try {
             UserResponseLambda userResponseLambda = userService.findUserByUsername(username);
-            System.out.println();
             if (userResponseLambda == null) {
+                System.out.println("Null value in user controller");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
             return ResponseEntity.ok(userResponseLambda);

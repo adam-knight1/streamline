@@ -32,10 +32,8 @@ public class UserDao {
                         "email", new ExpectedAttributeValue().withExists(false)
                 );
 
-
                 saveExpression.setExpected(expectedAttributes);
                 System.out.println("Saving userRecord: " + userRecord);
-
 
                 mapper.save(userRecord, saveExpression);
             } catch (ConditionalCheckFailedException e) {
@@ -81,7 +79,6 @@ public class UserDao {
 
         long startTime = System.currentTimeMillis();
         logger.info("Query start: " + startTime);
-
 
         DynamoDBQueryExpression<UserRecord> queryExpression = new DynamoDBQueryExpression<UserRecord>()
                 .withIndexName("UsernameIndex")

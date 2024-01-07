@@ -23,7 +23,6 @@ import java.util.Objects;
         private String password;
 
         public UserRecord(){
-
         }
 
         @DynamoDBHashKey(attributeName = "userId")
