@@ -2,6 +2,7 @@ package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
+import com.kenzie.capstone.service.dao.UserDao;
 import com.kenzie.capstone.service.model.*;
 import exceptions.InvalidDataException;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,15 +19,19 @@ import static org.mockito.Mockito.when;
 class LambdaServiceTest {
     private TaskDao taskDao;
     private TaskListDao taskListDao;
+    private UserDao userDao;
     private LambdaTaskService lambdaTaskService;
     private LambdaTaskListService lambdaTaskListService;
+    private LambdaUserService lambdaUserService;
 
     @BeforeAll
     void setup() {
         this.taskDao = mock(TaskDao.class);
-        this.lambdaTaskService = new LambdaTaskService(taskDao);
         this.taskListDao = mock(TaskListDao.class);
+        this.userDao = mock(UserDao.class);
+        this.lambdaTaskService = new LambdaTaskService(taskDao);
         this.lambdaTaskListService = new LambdaTaskListService(taskListDao,taskDao);
+        this.lambdaUserService = new LambdaUserService(userDao);
     }
 
     @Test
@@ -151,6 +156,42 @@ class LambdaServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             lambdaTaskListService.updateTaskList(userId,taskListRequest);
+        });
+    }
+    /*
+        this.taskDao = mock(TaskDao.class);
+        this.taskListDao = mock(TaskListDao.class);
+        this.userDao = mock(UserDao.class);
+        this.lambdaTaskService = new LambdaTaskService(taskDao);
+        this.lambdaTaskListService = new LambdaTaskListService(taskListDao,taskDao);
+        this.lambdaUserService = new LambdaUserService(userDao);
+     */
+    @Test
+    public void createUser_Successful() {
+        String email = "testEmail";
+        String username = "testUserName";
+        String password = "testPasword";
+        UserRecord userRecord = new UserRecord();
+        userRecord.setEmail(email);
+        userRecord.setUsername(username);
+        userRecord.setPassword(password);
+
+        when(userDao.createUser(userRecord)).thenReturn(userRecord);
+
+        UserResponseLambda response = lambdaUserService.createNewUser(userRecord);
+
+        assertNotNull(response);
+        assertEquals(email, response.getEmail());
+        assertNotNull(response.getUserId());
+        assertEquals(username, response.getUsername());
+    }
+
+    @Test
+    public void createUser_NullUserRecord_ThrowsException() {
+        when(userDao.createUser(null)).thenReturn(null);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            lambdaUserService.createNewUser(null);
         });
     }
 }
