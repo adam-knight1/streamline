@@ -20,6 +20,11 @@ public class LambdaTaskListService {
         this.taskDao = taskDao;
     }
 
+    public TaskListRecord findTaskListByUserId(String userId) {
+        //I need to add more logging statements here
+        return taskListDao.getTaskListByUserId(userId);
+    }
+
 //    public TaskListRequest retrieveTaskListRequest(String userId) {
 //        List<TaskListRecord> taskListRecords = taskListDao.getTaskListsByUserId(userId);
 //        if (!taskListRecords.isEmpty()) {

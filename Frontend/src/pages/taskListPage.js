@@ -5,13 +5,14 @@ import TaskListClient from "../api/taskListClient";
 class TaskListPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList'], this);
+        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList', 'onFind'], this);
         this.dataStore = new DataStore();
     }
 
     async mount() {
         document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
         document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
+        document.getElementById('find-task-list').addEventListener('submit', this.onFind);
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
     }
@@ -56,6 +57,40 @@ class TaskListPage extends BaseClass {
          }
    }
 
+     async onFind(event) {
+           event.preventDefault();
+           let userId = document.getElementById("find-task-list-by-user-id-field").value;
+           try {
+               const foundTaskList = await this.client.getTaskListByUserId(userId, this.errorHandler);
+               if (foundTaskList) {
+                   this.displayTaskListDetails(foundTaskList);
+               } else {
+                   this.showMessage("Task list not found");
+               }
+           } catch (error) {
+               this.errorHandler("An error occurred while fetching the task list");
+           }
+       }
+
+       displayTaskListDetails(taskList) {
+           const taskListDetails = document.getElementById("task-list-details");
+           let tasksHtml = '';
+
+           if(taskList.tasks && taskList.tasks.length) {
+               tasksHtml = '<ul>' + taskList.tasks.map(task => `<li>${task}</li>`).join('') + '</ul>';
+           }
+
+           taskListDetails.innerHTML = `
+               <p><strong>User ID:</strong> ${taskList.userId}</p>
+               <p><strong>Task List Name:</strong> ${taskList.taskListName}</p>
+               <p><strong>Tasks:</strong> ${tasksHtml}</p>
+           `;
+       }
+
+
+
+   async onCreateTask(event) {
+   }
 
 
 }

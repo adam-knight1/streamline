@@ -25,6 +25,7 @@ public class TaskListDao {
     }
 
     public TaskListRecord getTaskListByUserId(String userId) {
+        //this should work as is, no query needed as userId is the primary key - adam
         return mapper.load(TaskListRecord.class, userId);
 //        TaskListRecord taskListRecord = new TaskListRecord();
 //        taskListRecord.setUserId(userId);

@@ -8,6 +8,8 @@ import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.UserRecord;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 public class UserDao {
     private DynamoDBMapper mapper;
+    private static final Logger logger = LogManager.getLogger(UserDao.class);
 
     public UserDao(DynamoDBMapper mapper) {
         this.mapper = mapper;
@@ -29,10 +32,8 @@ public class UserDao {
                         "email", new ExpectedAttributeValue().withExists(false)
                 );
 
-
                 saveExpression.setExpected(expectedAttributes);
                 System.out.println("Saving userRecord: " + userRecord);
-
 
                 mapper.save(userRecord, saveExpression);
             } catch (ConditionalCheckFailedException e) {
@@ -72,17 +73,29 @@ public class UserDao {
                 mapper.delete(userRecord);
             }
         }
-    public List<UserRecord> findByUsername(String username) {
+    public UserRecord findUserByUsername(String username) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUsername(username);
 
+        long startTime = System.currentTimeMillis();
+        logger.info("Query start: " + startTime);
+
         DynamoDBQueryExpression<UserRecord> queryExpression = new DynamoDBQueryExpression<UserRecord>()
-                .withIndexName("UsernameIndex") //gonna query the GSI!
+                .withIndexName("UsernameIndex")
                 .withConsistentRead(false)
                 .withHashKeyValues(userRecord);
 
         PaginatedQueryList<UserRecord> result = mapper.query(UserRecord.class, queryExpression);
-        return new ArrayList<>(result);
+
+        long endTime = System.currentTimeMillis();
+        logger.info("Query end: " + endTime);
+        logger.info("Query duration: " + (endTime - startTime) + " ms"); //trying to determine if this is timing out.
+
+        if (!result.isEmpty()) {
+            return result.get(0);
+        }
+        System.out.println("no user was found with that username -userdao");
+        return null;
     }
 
 }
