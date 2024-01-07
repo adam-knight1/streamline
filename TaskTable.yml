@@ -3,10 +3,10 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "userId"
+        - AttributeName: "taskName"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "userId"
+        - AttributeName: "taskName"
           KeyType: "HASH"
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: false

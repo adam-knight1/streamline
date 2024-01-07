@@ -58,6 +58,7 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
                     .withStatusCode(200)
                     .withBody(gson.toJson(taskListResponse));
         } catch (IllegalArgumentException e) {
+            log.error("Error in UpdateTaskList Lambda: ", e);
             return response
                     .withStatusCode(400)
                     .withBody(gson.toJson(e.getMessage()));

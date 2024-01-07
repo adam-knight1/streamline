@@ -55,6 +55,13 @@ class TaskListPage extends BaseClass {
            this.errorHandler("Error updating task list! Try again...");
          }
    }
+
+<<<<<<< HEAD
+=======
+   async onCreateTask(event) {
+   }
+
+>>>>>>> 2ccd333 (update task)
 }
 
 const main = async () => {

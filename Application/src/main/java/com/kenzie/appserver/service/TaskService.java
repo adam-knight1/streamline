@@ -71,14 +71,14 @@ public class TaskService {
         return false;
     }
 
-    public TaskResponse updateTask (int taskId, String takName, String taskDescription) {
+    public TaskResponse updateTask (String taskId, String taskName, String taskDescription) {
         TaskResponse taskResponse = new TaskResponse();
 
         try{
-            boolean updateSuccessful = lambdaServiceClient.updateTask(taskId,takName,taskDescription);
+            boolean updateSuccessful = lambdaServiceClient.updateTask(taskId,taskName,taskDescription);
             if (updateSuccessful){
                 taskResponse.setTaskId(taskId);
-                taskResponse.setTaskName(takName);
+                taskResponse.setTaskName(taskName);
                 taskResponse.setTaskDescription(taskDescription);
                 taskResponse.setMessage("Task updated successfully");
             }else{

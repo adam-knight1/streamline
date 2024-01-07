@@ -13,7 +13,7 @@ public class LambdaServiceClient {
     private static final String CREATE_USER_ENDPOINT = "/user/create";
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
     private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
-   // private static final String ADD_TASKTOTASKLIST_ENDPOINT = ""
+
     private ObjectMapper mapper;
 
     private static final Logger log = LogManager.getLogger(LambdaServiceClient.class);
@@ -66,17 +66,19 @@ public class LambdaServiceClient {
         return taskListResponse;
     }
 
-    public TaskResponse addTaskToTaskList(String userId, String taskListName, TaskRecord taskRecord) throws JsonProcessingException {
+
+    public TaskResponseLambda addTaskToTaskList (String userId, String taskListName, TaskRecord taskRecord)throws JsonProcessingException{
+
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRecord);
         String response = endpointUtility.postEndpoint("task/add", requestData);
-        TaskResponse taskResponse;
+        TaskResponseLambda taskResponseLambda;
         try {
-            taskResponse = mapper.readValue(response, TaskResponse.class);
+            taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON:" + e);
         }
-        return taskResponse;
+        return taskResponseLambda;
 
     }
 
@@ -134,7 +136,7 @@ public class LambdaServiceClient {
     }
 
 
-    public boolean updateTask(int taskId, String taskName, String taskDescription) throws JsonProcessingException {
+    public boolean updateTask(String taskId, String taskName, String taskDescription) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
 
         TaskRequest taskRequest = new TaskRequest(taskId,taskName,taskDescription);
@@ -144,14 +146,29 @@ public class LambdaServiceClient {
             String endpoint = "task/update/" + taskId;
 
             String response = endpointUtility.postEndpoint(endpoint, requestData);
-            TaskResponse taskResponse = mapper.readValue(response, TaskResponse.class);
-            return taskResponse.isCompleted();
+            TaskResponseLambda taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
+            return taskResponseLambda.isCompleted();
         }catch (JsonProcessingException e){
             throw e;
         }catch (Exception e){
             throw new ApiGatewayException("Error updating task: " + e.getMessage());
         }
 
+    }
+
+    public TaskResponse createTask(TaskRequest taskRequest)throws JsonProcessingException{
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String requestData = mapper.writeValueAsString(taskRequest);
+        String response = endpointUtility.postEndpoint("task/create", requestData);
+
+        TaskResponse taskResponse;
+
+        try{
+            taskResponse= mapper.readValue(response, TaskResponse.class);
+        } catch (Exception e ) {
+            throw new ApiGatewayException("unable to map deserialize JSON: " +e);
+        }
+        return taskResponse;
     }
 }
 
