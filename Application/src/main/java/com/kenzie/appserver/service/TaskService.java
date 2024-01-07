@@ -1,6 +1,7 @@
 
 package com.kenzie.appserver.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
@@ -11,10 +12,12 @@ import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponseLambda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -38,6 +41,23 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    public TaskResponse createTask (TaskRequest taskRequest){
+        try {
+            lambdaServiceClient.createTask(taskRequest);
+        }catch (Exception e){
+            System.out.println("unsuccessful task creation");
+        }
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setTaskName(taskRequest.getTaskName());
+            if (taskRequest.getTaskName() == null){
+                taskResponse.setTaskName(UUID.randomUUID().toString());
+            }
+            taskResponse.setUserId(taskRequest.getUserId());
+            taskResponse.setTaskDescription(taskRequest.getTaskDescription());
+            taskResponse.setTaskId(taskRequest.getTaskId());
+            taskResponse.setCompleted(taskRequest.isCompleted());
+            return taskResponse;
+    }
 
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists

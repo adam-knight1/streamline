@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.model.*;
 
 
+
 public class LambdaServiceClient {
     private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
     private static final String SET_EXAMPLE_ENDPOINT = "example";
@@ -120,19 +121,21 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Error updating task: " + e.getMessage());
         }
     }
+    //was taskrecord update to taskresponselambda
 
 /*    public TaskResponse createTask(TaskRequest taskRequest)throws JsonProcessingException{
+
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRequest);
         String response = endpointUtility.postEndpoint("task/create", requestData);
 
-        TaskResponse taskResponse;
-
         try{
-            taskResponse= mapper.readValue(response, TaskResponse.class);
+            return mapper.readValue(response, TaskResponseLambda.class);
+    
         } catch (Exception e ) {
             throw new ApiGatewayException("unable to map deserialize JSON: " +e);
         }
+
         return taskResponse;
     }*/
 }
