@@ -81,6 +81,6 @@ Resources:
         FindTaskListByUserIdEvent:
           Type: Api
           Properties:
-            Path: /taskList/taskList
+            Path: /taskList/{userId}
             Method: get
 
