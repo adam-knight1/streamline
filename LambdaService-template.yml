@@ -174,3 +174,26 @@ Resources:
             Method: get
 
 
+  FindTaskListByUserIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.FindTaskListByUserId
+      Runtime: java11
+      Description: Find a taskList by the userId
+      MemorySize: 512
+      Timeout: 240
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        FindTaskListByUserIdEvent:
+          Type: Api
+          Properties:
+            Path: /taskList/{userId}
+            Method: get
