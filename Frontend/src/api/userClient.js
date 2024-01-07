@@ -21,6 +21,16 @@ export default class UserClient extends BaseClass {
         }
     }
 
+    async getUserByUsername(username) {
+            try {
+                const response = await this.client.get(`/user/by-username/${username}`);
+                console.log("Received response:", response.data);
+                return response.data;
+            } catch (error) {
+                return this.handleError("getUserByUsername", error);
+            }
+        }
+
     async createUser(username, password, email) {
         try {
             const response = await this.client.post('/user/create', {

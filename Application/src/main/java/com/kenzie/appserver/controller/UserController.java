@@ -40,6 +40,21 @@ public class UserController {
         }
     }
 
+    @GetMapping("/name/{username}")
+    public ResponseEntity<UserResponseLambda> getUserByUsername(@PathVariable("username") String username){
+        System.out.println("Received request to find user with username: " + username);
+        try {
+            UserResponseLambda userResponseLambda = userService.findUserByUsername(username);
+            if (userResponseLambda == null) {
+                System.out.println("Null value in user controller");
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.ok(userResponseLambda);
+        } catch (Exception e) {
+            System.out.println("Error in fetching user by username: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     @PostMapping("/create")

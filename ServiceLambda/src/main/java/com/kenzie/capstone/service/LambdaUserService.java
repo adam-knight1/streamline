@@ -25,6 +25,16 @@ public class LambdaUserService {
         return userDao.findUserById(userId);
     }
 
+    public UserRecord findByUserName(String username) {
+        //I need to add more logging statements here
+        try {
+            return userDao.findUserByUsername(username);
+        } catch (Exception e) {
+            System.out.println("Error from userDao showing up in lambdaUserService");
+        }
+        return null;
+    }
+
     public UserResponseLambda createNewUser(UserRecord userRecord) {
         if (userRecord == null || userRecord.getEmail() == null || userRecord.getUsername() == null || userRecord.getPassword() == null) {
             log.error("The user record contains null values");
@@ -39,6 +49,8 @@ public class LambdaUserService {
         try {
             userDao.createUser(userRecord);
             log.info("Successfully created user");
+//            localLoginMap.put(userRecord.getUsername(), userRecord);
+
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
             userResponseLambda.setUserId(userRecord.getUserId());
