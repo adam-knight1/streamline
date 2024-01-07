@@ -171,7 +171,7 @@ public class LambdaServiceClient {
     }
     //was taskrecord update to taskresponselambda
 
-/*    public TaskResponse createTask(TaskRequest taskRequest)throws JsonProcessingException{
+   public TaskResponseLambda createTask(TaskRequest taskRequest)throws JsonProcessingException{
 
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRequest);
@@ -182,12 +182,7 @@ public class LambdaServiceClient {
         } catch (Exception e ) {
             throw new ApiGatewayException("unable to map deserialize JSON: " + e.getMessage());
         }
-
     }
-
-
-        return taskResponse;
-    }*/
 
 }
 
