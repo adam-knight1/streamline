@@ -113,15 +113,15 @@ public class LambdaServiceClient {
     public TaskResponseLambda createTask(TaskRequest taskRequest)throws JsonProcessingException{
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRequest);
-        String response = endpointUtility.postEndpoint("task/create", requestData);
 
         try{
+            String response = endpointUtility.postEndpoint("task/create", requestData);
             return mapper.readValue(response, TaskResponseLambda.class);
-    
         } catch (Exception e ) {
-            throw new ApiGatewayException("unable to map deserialize JSON: " +e);
+            throw new ApiGatewayException("unable to map deserialize JSON: " + e.getMessage());
         }
     }
+
 }
 
 
