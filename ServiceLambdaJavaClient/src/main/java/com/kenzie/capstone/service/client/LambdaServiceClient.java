@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.model.*;
 
 
+
 public class LambdaServiceClient {
     private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
     private static final String SET_EXAMPLE_ENDPOINT = "example";
@@ -114,14 +115,12 @@ public class LambdaServiceClient {
         String requestData = mapper.writeValueAsString(taskRequest);
         String response = endpointUtility.postEndpoint("task/create", requestData);
 
-        TaskResponseLambda taskResponse;
-
         try{
-            taskResponse= mapper.readValue(response, TaskResponseLambda.class);
+            return mapper.readValue(response, TaskResponseLambda.class);
+    
         } catch (Exception e ) {
             throw new ApiGatewayException("unable to map deserialize JSON: " +e);
         }
-        return taskResponse;
     }
 }
 
