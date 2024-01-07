@@ -10,9 +10,14 @@ export default class TaskClient extends BaseClass {
         });
     }
 
-   async createTask(taskData) {
+   async createTask(userId, taskName, taskDescription, completed) {
        try {
-           const response = await this.client.post(`/task/create`, taskData); //not supposed to be using taskData
+           const response = await this.client.post(`/task/create`, {
+           userId: userId,
+           taskName: taskName,
+           taskDescription: taskDescription,
+           completed: completed
+           });
            console.log("Received response:", response.data);
            return response.data;
        } catch (error) {
