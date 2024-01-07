@@ -10,12 +10,13 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Task")
 public class TaskRecord {
     @Id
-    @DynamoDBHashKey(attributeName = "userId")
-    private String userId;
-    @DynamoDBAttribute(attributeName = "taskId")
-    private int taskId;
-    @DynamoDBAttribute(attributeName = "taskName")
+    @DynamoDBHashKey(attributeName = "taskName")
     private String taskName;
+    @DynamoDBAttribute(attributeName = "userId")
+    private String userId;
+
+    @DynamoDBAttribute(attributeName = "taskId")
+    private String taskId;
     @DynamoDBAttribute(attributeName = "taskDescription")
     private String taskDescription;
     @DynamoDBAttribute(attributeName = "completed")
@@ -29,11 +30,11 @@ public class TaskRecord {
         this.userId = userId;
     }
 
-    public int getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
 

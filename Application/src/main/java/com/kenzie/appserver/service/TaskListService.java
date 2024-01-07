@@ -56,11 +56,13 @@ public class TaskListService {
     }
 
     public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {
+        // can't query DynamoDB/taskListRepo from backend, need to use findTaskListByUserId or
+        // findTaskListByTaskListName
         Optional<TaskListRecord> optionalTaskListRecord = taskListRepository.findById(userId);
 
         if (optionalTaskListRecord.isPresent()) {
             TaskListRecord taskListRecord = optionalTaskListRecord.get();
-            taskListRecord.setTaskListName(request.getTaskListName());
+            taskListRecord.setTaskListName(request.getNewTaskListName());
             return taskListRepository.save(taskListRecord);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");

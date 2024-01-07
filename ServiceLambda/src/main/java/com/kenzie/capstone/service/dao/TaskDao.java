@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.TaskRecord;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class TaskDao {
@@ -50,7 +51,7 @@ public class TaskDao {
         return mapper.query(TaskRecord.class, queryExpression);
     }
 
-    public TaskRecord setTaskData(String userId, int taskId) {
+    public TaskRecord setTaskData(String userId, String taskId) {
         TaskRecord taskRecord = new TaskRecord();
         taskRecord.setUserId(userId);
         taskRecord.setTaskId(taskId);
@@ -79,12 +80,12 @@ public class TaskDao {
         return mapper.query(TaskRecord.class, queryExpression);
     }
 
-    public TaskRecord createTaskRecord(String userId, int taskId) {
+    public TaskRecord createTaskRecord(String userId, String taskId) {
         if (userId == null || userId.isEmpty()){
             throw new IllegalArgumentException("User ID cannot be null or empty");
         }
 
-        if (taskId <=0 ){
+        if (taskId == null || taskId.isEmpty()){
             throw new IllegalArgumentException("Task ID cannot be null or empty");
         }
         TaskRecord taskRecord = new TaskRecord();
@@ -92,8 +93,8 @@ public class TaskDao {
         taskRecord.setUserId(userId);
         return taskRecord;
     }
-    public TaskRecord getTaskRecordById(int taskId) {
-        if (taskId <=0 ){
+    public TaskRecord getTaskRecordById(String taskId) {
+        if (taskId  == null || taskId.isEmpty()){
             throw new IllegalArgumentException("Task ID cannot be null or empty");
         }
         TaskRecord taskRecord = null;
@@ -103,6 +104,19 @@ public class TaskDao {
         }catch (AmazonDynamoDBException e){
             e.printStackTrace();
             throw new RuntimeException("Error while fetching TaskRecord by taskId: " + taskId,e);
+        }
+        return taskRecord;
+    }
+    public TaskRecord getTaskRecordByName(String taskName){
+        if (taskName == null || taskName.isEmpty()){
+            throw new IllegalArgumentException("Task Name cannot be null or empty");
+        }
+        TaskRecord taskRecord = null;
+        try {
+            taskRecord = mapper.load(TaskRecord.class,taskName);
+        }catch (AmazonDynamoDBException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error while fetching TaskRecord by taskName: " + taskName,e);
         }
         return taskRecord;
     }
@@ -127,5 +141,43 @@ public class TaskDao {
             throw new RuntimeException("Error while updating TaskRecord: " + existingTask.getTaskId(), e);
         }
         return existingTask;
+    }
+    public TaskRecord updateTask(TaskRecord taskRecord){
+    if (taskRecord == null || taskRecord.getTaskName() == null || taskRecord.getTaskName().isEmpty()){
+        throw new IllegalArgumentException("TaskRecord or Task Name cannot be null or empty");
+    }
+    try {
+        TaskRecord retrievedTask = mapper.load(TaskRecord.class,taskRecord.getTaskName());
+
+        if (retrievedTask != null){
+            retrievedTask.setTaskDescription(taskRecord.getTaskDescription());
+            retrievedTask.setCompleted(taskRecord.isCompleted());
+
+            mapper.save(retrievedTask);
+        }else{
+            throw new NoSuchElementException("No TaskRecord found for TaskName: " + taskRecord.getTaskName());
+        }
+    }catch (AmazonDynamoDBException e){
+        e.printStackTrace();
+        throw new RuntimeException("Error while updating TaskRecord: " + taskRecord.getTaskName(),e);
+    }
+    return taskRecord;
+    }
+    //addcreateTask
+    public TaskRecord createTask(TaskRecord taskRecord){
+        try {
+            DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
+
+            Map<String, ExpectedAttributeValue> expectedAttributes = ImmutableMap.of(
+                    "taskName", new ExpectedAttributeValue().withExists(false));
+
+            saveExpression.setExpected(expectedAttributes);
+            System.out.println("Saving taskRecord: " + taskRecord);
+
+            mapper.save(taskRecord,saveExpression);
+        }catch (ConditionalCheckFailedException e){
+            throw new IllegalArgumentException("Task name " + taskRecord.getTaskName() + "already exists.");
+        }
+        return taskRecord;
     }
 }

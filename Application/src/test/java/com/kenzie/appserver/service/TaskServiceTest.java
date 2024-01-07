@@ -1,59 +1,103 @@
 package com.kenzie.appserver.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskRecord;
-import com.kenzie.appserver.service.model.Task;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 public class TaskServiceTest {
+
+    @Mock
     private TaskRepository taskRepository;
-    private TaskService taskService;
+
+    @Mock
     private TaskListRepository taskListRepository;
-    private TaskListService taskListService;
+    @Mock
     private LambdaServiceClient lambdaServiceClient;
+
+    @InjectMocks
+    private TaskService taskService;
 
     @BeforeEach
     void setup(){
-        taskRepository = mock(TaskRepository.class);
-        taskService = new TaskService(taskRepository,taskListRepository,lambdaServiceClient);
-        taskListRepository = mock(TaskListRepository.class);
-        taskListService = new TaskListService(taskListRepository,lambdaServiceClient);
+        MockitoAnnotations.initMocks(this);
     }
+
     @Test
-    void addTask_Successful(){
-        //GIVEN
-        TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setTaskDescription("Description of task");
-        taskRecord.setTaskName("Sample taskName");
-        taskRecord.setCompleted(true);
+    public void add_Task_Successful() {
+        String userId = "user";
+        String taskId = "sampleTaskId";
+        String taskName = "sampleName";
+        String taskDescription = "sampleDescription";
+        boolean completed = false;
 
-        when(taskRepository.save(any(TaskRecord.class))).thenReturn(taskRecord);
+        TaskRecord sampleTask = new TaskRecord();
+        sampleTask.setTaskId(taskId);
+        sampleTask.setTaskName(taskName);
+        sampleTask.setTaskDescription(taskDescription);
+        sampleTask.setUserId(userId);
+        sampleTask.setCompleted(completed);
 
-        TaskRecord addedTask = taskService.addTask(taskRecord);
+        when(taskRepository.save(any(TaskRecord.class))).thenReturn(sampleTask);
 
-        assertNotNull(addedTask);
-        assertEquals("Sample taskName", addedTask.getTaskName());
-        assertEquals("Description of task",addedTask.getTaskDescription());
-        assertTrue(addedTask.isCompleted());
+        TaskRecord createdTask = taskService.addTask(sampleTask);
 
+        verify(taskRepository, times(1)).save(any(TaskRecord.class));
+
+        assertNotNull(createdTask);
+        assertEquals(sampleTask.getTaskId(),createdTask.getTaskId());
+        assertEquals(sampleTask.getTaskName(),createdTask.getTaskName());
+        assertEquals(sampleTask.getTaskDescription(),createdTask.getTaskDescription());
+        assertEquals(sampleTask.getUserId(),createdTask.getUserId());
+        assertEquals(sampleTask.isCompleted(),createdTask.isCompleted());
     }
-
 //    @Test
-//    public void testDeleteTask(){
-//        //GIVEN
-//        Task task = new Task("Task to Delete", "Description of task", true);
-//
-//        //WHEN
+//    public void addTask_Unsuccessful(){
 //
 //    }
+
+    @Test
+    public void updateTask_Successful() throws JsonProcessingException {
+        String taskId = "sampleTaskId";
+        String updatedTaskName = "Updated Task Name";
+        String updatedTaskDescription = "Updated Task Description";
+
+        when(lambdaServiceClient.updateTask(taskId, updatedTaskName, updatedTaskDescription)).thenReturn(true);
+
+        TaskResponse result = taskService.updateTask(taskId,updatedTaskName, updatedTaskDescription);
+
+        assertNotNull(result);
+        assertEquals(taskId,result.getTaskId());
+        assertEquals(updatedTaskName,result.getTaskName());
+        assertEquals(updatedTaskDescription,result.getTaskDescription());
+        assertEquals("Task updated successfully", result.getMessage());
+    }
+//    @Test
+//    public void updateTask_Unsuccessful() throws JsonProcessingException {
+//        int taskId = 123;
+//        String updatedTaskName = "Updated Task Name";
+//        String updatedTaskDescription = "Updated Task Description";
+//
+//        when(lambdaServiceClient.updateTask(taskId, updatedTaskName, updatedTaskDescription)).thenReturn(false);
+//
+//        TaskResponse result = taskService.updateTask(taskId,updatedTaskName, updatedTaskDescription);
+//
+//        assertNotNull(result);
+//        assertEquals(taskId,result.getTaskId());
+//        assertEquals(updatedTaskName,result.getTaskName());
+//        assertEquals(updatedTaskDescription,result.getTaskDescription());
+//        assertEquals("Failed to update task successfully", result.getMessage());
+//    }
+
 }

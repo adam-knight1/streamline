@@ -1,15 +1,10 @@
 package com.kenzie.appserver.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
-import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.TaskListService;
-import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.model.TaskListRequest;
-import com.kenzie.capstone.service.model.UserRequest;
-import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +37,7 @@ public class TaskListController {
 
     @PostMapping("/create")
     public ResponseEntity<TaskListResponse> createTaskList(@RequestBody TaskListCreateRequest createRequest) {
-        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getTaskListName());
+        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getExistingTaskListName());
 
         if (createRequest.getUserId() == null) {
             request.setUserId(UUID.randomUUID().toString());

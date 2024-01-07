@@ -17,9 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-import java.util.Collections;
+
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -83,9 +82,10 @@ public class TaskListServiceTest {
 //    }
 
     /** ------------------------------------------------------------------------
-     *  taskListService.updateTaskList
-     *  ------------------------------------------------------------------------ **/
+    *  taskListService.updateTaskList
+    *  ------------------------------------------------------------------------ **/
 
+    // not passing
     @Test
     public void updateTaskList_Exists_Succeeds() {
         // GIVEN
@@ -94,7 +94,7 @@ public class TaskListServiceTest {
         String newTaskListName = "NewName";
         TaskListCreateRequest request = new TaskListCreateRequest();
         request.setUserId(userId);
-        request.setTaskListName(newTaskListName);
+        request.setExistingTaskListName(newTaskListName);
 
         // simulating an existing tasklist for the same user
         TaskListRecord existingRecord = new TaskListRecord(userId, taskListName);
@@ -119,7 +119,7 @@ public class TaskListServiceTest {
         String newTaskListName = "NewName";
         TaskListCreateRequest request = new TaskListCreateRequest();
         request.setUserId(userId);
-        request.setTaskListName(newTaskListName);
+        request.setExistingTaskListName(newTaskListName);
 
         when(taskListRepository.findById(userId)).thenReturn(Optional.empty());
 

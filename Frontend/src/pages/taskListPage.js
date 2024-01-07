@@ -55,6 +55,9 @@ class TaskListPage extends BaseClass {
            this.errorHandler("Error updating task list! Try again...");
          }
    }
+
+
+
 }
 
 const main = async () => {

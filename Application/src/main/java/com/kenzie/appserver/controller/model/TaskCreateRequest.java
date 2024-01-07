@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotEmpty;
 
 public class TaskCreateRequest {
-    @NotEmpty
+
     @JsonProperty("taskName")
     private String taskName;
+    @JsonProperty("taskId")
+    private String taskId;
 
     @JsonProperty("taskDescription")
     private String taskDescription;
@@ -21,6 +23,14 @@ public class TaskCreateRequest {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskDescription() {
