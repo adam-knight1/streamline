@@ -83,16 +83,16 @@ public class LambdaServiceClient {
 
     }
 
-    public TaskResponse updateTask(String taskId, TaskRequest updatedTaskRequest) throws JsonProcessingException {
+    public TaskResponseLambda updateTask(String taskId, TaskRequest updatedTaskRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(updatedTaskRequest);
         String endpoint = "task/update/" + taskId;
 
         String response = endpointUtility.postEndpoint(endpoint, requestData);
 
-        TaskResponse taskResponse;
+        TaskResponseLambda taskResponse;
         try {
-            taskResponse = mapper.readValue(response, TaskResponse.class);
+            taskResponse = mapper.readValue(response, TaskResponseLambda.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
@@ -123,6 +123,8 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return getTaskListLambdaResponse;
+    }
+
     public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         log.info("Attempting to find user by username: " + username);
