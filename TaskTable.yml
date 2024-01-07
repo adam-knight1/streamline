@@ -1,5 +1,5 @@
 Resources:
-  UserTable:
+  TaskTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
