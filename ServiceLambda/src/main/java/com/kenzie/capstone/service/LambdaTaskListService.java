@@ -78,31 +78,31 @@ public class LambdaTaskListService {
         return taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskListName, newTaskListName);
     }
 
-    public TaskResponseLambda createTask(String userId, TaskRequest taskRequest) {
-        if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
-            throw new IllegalArgumentException("Task name is required");
-        }
-        TaskListRecord taskListRecord = taskListDao.getTaskListByUserId(userId);
-
-        if (taskListRecord == null) {
-            throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
-        }
-
-        TaskRecord taskRecord = new TaskRecord();
-        taskRecord.setUserId(userId);
-        taskRecord.setTaskName(taskRequest.getTaskName());
-        taskRecord.setTaskDescription(taskRequest.getTaskDescription());
-        taskRecord.setTaskId(taskRequest.getTaskId());
-        taskRecord.setCompleted(false);
-
-
-        taskDao.storeTaskData(taskRecord);
-
-        // Return the TaskResponse
-        return new TaskResponseLambda(
-                taskRecord.getUserId(), taskRecord.getTaskId(), taskRecord.getTaskName(),
-                taskRecord.getTaskDescription(), taskRecord.isCompleted()
-        );
-    }
+//    public TaskResponseLambda createTask(String userId, TaskRequest taskRequest) {
+//        if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
+//            throw new IllegalArgumentException("Task name is required");
+//        }
+//        TaskListRecord taskListRecord = taskListDao.getTaskListByUserId(userId);
+//
+//        if (taskListRecord == null) {
+//            throw new IllegalArgumentException("TaskList with userId " + userId + " does not exist");
+//        }
+//
+//        TaskRecord taskRecord = new TaskRecord();
+//        taskRecord.setUserId(userId);
+//        taskRecord.setTaskName(taskRequest.getTaskName());
+//        taskRecord.setTaskDescription(taskRequest.getTaskDescription());
+//        taskRecord.setTaskId(taskRequest.getTaskId());
+//        taskRecord.setCompleted(false);
+//
+//
+//        taskDao.storeTaskData(taskRecord);
+//
+//        // Return the TaskResponse
+//        return new TaskResponseLambda(
+//                taskRecord.getUserId(), taskRecord.getTaskId(), taskRecord.getTaskName(),
+//                taskRecord.getTaskDescription(), taskRecord.isCompleted()
+//        );
+//    }
     }
 
