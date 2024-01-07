@@ -57,7 +57,7 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/{taskId}")
+    @PostMapping("/task/update")
     public ResponseEntity<TaskResponse> updateTask(@PathVariable String taskId,
                                                    @RequestParam String taskName,
                                                    @RequestParam String taskDescription){
