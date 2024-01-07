@@ -4,22 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
-import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
-import com.kenzie.appserver.service.model.TaskList;
-import com.kenzie.capstone.service.client.ApiGatewayException;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.TaskListRequest;
-import org.apache.http.protocol.HTTP;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.Collections;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
