@@ -59,7 +59,6 @@ public class TaskService {
             return taskResponse;
     }
 
-
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
