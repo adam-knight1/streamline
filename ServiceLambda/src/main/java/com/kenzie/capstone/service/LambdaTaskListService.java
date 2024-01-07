@@ -96,6 +96,10 @@ public class LambdaTaskListService {
         taskRecord.setTaskId(taskRequest.getTaskId());
         taskRecord.setCompleted(false);
 
+        if (taskDao == null){
+            throw new RuntimeException("TaskDao is null");
+        }
+
         taskDao.storeTaskData(taskRecord);
 
         // Return the TaskResponse
