@@ -65,7 +65,7 @@ public class TaskListController {
     public ResponseEntity<GetTaskListLambdaResponse> getTaskListByUserId(@PathVariable("userId") String userId) {
         System.out.println("Received request to find taskList with userId: " + userId);
         try {
-           GetTaskListLambdaResponse getTaskListLambdaResponse = taskListService.findTaskList(userId);
+           GetTaskListLambdaResponse getTaskListLambdaResponse = taskListService.findTaskListByUserId(userId);
             if (getTaskListLambdaResponse == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
