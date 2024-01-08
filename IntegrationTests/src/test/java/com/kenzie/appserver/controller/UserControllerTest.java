@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kenzie.appserver.IntegrationTest;
+import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.controller.model.UserRequestTest;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
@@ -36,6 +37,28 @@ class UserControllerTest {
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
     private final ObjectMapper mapper = new ObjectMapper();
+@Test
+    public void createNewUser_Successful() throws Exception {
+        String username = mockNeat.strings().valStr();
+        String email = mockNeat.emails().valStr();
+        String password = mockNeat.passwords().valStr();
+
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
+        userCreateRequest.setUsername(username);
+        userCreateRequest.setPassword(password);
+        userCreateRequest.setEmail(email);
+
+        mvc.perform(post("/user/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(userCreateRequest))
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.userId")
+                        .exists())
+                .andExpect(jsonPath("$.username")
+                        .value(is(username)))
+                .andExpect(status().isOk());
+    }
+
 
 
 
@@ -62,8 +85,4 @@ class UserControllerTest {
                         .value(is(username)))
                 .andExpect(status().is2xxSuccessful());
     }
-
-
-
-
 }
