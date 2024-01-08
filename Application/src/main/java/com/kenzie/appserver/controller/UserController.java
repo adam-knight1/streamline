@@ -71,8 +71,8 @@ public class UserController {
             UserResponse userResponse = userService.createNewUser(userRequest);
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
-            userResponseLambda.setUserId(userResponse.getUserId());
-            System.out.println("hi adam!" + userResponse.getUserId());
+            userResponseLambda.setUserId(userRequest.getUserId());  //I changed this from userResponse.getUserId
+            System.out.println("hi adam!" + userRequest.getUserId());  //this is different than what is in the table.
             userResponseLambda.setUsername(userResponse.getUsername());
             userResponseLambda.setEmail(userResponse.getEmail());
 

@@ -22,9 +22,10 @@ import java.util.Map;
 public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();
+
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-        log.info(gson.toJson(input));
+        log.info("Starting CreateTask Lambda function");
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
         LambdaTaskService lambdaTaskService = serviceComponent.provideLambdaTaskService();
@@ -35,7 +36,27 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
                 .withHeaders(headers);
 
       try {
+          log.info("Input:" + gson.toJson(input));
+
+          String body = input.getBody();
+          log.info("Request body:" + body);
+
+          if (body == null){
+              log.error("Request body is null.");
+              return response
+                      .withStatusCode(400)
+                      .withBody("Request body is null");
+          }
+
           TaskRequest taskRequest = gson.fromJson(input.getBody(), TaskRequest.class);
+          log.info("TaskRequest:" + gson.toJson(taskRequest));
+
+          if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
+              log.error("Task name is null or empty");
+              return response
+                      .withStatusCode(400)
+                      .withBody("Task name is null or empty");
+          }
 
           TaskRecord taskRecord = new TaskRecord();
           taskRecord.setTaskName(taskRequest.getTaskName());
@@ -45,7 +66,10 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
           taskRecord.setCompleted(taskRequest.isCompleted());
 
           TaskResponseLambda taskResponseLambda = lambdaTaskService.createTask(taskRecord);
+          log.info("TaskResponseLambda:" + gson.toJson(taskResponseLambda));
+
           String output = gson.toJson(taskResponseLambda);
+          log.info("Lambda function completed successfully");
 
           return response
                   .withStatusCode(200)
