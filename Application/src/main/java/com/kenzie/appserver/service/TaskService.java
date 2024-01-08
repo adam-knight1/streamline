@@ -2,6 +2,7 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.TaskCreationException;
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
@@ -42,20 +43,22 @@ public class TaskService {
     }
 
     public TaskResponse createTask (TaskRequest taskRequest){
+        TaskResponse taskResponse = new TaskResponse();
         try {
             lambdaServiceClient.createTask(taskRequest);
-        }catch (Exception e){
+        }catch (Exception e) {
             System.out.println("unsuccessful task creation");
-        }
-        TaskResponse taskResponse = new TaskResponse();
-        taskResponse.setTaskName(taskRequest.getTaskName());
-            if (taskRequest.getTaskName() == null){
+
+            taskResponse.setTaskName(taskRequest.getTaskName());
+            if (taskRequest.getTaskName() == null) {
                 taskResponse.setTaskName(UUID.randomUUID().toString());
             }
             taskResponse.setUserId(taskRequest.getUserId());
             taskResponse.setTaskDescription(taskRequest.getTaskDescription());
             taskResponse.setTaskId(taskRequest.getTaskId());
             taskResponse.setCompleted(taskRequest.isCompleted());
+            throw new TaskCreationException(taskResponse,"Failed to create task");
+        }
             return taskResponse;
     }
 
