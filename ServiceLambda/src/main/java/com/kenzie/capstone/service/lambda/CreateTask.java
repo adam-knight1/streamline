@@ -38,6 +38,11 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
       try {
           log.info("Input:" + gson.toJson(input));
 
+          String body = input.getBody();
+          if (body == null){
+              log.error("Request body is null.");
+          }
+
           TaskRequest taskRequest = gson.fromJson(input.getBody(), TaskRequest.class);
           log.info("TaskRequest:" + gson.toJson(taskRequest));
 
