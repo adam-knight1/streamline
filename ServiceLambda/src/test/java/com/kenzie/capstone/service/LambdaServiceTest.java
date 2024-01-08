@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -186,6 +189,38 @@ class LambdaServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             lambdaUserService.createNewUser(null);
+        });
+    }
+
+    @Test
+    public void createTaskList_Successful() {
+        // GIVEN
+        String userId = "userId";
+        String taskListName = "taskListName";
+        List<TaskRecord> tasks = new ArrayList<>();
+        TaskListRecord taskListRecord = new TaskListRecord();
+        taskListRecord.setUserId(userId);
+        taskListRecord.setTaskListName(taskListName);
+        taskListRecord.setTasks(tasks);
+
+        when(taskListDao.createTaskList(taskListRecord)).thenReturn(taskListRecord);
+
+        // WHEN
+        TaskListResponse response = lambdaTaskListService.createTaskList(taskListRecord);
+
+        // THEN
+        assertNotNull(response);
+        assertEquals(userId, response.getUserId());
+        assertEquals(taskListName, response.getTaskListName());
+    }
+
+    @Test
+    public void createTaskList_NullRecord_ThrowsException() {
+        when(taskListDao.createTaskList(null)).thenReturn(null);
+
+        // THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            lambdaTaskListService.createTaskList(null);
         });
     }
 }
