@@ -37,29 +37,28 @@ public class TaskService {
         return (List<TaskRecord>) taskRepository.findAll();
     }
 
-
     public TaskRecord addTask (TaskRecord task) {
         return taskRepository.save(task);
     }
 
-    public TaskResponse createTask (TaskRequest taskRequest){
+    public TaskResponse createTask(TaskRequest taskRequest){
         TaskResponse taskResponse = new TaskResponse();
-        try {
-            lambdaServiceClient.createTask(taskRequest);
-        }catch (Exception e) {
-            System.out.println("unsuccessful task creation");
 
-            taskResponse.setTaskName(taskRequest.getTaskName());
-            if (taskRequest.getTaskName() == null) {
-                taskResponse.setTaskName(UUID.randomUUID().toString());
+        try {
+            boolean updateSuccessful = lambdaServiceClient.createTask(taskRequest);
+            if (updateSuccessful) {
+                taskResponse.setTaskId(taskRequest.getTaskId());
+                taskResponse.setTaskName(taskRequest.getTaskName());
+                taskResponse.setTaskDescription(taskRequest.getTaskDescription());
+                taskResponse.setMessage("Task created Successfully");
+            } else {
+                taskResponse.setMessage("Failed to create task");
             }
-            taskResponse.setUserId(taskRequest.getUserId());
-            taskResponse.setTaskDescription(taskRequest.getTaskDescription());
-            taskResponse.setTaskId(taskRequest.getTaskId());
-            taskResponse.setCompleted(taskRequest.isCompleted());
-            throw new TaskCreationException(taskResponse,"Failed to create task");
+        } catch (Exception e){
+            taskResponse.setMessage("Error creating task:" +e.getMessage());
+
         }
-            return taskResponse;
+        return taskResponse;
     }
 
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
@@ -72,9 +71,6 @@ public class TaskService {
         }
         return null;
     }
-
-
-
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
         TaskRecord task = taskRepository.findById(taskId).orElse(null);

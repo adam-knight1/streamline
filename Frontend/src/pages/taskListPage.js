@@ -1,18 +1,28 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import TaskListClient from "../api/taskListClient";
+import TaskClient from "../api/taskClient";
 
 class TaskListPage extends BaseClass {
     constructor() {
         super();
+<<<<<<< HEAD
         this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList', 'onFind'], this);
+=======
+        this.bindClassMethods(['onCreate', 'onUpdate','onCreateTask', 'renderTaskList'], this);
+>>>>>>> 0f24b47 (refactored to use /task/add)
         this.dataStore = new DataStore();
+        this.taskClient = new TaskClient();
     }
 
     async mount() {
         document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
         document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
+<<<<<<< HEAD
         document.getElementById('find-task-list').addEventListener('submit', this.onFind);
+=======
+        document.getElementById('create-task').addEventListener('submit', this.onCreateTask);
+>>>>>>> 0f24b47 (refactored to use /task/add)
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
     }
@@ -57,6 +67,7 @@ class TaskListPage extends BaseClass {
          }
    }
 
+<<<<<<< HEAD
      async onFind(event) {
            event.preventDefault();
            let userId = document.getElementById("find-task-list-by-user-id-field").value;
@@ -91,8 +102,26 @@ class TaskListPage extends BaseClass {
 
    async onCreateTask(event) {
    }
+=======
+   async onCreateTask(event) {
+           event.preventDefault();
+>>>>>>> 0f24b47 (refactored to use /task/add)
 
+           let taskDescription = document.getElementById("task-desc-field").value;
+           let userId = document.getElementById("userId-field").value;
+           let taskListName = document.getElementById("taskList-name-field").value;
 
+           this.showMessage(`userId ${userId}`);
+
+           let createdTask = await this.taskClient.createTask(userId, taskListName, taskDescription, this.errorHandler);
+
+           if (createdTask) {
+               this.showMessage(`Task ${createdTask.taskName} created successfully!`);
+               document.getElementById("created-task").innerHTML = `Your task was created: ${createdTask.taskName}`;
+           } else {
+               this.errorHandler("Error creating Task! Try again...");
+           }
+       }
 }
 
 const main = async () => {

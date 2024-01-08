@@ -33,12 +33,13 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-//    @PostMapping("/create")
-//    public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
-//        TaskRecord createdTask = taskService.createTask(task);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
-//    }
     @PostMapping("/add")
+    public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
+        TaskRecord createdTask = taskService.addTask(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+   }
+
+   /* @PostMapping("/add")
     public ResponseEntity<TaskRecord> addTask(@RequestBody TaskRecord task){
         TaskRecord addedTask = taskService.addTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
@@ -66,6 +67,8 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    */
 
     //update task status by taskId
     @PostMapping("/{taskId}/update-status")
