@@ -7,7 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
+
 public class LambdaServiceClient {
+    private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
     private static final String SET_EXAMPLE_ENDPOINT = "example";
     private static final String CREATE_USER_ENDPOINT = "/user/create";
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
@@ -16,6 +18,7 @@ public class LambdaServiceClient {
     private ObjectMapper mapper;
 
     private static final Logger log = LogManager.getLogger(LambdaServiceClient.class);
+
 
     public LambdaServiceClient() {
         this.mapper = new ObjectMapper();
@@ -174,21 +177,20 @@ public class LambdaServiceClient {
     }
     //was taskrecord update to taskresponselambda
 
+    public TaskResponseLambda createTask(TaskRequest taskRequest) throws JsonProcessingException {
 
-    public boolean createTask (TaskRequest taskRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRequest);
-        String response = endpointUtility.postEndpoint("task/add", requestData);
-
-        TaskResponseLambda taskResponseLambda;
 
         try {
-            taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
-            return taskResponseLambda.isCompleted();
+            String response = endpointUtility.postEndpoint("task/create", requestData);
+            return mapper.readValue(response, TaskResponseLambda.class);
         } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+            throw new ApiGatewayException("unable to map deserialize JSON: " + e.getMessage());
+
+            }
+
         }
-    }
 
 }
 
