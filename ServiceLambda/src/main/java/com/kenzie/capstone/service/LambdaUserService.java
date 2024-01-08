@@ -46,6 +46,7 @@ public class LambdaUserService {
             userRecord.setUserId(UUID.randomUUID().toString());
         }
 
+
         try {
             userDao.createUser(userRecord);
             log.info("Successfully created user");

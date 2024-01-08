@@ -44,7 +44,7 @@ class UserPage extends BaseClass {
             this.showMessage(`User ${createdUser.username} created successfully!`);
             this.showMessage(`User ${createdUser.userId} created successfully!`);
             document.getElementById("created-user-id").innerHTML = `Your User ID is: ${createdUser.userId}`;
-            document.getElementById("keep-it-safe").innerHTML = 'Please keep it somewhere safe!';
+            document.getElementById("keep-it-safe").innerHTML = 'Account created successfully!';
 
         } else {
             this.errorHandler("Error creating user! Try again...");

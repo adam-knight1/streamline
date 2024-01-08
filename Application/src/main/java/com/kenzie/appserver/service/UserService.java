@@ -62,11 +62,12 @@ public class UserService {
         }
         UserResponse userResponse = new UserResponse();
         userResponse.setUserId(userRequest.getUserId());
-            if (userRequest.getUserId() == null){
+           /* if (userRequest.getUserId() == null){
                 userResponse.setUserId(UUID.randomUUID().toString());
-            } //just added this -adam 12/31
+            }*/ //just added this -adam 12/31  and now commented it out 12-8
         userResponse.setEmail(userRequest.getEmail());
         userResponse.setUsername(userRequest.getUsername());
+        System.out.println("User Id in userService is: " + userRequest.getUserId());
         return userResponse;
     }
 
@@ -77,7 +78,42 @@ public class UserService {
         user.setUsername(userRecord.getUsername());
         user.setPassword(userRecord.getPassword());
         return user;
+
     }
+
+      public Optional<UserRecord> authenticateUser(String username, String password){
+        if (username == null || password == null) {
+            logger.error("Username or Password is null");
+            return Optional.empty();
+        }
+
+        Optional<UserRecord> userRecord = userRepository.findByUsername(username);
+
+        if (userRecord.isEmpty()) {
+            logger.warn("User not found - authenticateUser: {}", username);
+            return Optional.empty();
+        }
+        if (userRecord.get().getPassword().equals(password)) {
+            logger.info("User authenticated successfully: {}", username);
+            return userRecord;
+        } else {
+            logger.warn("Authentication failed for user: {}", username);
+            return Optional.empty();
+        }
+    }
+
+    /*public boolean authenticateUser(String username, String submittedPassword) {
+        UserRecord user;
+        if (user != null) {
+            String storedHashedPassword = user.getPassword();
+            return checkPassword(submittedPassword, storedHashedPassword);
+        }
+        return false;
+    }*/
+
+
+    //Keeping this methods in to show thought process.  Tried to query from the backend at first.  It doesn't
+    //work with the project config.
      /* public User findByUserId(String userId) {
         System.out.println("Searching for userId: " + userId);
         User user = userRepository
@@ -113,36 +149,6 @@ public class UserService {
         } else {
             return null;
         }
-    }*/
-
-      public Optional<UserRecord> authenticateUser(String username, String password){
-        if (username == null || password == null) {
-            logger.error("Username or Password is null");
-            return Optional.empty();
-        }
-
-        Optional<UserRecord> userRecord = userRepository.findByUsername(username);
-
-        if (userRecord.isEmpty()) {
-            logger.warn("User not found - authenticateUser: {}", username);
-            return Optional.empty();
-        }
-        if (userRecord.get().getPassword().equals(password)) {
-            logger.info("User authenticated successfully: {}", username);
-            return userRecord;
-        } else {
-            logger.warn("Authentication failed for user: {}", username);
-            return Optional.empty();
-        }
-    }
-
-    /*public boolean authenticateUser(String username, String submittedPassword) {
-        UserRecord user;
-        if (user != null) {
-            String storedHashedPassword = user.getPassword();
-            return checkPassword(submittedPassword, storedHashedPassword);
-        }
-        return false;
     }*/
 
 }
