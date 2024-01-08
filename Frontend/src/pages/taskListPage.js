@@ -6,11 +6,7 @@ import TaskClient from "../api/taskClient";
 class TaskListPage extends BaseClass {
     constructor() {
         super();
-<<<<<<< HEAD
-        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList', 'onFind'], this);
-=======
         this.bindClassMethods(['onCreate', 'onUpdate','onCreateTask', 'renderTaskList'], this);
->>>>>>> 0f24b47 (refactored to use /task/add)
         this.dataStore = new DataStore();
         this.taskClient = new TaskClient();
     }
@@ -18,11 +14,9 @@ class TaskListPage extends BaseClass {
     async mount() {
         document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
         document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
-<<<<<<< HEAD
         document.getElementById('find-task-list').addEventListener('submit', this.onFind);
-=======
         document.getElementById('create-task').addEventListener('submit', this.onCreateTask);
->>>>>>> 0f24b47 (refactored to use /task/add)
+
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
     }
@@ -67,7 +61,6 @@ class TaskListPage extends BaseClass {
          }
    }
 
-<<<<<<< HEAD
      async onFind(event) {
            event.preventDefault();
            let userId = document.getElementById("find-task-list-by-user-id-field").value;
@@ -97,15 +90,8 @@ class TaskListPage extends BaseClass {
                <p><strong>Tasks:</strong> ${tasksHtml}</p>
            `;
        }
-
-
-
-   async onCreateTask(event) {
-   }
-=======
    async onCreateTask(event) {
            event.preventDefault();
->>>>>>> 0f24b47 (refactored to use /task/add)
 
            let taskDescription = document.getElementById("task-desc-field").value;
            let userId = document.getElementById("userId-field").value;

@@ -7,9 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-
 public class LambdaServiceClient {
-    private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
     private static final String SET_EXAMPLE_ENDPOINT = "example";
     private static final String CREATE_USER_ENDPOINT = "/user/create";
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
@@ -18,7 +16,6 @@ public class LambdaServiceClient {
     private ObjectMapper mapper;
 
     private static final Logger log = LogManager.getLogger(LambdaServiceClient.class);
-
 
     public LambdaServiceClient() {
         this.mapper = new ObjectMapper();
