@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.TaskRecord;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class TaskDao {
@@ -161,5 +162,22 @@ public class TaskDao {
         throw new RuntimeException("Error while updating TaskRecord: " + taskRecord.getTaskName(),e);
     }
     return taskRecord;
+    }
+    //addcreateTask
+    public TaskRecord createTask(TaskRecord taskRecord){
+        try {
+            DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
+
+            Map<String, ExpectedAttributeValue> expectedAttributes = ImmutableMap.of(
+                    "taskName", new ExpectedAttributeValue().withExists(false));
+
+            saveExpression.setExpected(expectedAttributes);
+            System.out.println("Saving taskRecord: " + taskRecord);
+
+            mapper.save(taskRecord,saveExpression);
+        }catch (ConditionalCheckFailedException e){
+            throw new IllegalArgumentException("Task name " + taskRecord.getTaskName() + "already exists.");
+        }
+        return taskRecord;
     }
 }

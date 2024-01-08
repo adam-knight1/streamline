@@ -1,18 +1,22 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import TaskListClient from "../api/taskListClient";
+import TaskClient from "../api/taskClient";
 
 class TaskListPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList', 'onFind'], this);
+        this.bindClassMethods(['onCreate', 'onUpdate','onCreateTask', 'renderTaskList'], this);
         this.dataStore = new DataStore();
+        this.taskClient = new TaskClient();
     }
 
     async mount() {
         document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
         document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
         document.getElementById('find-task-list').addEventListener('submit', this.onFind);
+        document.getElementById('create-task').addEventListener('submit', this.onCreateTask);
+
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
     }
@@ -86,13 +90,24 @@ class TaskListPage extends BaseClass {
                <p><strong>Tasks:</strong> ${tasksHtml}</p>
            `;
        }
-
-
-
    async onCreateTask(event) {
-   }
+           event.preventDefault();
 
+           let taskDescription = document.getElementById("task-desc-field").value;
+           let userId = document.getElementById("userId-field").value;
+           let taskListName = document.getElementById("taskList-name-field").value;
 
+           this.showMessage(`userId ${userId}`);
+
+           let createdTask = await this.taskClient.createTask(userId, taskListName, taskDescription, this.errorHandler);
+
+           if (createdTask) {
+               this.showMessage(`Task ${createdTask.taskName} created successfully!`);
+               document.getElementById("created-task").innerHTML = `Your task was created: ${createdTask.taskName}`;
+           } else {
+               this.errorHandler("Error creating Task! Try again...");
+           }
+       }
 }
 
 const main = async () => {

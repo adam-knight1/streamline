@@ -1,19 +1,20 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.TaskCreationException;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.TaskRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class TaskServiceTest {
@@ -99,5 +100,62 @@ public class TaskServiceTest {
 //        assertEquals(updatedTaskDescription,result.getTaskDescription());
 //        assertEquals("Failed to update task successfully", result.getMessage());
 //    }
+    //test passes
+    @Test
+    public void createTask_Successful() throws JsonProcessingException, TaskCreationException {
+        String userId = "user";
+        String taskId = "sampleTaskId";
+        String taskName = "sampleName";
+        String taskDescription = "sampleDescription";
+        boolean completed = false;
+
+        TaskRequest taskRequest = new TaskRequest();
+        taskRequest.setTaskId(taskId);
+        taskRequest.setTaskName(taskName);
+        taskRequest.setTaskDescription(taskDescription);
+        taskRequest.setUserId(userId);
+        taskRequest.setCompleted(completed);
+
+        TaskResponse taskResponse = new TaskResponse();
+        taskResponse.setTaskId(taskId);
+        taskResponse.setTaskName(taskName);
+        taskResponse.setTaskDescription(taskDescription);
+        taskResponse.setUserId(userId);
+        taskResponse.setCompleted(completed);
+
+        when(lambdaServiceClient.createTask(taskRequest)).thenThrow(new TaskCreationException(taskResponse,
+                "failed to create task"));
+
+        assertThrows(TaskCreationException.class, () ->{
+            taskService.createTask(taskRequest);
+        });
+
+        verify(lambdaServiceClient,times(1)).createTask(taskRequest);
+    }
+    //passing
+    @Test
+    public void createTask_Unsuccessful() throws TaskCreationException, JsonProcessingException {
+        String userId = "user";
+        String taskId = "sampleTaskId";
+        String taskName = "sampleName";
+        String taskDescription = "sampleDescription";
+        boolean completed = false;
+
+        TaskRequest taskRequest = new TaskRequest();
+        taskRequest.setTaskId(taskId);
+        taskRequest.setTaskName(taskName);
+        taskRequest.setTaskDescription(taskDescription);
+        taskRequest.setUserId(userId);
+        taskRequest.setCompleted(completed);
+
+        when(lambdaServiceClient.createTask(taskRequest)).thenThrow(new RuntimeException("Failed to create task"));
+
+        assertThrows(TaskCreationException.class, () ->{
+            taskService.createTask(taskRequest);
+        });
+
+        verify(lambdaServiceClient,times(1)).createTask(taskRequest);
+
+    }
 
 }

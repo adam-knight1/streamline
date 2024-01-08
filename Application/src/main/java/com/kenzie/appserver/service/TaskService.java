@@ -1,6 +1,8 @@
 
 package com.kenzie.appserver.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.TaskCreationException;
 import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
@@ -11,10 +13,12 @@ import com.kenzie.appserver.service.model.Task;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.TaskRequest;
+import com.kenzie.capstone.service.model.TaskResponseLambda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -33,11 +37,30 @@ public class TaskService {
         return (List<TaskRecord>) taskRepository.findAll();
     }
 
-
     public TaskRecord addTask (TaskRecord task) {
         return taskRepository.save(task);
     }
 
+    public TaskResponse createTask (TaskRequest taskRequest) {
+        TaskResponse taskResponse = new TaskResponse();
+        try {
+            lambdaServiceClient.createTask(taskRequest);
+        } catch (Exception e) {
+            System.out.println("unsuccessful task creation");
+
+            taskResponse.setTaskName(taskRequest.getTaskName());
+            if (taskRequest.getTaskName() == null) {
+                taskResponse.setTaskName(UUID.randomUUID().toString());
+            }
+            taskResponse.setUserId(taskRequest.getUserId());
+            taskResponse.setTaskDescription(taskRequest.getTaskDescription());
+            taskResponse.setTaskId(taskRequest.getTaskId());
+            taskResponse.setCompleted(taskRequest.isCompleted());
+            throw new TaskCreationException(taskResponse, "Failed to create task");
+        }
+        return taskResponse;
+
+    }
 
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists
@@ -49,9 +72,6 @@ public class TaskService {
         }
         return null;
     }
-
-
-
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
         TaskRecord task = taskRepository.findById(taskId).orElse(null);

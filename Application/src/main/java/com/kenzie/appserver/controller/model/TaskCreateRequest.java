@@ -8,6 +8,8 @@ public class TaskCreateRequest {
 
     @JsonProperty("taskName")
     private String taskName;
+    @JsonProperty("taskId")
+    private String taskId;
 
     @JsonProperty("taskDescription")
     private String taskDescription;
@@ -21,6 +23,14 @@ public class TaskCreateRequest {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskDescription() {
