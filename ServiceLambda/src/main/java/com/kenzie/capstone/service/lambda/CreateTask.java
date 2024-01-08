@@ -39,12 +39,24 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
           log.info("Input:" + gson.toJson(input));
 
           String body = input.getBody();
+          log.info("Request body:" + body);
+
           if (body == null){
               log.error("Request body is null.");
+              return response
+                      .withStatusCode(400)
+                      .withBody("Request body is null");
           }
 
           TaskRequest taskRequest = gson.fromJson(input.getBody(), TaskRequest.class);
           log.info("TaskRequest:" + gson.toJson(taskRequest));
+
+          if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
+              log.error("Task name is null or empty");
+              return response
+                      .withStatusCode(400)
+                      .withBody("Task name is null or empty");
+          }
 
           TaskRecord taskRecord = new TaskRecord();
           taskRecord.setTaskName(taskRequest.getTaskName());
