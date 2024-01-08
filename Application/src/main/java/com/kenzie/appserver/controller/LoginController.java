@@ -30,7 +30,7 @@ public class LoginController {
     }
 */
 
-    @PostMapping("/loginUser")
+   /* @PostMapping("/loginUser")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest loginRequest) {
         if (loginRequest == null || loginRequest.getUsername() == null || loginRequest.getPassword() == null) {
             logger.error("Invalid login request: Missing username or password");
@@ -57,5 +57,5 @@ public class LoginController {
             logger.error("Login error: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 }

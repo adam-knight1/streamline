@@ -49,6 +49,25 @@ class UserServiceTest {
         verify(lambdaServiceClient, times(1)).createUser(any(UserRequest.class));
     }
 
+    @Test
+    void FindUserByUserIdTest() throws Exception {
+        String userId = "123";
+        UserResponseLambda mockResponse = new UserResponseLambda();
+        mockResponse.setUserId(userId);
+        mockResponse.setUsername("testUser");
+        mockResponse.setEmail("test@example.com");
+
+        when(lambdaServiceClient.findUserByUserId(userId)).thenReturn(mockResponse);
+
+        UserResponseLambda result = userService.findUserByUserId(userId);
+
+        assertNotNull(result);
+        assertEquals(userId, result.getUserId());
+        assertEquals("testUser", result.getUsername());
+        assertEquals("test@example.com", result.getEmail());
+
+        verify(lambdaServiceClient, times(1)).findUserByUserId(userId);
+    }
 
 }
 
