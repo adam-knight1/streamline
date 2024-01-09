@@ -76,7 +76,7 @@ class LambdaServiceTest {
         when(taskDao.getTaskRecordById(taskId)).thenReturn(null);
 
         assertThrows(InvalidDataException.class, () -> {
-            lambdaTaskService.updateTask(taskId,taskName, taskDescription, completed);
+            lambdaTaskService.updateTask(taskName, taskDescription, completed);
         });
     }
 
