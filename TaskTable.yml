@@ -5,9 +5,13 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "taskName"
           AttributeType: "S"
+        - AttributeName: "userId"
+          AttributeType: "S"
       KeySchema:
         - AttributeName: "taskName"
           KeyType: "HASH"
+        - AttributeName: "userId"
+          KeyType: "RANGE"
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: false
       BillingMode: PAY_PER_REQUEST

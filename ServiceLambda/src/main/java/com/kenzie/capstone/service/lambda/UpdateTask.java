@@ -48,12 +48,12 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
             TaskRecord taskRecord = new TaskRecord();
             taskRecord.setTaskDescription(taskRequest.getTaskDescription());
             taskRecord.setTaskName(taskRequest.getTaskName());
-            taskRecord.setTaskId(taskRequest.getTaskId());
+            //taskRecord.setTaskId(taskRequest.getTaskId());
             taskRecord.setUserId(taskRequest.getUserId());
             taskRecord.setCompleted(taskRequest.isCompleted());
 
             TaskResponseLambda taskResponseLambda = lambdaTaskService.updateTask(
-                    taskRecord.getTaskId(),
+                    //taskRecord.getTaskId(),
                     taskRecord.getTaskName(),
                     taskRecord.getTaskDescription(),
                     taskRecord.isCompleted());

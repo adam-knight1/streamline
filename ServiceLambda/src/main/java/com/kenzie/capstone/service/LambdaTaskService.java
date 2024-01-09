@@ -20,17 +20,17 @@ public class LambdaTaskService {
         this.taskDao =taskDao;
     }
 
-    public TaskResponseLambda updateTask(String taskId, String taskName, String taskDescription, boolean completed){
-        if (taskId == null || taskName == null || taskName.isEmpty()){
+    public TaskResponseLambda updateTask( String taskName, String taskDescription, boolean completed){
+        if ( taskName == null || taskName.isEmpty()){
             throw new InvalidDataException("Invalid task details");
         }
         TaskRecord existingRecord = taskDao.getTaskRecordByName(taskName);
         if (existingRecord == null){
-            throw new InvalidDataException("Task with Name " + taskName + "not found");
+            throw new InvalidDataException("Task with Name " + taskName + " not found");
         }
-        if (!existingRecord.getTaskId().equals(taskId)){
-            throw new InvalidDataException("Task ID does not match Task Name");
-        }
+      //  if (!existingRecord.getTaskId().equals(taskId)){
+       //     throw new InvalidDataException("Task ID does not match Task Name");
+       // }
        // existingRecord.setTaskName(taskName);
         existingRecord.setTaskDescription(taskDescription);
         existingRecord.setCompleted(completed);
@@ -46,8 +46,8 @@ public class LambdaTaskService {
 
         try {
             taskDao.createTask(taskRecord);
-            log.info("Succesfully created a task.");
-            return new TaskResponseLambda(taskRecord.getTaskName(), taskRecord.getTaskId(),
+            log.info("Successfully created a task.");
+            return new TaskResponseLambda(taskRecord.getTaskName(),
                     taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
         }catch (Exception e){
             log.error("Error creating a task: ", e);

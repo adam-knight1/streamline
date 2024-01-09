@@ -3,8 +3,10 @@ package com.kenzie.appserver.controller.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TaskResponse {
-    @JsonProperty("taskId")
+    /*@JsonProperty("taskId")
     private String taskId;
+
+     */
     @JsonProperty("userId")
     private String userId;
     @JsonProperty("taskName")
@@ -18,7 +20,7 @@ public class TaskResponse {
     private String message;
 
 
-    public String getTaskId() {
+  /*  public String getTaskId() {
         return taskId;
     }
 
@@ -26,6 +28,8 @@ public class TaskResponse {
         this.taskId = taskId;
     }
 
+
+   */
     public String getUserId() {
         return userId;
     }

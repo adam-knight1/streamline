@@ -6,7 +6,7 @@ public class TaskResponseLambda {
 
 
     private String userId;
-    private String taskId;
+   // private String taskId;
     // This may be superfluous since the task is just a simple sentence "take the dog out" - OB
     private String taskName;
     private String taskDescription;
@@ -15,9 +15,9 @@ public class TaskResponseLambda {
     public TaskResponseLambda() {
     }
 
-    public TaskResponseLambda(String userId, String taskId, String taskName, String taskDescription, boolean completed) {
+    public TaskResponseLambda(String userId, String taskName, String taskDescription, boolean completed) {
         this.userId = userId;
-        this.taskId = taskId;
+        //this.taskId = taskId;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.completed = completed;
@@ -31,7 +31,7 @@ public class TaskResponseLambda {
     }
 
 
-    public String getTaskId() {
+  /*  public String getTaskId() {
         return taskId;
     }
 
@@ -39,6 +39,8 @@ public class TaskResponseLambda {
         this.taskId = taskId;
     }
 
+
+   */
     public String getTaskName() {
         return taskName;
     }
@@ -68,19 +70,18 @@ public class TaskResponseLambda {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskResponseLambda that = (TaskResponseLambda) o;
-        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskId, that.taskId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
+        return completed == that.completed && Objects.equals(userId, that.userId) &&  Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId, taskName, taskDescription, completed);
+        return Objects.hash(userId, taskName, taskDescription, completed);
     }
 
     @Override
     public String toString() {
         return "TaskResponse{" +
                 "userId='" + userId + '\'' +
-                ", taskId='" + taskId + '\'' +
                 ", taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", completed=" + completed +

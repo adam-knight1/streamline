@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.LambdaTaskService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
@@ -49,6 +50,15 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
           }
 
           TaskRequest taskRequest = gson.fromJson(input.getBody(), TaskRequest.class);
+          try {
+              taskRequest = gson.fromJson(body, TaskRequest.class);
+          } catch (JsonSyntaxException e ) {
+              log.error("Error parsing request body:", e);
+              return response
+                      .withStatusCode(400)
+                      .withBody("Error parsing request body");
+          }
+
           log.info("TaskRequest:" + gson.toJson(taskRequest));
 
           if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
@@ -60,7 +70,7 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 
           TaskRecord taskRecord = new TaskRecord();
           taskRecord.setTaskName(taskRequest.getTaskName());
-          taskRecord.setTaskId(taskRequest.getTaskId());
+          //taskRecord.setTaskId(taskRequest.getTaskId());
           taskRecord.setTaskDescription(taskRequest.getTaskDescription());
           taskRecord.setUserId(taskRequest.getUserId());
           taskRecord.setCompleted(taskRequest.isCompleted());

@@ -40,7 +40,7 @@ public class TaskListController {
 
     @PostMapping("/create")
     public ResponseEntity<TaskListResponse> createTaskList(@RequestBody TaskListCreateRequest createRequest) {
-        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getExistingTaskListName());
+        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getTaskListName());
 
         if (createRequest.getUserId() == null) {
             request.setUserId(UUID.randomUUID().toString());
