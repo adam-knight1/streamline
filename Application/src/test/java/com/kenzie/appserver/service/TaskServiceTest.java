@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.lang.reflect.Executable;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -63,10 +65,31 @@ public class TaskServiceTest {
         assertEquals(sampleTask.getUserId(),createdTask.getUserId());
         assertEquals(sampleTask.isCompleted(),createdTask.isCompleted());
     }
-//    @Test
-//    public void addTask_Unsuccessful(){
-//
-//    }
+    @Test
+    public void addTask_Unsuccessful(){
+        String userId = "user";
+        String taskId = "sampleTaskId";
+        String taskName = "sampleName";
+        String taskDescription = "sampleDescription";
+        boolean completed = false;
+
+        TaskRecord sampleTask = new TaskRecord();
+        sampleTask.setTaskId(taskId);
+        sampleTask.setTaskName(taskName);
+        sampleTask.setTaskDescription(taskDescription);
+        sampleTask.setUserId(userId);
+        sampleTask.setCompleted(completed);
+
+        when(taskRepository.save(any(TaskRecord.class))).thenThrow(new RuntimeException("Failed to add task"));
+
+        assertThrows(RuntimeException.class, () -> {
+            taskService.addTask(sampleTask);
+        });
+
+        verify(taskRepository, times(1)).save(any(TaskRecord.class));
+
+
+    }
 
     @Test
     public void updateTask_Successful() throws JsonProcessingException {
@@ -86,19 +109,30 @@ public class TaskServiceTest {
     }
 //    @Test
 //    public void updateTask_Unsuccessful() throws JsonProcessingException {
-//        int taskId = 123;
+//        String taskId = "sampleTaskId";
 //        String updatedTaskName = "Updated Task Name";
 //        String updatedTaskDescription = "Updated Task Description";
 //
-//        when(lambdaServiceClient.updateTask(taskId, updatedTaskName, updatedTaskDescription)).thenReturn(false);
+//        TaskResponse sampleTask = new TaskResponse();
+//        sampleTask.setTaskId(taskId);
+//        sampleTask.setTaskName(updatedTaskName);
+//        sampleTask.setTaskDescription(updatedTaskDescription);
 //
-//        TaskResponse result = taskService.updateTask(taskId,updatedTaskName, updatedTaskDescription);
 //
-//        assertNotNull(result);
-//        assertEquals(taskId,result.getTaskId());
-//        assertEquals(updatedTaskName,result.getTaskName());
-//        assertEquals(updatedTaskDescription,result.getTaskDescription());
-//        assertEquals("Failed to update task successfully", result.getMessage());
+//        when(lambdaServiceClient.updateTask(taskId, updatedTaskName, updatedTaskDescription))
+//                .thenThrow(new RuntimeException("Failed to update a task"));
+//
+//        assertThrows(RuntimeException.class, () -> {
+//            taskService.updateTask(sampleTask);
+//        });
+//        when(lambdaServiceClient.updateTask(any(TaskResponse.class)).t.save(any(TaskRecord.class))).thenThrow(new RuntimeException("Failed to add task"));
+//
+//        assertThrows(RuntimeException.class, () -> {
+//            taskService.addTask(sampleTask);
+//        });
+//
+//        verify(taskRepository, times(1)).save(any(TaskRecord.class));
+//
 //    }
     //test passes
     @Test

@@ -52,9 +52,13 @@ class LambdaServiceTest {
 //
 //        //WHEN
 //        when(taskDao.getTaskRecordById(taskId)).thenReturn(updatedTaskRecord);
-//        when(taskDao.updateTaskRecord(any(TaskRecord.class))).thenReturn(updatedTaskRecord);
+//       // when(taskDao.updateTaskRecord(any(TaskRecord.class))).thenReturn(updatedTaskRecord);
 //
-//        TaskResponseLambda result = lambdaTaskService.updateTask(taskId,updatedTaskName,updatedTaskDescription, completed);
+//        //TaskResponseLambda result = lambdaTaskService.updateTask(taskId,updatedTaskName,updatedTaskDescription,completed);
+//
+//        TaskResponseLambda result = lambdaTaskService.updateTask(taskId,updatedTaskName,updatedTaskDescription,completed);
+//
+//        verify(taskDao).updateTaskRecord(updatedTaskRecord);
 //
 //        assertNotNull(result);
 //        assertEquals(updatedTaskName,result.getTaskName());
