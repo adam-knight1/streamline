@@ -1,4 +1,4 @@
-package com.kenzie.capstone.service.model;
+/* package com.kenzie.capstone.service.model;
 
 public class TaskRequest {
     private String userId;
@@ -43,7 +43,7 @@ public class TaskRequest {
         this.taskId = taskId;
     }
 
-     */
+
 
     public String getTaskDescription() {
         return taskDescription;
@@ -62,3 +62,6 @@ public class TaskRequest {
     }
 
 }
+
+
+ */
