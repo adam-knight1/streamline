@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
-
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -51,8 +50,8 @@ class TaskListControllerTest {
         //when(taskListService.createTaskList()).thenReturn(taskListResponse);
 
         mvc.perform(post("/taskList/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(createRequest)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(createRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("userId").value("json102"))
                 .andExpect(jsonPath("taskListName").value("Task List"));
@@ -71,9 +70,9 @@ class TaskListControllerTest {
         mvc.perform(get("/taskList/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(createRequest)))
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("userId").value("json102"))
-                        .andExpect(jsonPath("taskListName").value("Task List"));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("userId").value("json102"))
+                .andExpect(jsonPath("taskListName").value("Task List"));
 
     }
 }
