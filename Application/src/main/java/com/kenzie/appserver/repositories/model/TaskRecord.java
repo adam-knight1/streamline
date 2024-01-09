@@ -2,7 +2,6 @@ package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import org.springframework.data.annotation.Id;
 
@@ -11,17 +10,17 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Task")
 public class TaskRecord {
     @Id
-    @DynamoDBHashKey(attributeName = "userId")
+    @DynamoDBHashKey(attributeName = "taskName")
+    private String taskName;
+    @DynamoDBAttribute(attributeName = "userId")
     private String userId;
 
-    @DynamoDBRangeKey(attributeName = "taskId")
+    @DynamoDBAttribute(attributeName = "taskId")
     private String taskId;
     @DynamoDBAttribute(attributeName = "taskDescription")
     private String taskDescription;
     @DynamoDBAttribute(attributeName = "completed")
     private boolean completed;
-    @DynamoDBAttribute(attributeName = "taskName")
-    private String taskName;
 
     public String getUserId() {
         return userId;
