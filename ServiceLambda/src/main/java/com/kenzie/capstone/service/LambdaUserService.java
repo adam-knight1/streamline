@@ -40,6 +40,9 @@ public class LambdaUserService {
             log.error("The user record contains null values");
             throw new IllegalArgumentException("User record cannot contain null values");
         }
+
+        //I added more logging statements to diagnose the issue of the correct UserId not
+        //populating to the front end for the User UI
         log.info("userid is " + userRecord.getUserId());
 
         if (userRecord.getUserId() == null) {
@@ -48,6 +51,7 @@ public class LambdaUserService {
 
 
         try {
+            //this line calls createUser method in the userDao which then interacts with DynamoDB -adam
             userDao.createUser(userRecord);
             log.info("Successfully created user");
 //            localLoginMap.put(userRecord.getUsername(), userRecord);
