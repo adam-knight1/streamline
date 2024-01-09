@@ -12,7 +12,7 @@ export default class TaskClient extends BaseClass {
 
    async createTask(userId, taskName, taskDescription, completed) {
        try {
-           const response = await this.client.post(`/task/add`, {
+           const response = await this.client.post(`/task/create`, {
            userId: userId,
            taskName: taskName,
            taskDescription: taskDescription,

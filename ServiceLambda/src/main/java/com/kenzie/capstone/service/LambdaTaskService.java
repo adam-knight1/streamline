@@ -46,7 +46,7 @@ public class LambdaTaskService {
 
         try {
             taskDao.createTask(taskRecord);
-            log.info("Succesfully created a task.");
+            log.info("Successfully created a task.");
             return new TaskResponseLambda(taskRecord.getTaskName(), taskRecord.getTaskId(),
                     taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
         }catch (Exception e){
