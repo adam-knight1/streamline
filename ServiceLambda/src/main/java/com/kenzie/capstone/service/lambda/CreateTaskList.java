@@ -40,7 +40,7 @@ public class CreateTaskList implements RequestHandler<APIGatewayProxyRequestEven
 
             TaskListRecord taskListRecord = new TaskListRecord();
             taskListRecord.setUserId(taskListRequest.getUserId());
-            taskListRecord.setTaskListName(taskListRequest.getNewTaskListName());
+            taskListRecord.setTaskListName(taskListRequest.getTaskListName());
             taskListRecord.setTasks(Collections.emptyList());
 
             lambdaTaskListService.createTaskList(taskListRecord);

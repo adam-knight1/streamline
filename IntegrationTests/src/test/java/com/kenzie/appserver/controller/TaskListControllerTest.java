@@ -31,23 +31,23 @@ public class TaskListControllerTest {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-//    @Test
-//    public void createTaskList_CreateSuccessful() throws Exception {
-//        String userId = "json102";
-//        String taskListName = "Task List";
-//        List<TaskRecord> tasks = Collections.emptyList();
-//        TaskListResponse taskListResponse = new TaskListResponse(userId, taskListName, tasks);
-//        TaskListCreateRequest createRequest = new TaskListCreateRequest();
-//        createRequest.setUserId(userId);
-//        createRequest.setExistingTaskListName(taskListName);
-//
-//        //when(taskListService.createTaskList()).thenReturn(taskListResponse);
-//
-//        mvc.perform(post("/taskList/create")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(mapper.writeValueAsString(createRequest)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("userId").value("json102"))
-//                .andExpect(jsonPath("taskListName").value("Task List"));
-//    }
+    @Test
+    public void createTaskList_CreateSuccessful() throws Exception {
+        String userId = "json102";
+        String taskListName = "Task List";
+        List<TaskRecord> tasks = Collections.emptyList();
+        TaskListResponse taskListResponse = new TaskListResponse(userId, taskListName, tasks);
+        TaskListCreateRequest createRequest = new TaskListCreateRequest();
+        createRequest.setUserId(userId);
+        createRequest.setTaskListName(taskListName);
+
+        //when(taskListService.createTaskList()).thenReturn(taskListResponse);
+
+        mvc.perform(post("/taskList/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(createRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("userId").value("json102"))
+                .andExpect(jsonPath("taskListName").value("Task List"));
+    }
 }
