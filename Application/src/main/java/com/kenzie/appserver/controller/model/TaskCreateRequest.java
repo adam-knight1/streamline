@@ -1,4 +1,4 @@
-/* package com.kenzie.appserver.controller.model;
+package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -49,6 +49,3 @@ public class TaskCreateRequest {
         this.completed = completed;
     }
 }
-
-
- */
