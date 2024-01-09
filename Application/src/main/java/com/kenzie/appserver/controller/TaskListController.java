@@ -62,9 +62,12 @@ public class TaskListController {
     }
 
     @GetMapping("/{userId}")
+    //Now we can find taskLists by the primary key userId! -Adam
     public ResponseEntity<GetTaskListLambdaResponse> getTaskListByUserId(@PathVariable("userId") String userId) {
         System.out.println("Received request to find taskList with userId: " + userId);
         try {
+            //This line makes the call to taskListService, which calls the corresponding method in
+            // lambda service client, and returns the new get task list response DTO from the lambda service package. -Adam
            GetTaskListLambdaResponse getTaskListLambdaResponse = taskListService.findTaskListByUserId(userId);
             if (getTaskListLambdaResponse == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);

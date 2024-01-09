@@ -72,6 +72,7 @@ public class TaskListService {
     }
 
     public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
+        //this routes the call from taskListService to the LambdaService client, to interact with the findTaskListById lambda. -Adam
         return lambdaServiceClient.findTaskListByUserId(userId);
     }
 
