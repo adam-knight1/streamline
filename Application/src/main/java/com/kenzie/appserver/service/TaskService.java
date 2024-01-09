@@ -2,12 +2,12 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.TaskCreationException;
-import com.kenzie.appserver.controller.model.TaskResponse;
+//import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
-import com.kenzie.appserver.repositories.TaskRepository;
+//import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import com.kenzie.capstone.service.model.TaskRequest;
+//import com.kenzie.capstone.service.model.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Service
 public class TaskService {
-    private final TaskRepository taskRepository;
+    /*private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
@@ -55,7 +55,7 @@ public class TaskService {
         return taskResponse;
 
     }
-/*
+*//*
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
@@ -67,7 +67,7 @@ public class TaskService {
         return null;
     }
 
- */
+ *//*
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
         TaskRecord task = taskRepository.findById(taskId).orElse(null);
@@ -104,6 +104,6 @@ public class TaskService {
             taskResponse.setMessage("Error updating task: " + exception.getMessage());
         }
         return taskResponse;
-    }
+    }*/
 
 }
