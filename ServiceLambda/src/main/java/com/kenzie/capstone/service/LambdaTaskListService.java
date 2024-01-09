@@ -64,24 +64,24 @@ public class LambdaTaskListService {
 //                taskListRequest.getTaskListName(), Collections.emptyList());
     }
 
-    public TaskListResponse updateTaskList(String userId, TaskListRequest taskListRequest) {
-        String existingTaskListName = taskListRequest.getExistingTaskListName();
-        String newTaskListName = taskListRequest.getNewTaskListName();
-        TaskListRecord existingTaskList = taskListDao.getTaskListByTaskListName(userId, existingTaskListName);
-
-        if (existingTaskList == null) {
-            throw new IllegalArgumentException("TaskList with userId " + userId + " and TaskListName " + existingTaskListName
-                    + " does not exist");
-        }
-//        log.info("User id is " + taskListRequest.getUserId());
-        // Update the properties of the existing taskList using data from taskListRequest
-        existingTaskList.setTaskListName(newTaskListName);
-
-        TaskListResponse response = taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskListName, newTaskListName);
-        log.info("userId is: " + response.getUserId());
-        log.info("taskListName is: " + response.getTaskListName());
-        return taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskListName, newTaskListName);
-    }
+//    public TaskListResponse updateTaskList(String userId, TaskListRequest taskListRequest) {
+//        String existingTaskListName = taskListRequest.getExistingTaskListName();
+//        String newTaskListName = taskListRequest.getNewTaskListName();
+//        TaskListRecord existingTaskList = taskListDao.getTaskListByTaskListName(userId, existingTaskListName);
+//
+//        if (existingTaskList == null) {
+//            throw new IllegalArgumentException("TaskList with userId " + userId + " and TaskListName " + existingTaskListName
+//                    + " does not exist");
+//        }
+////        log.info("User id is " + taskListRequest.getUserId());
+//        // Update the properties of the existing taskList using data from taskListRequest
+//        existingTaskList.setTaskListName(newTaskListName);
+//
+//        TaskListResponse response = taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskListName, newTaskListName);
+//        log.info("userId is: " + response.getUserId());
+//        log.info("taskListName is: " + response.getTaskListName());
+//        return taskListDao.updateTaskListRecord(existingTaskList.getUserId(), existingTaskListName, newTaskListName);
+//    }
 
 //    public TaskResponseLambda createTask(String userId, TaskRequest taskRequest) {
 //        if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {

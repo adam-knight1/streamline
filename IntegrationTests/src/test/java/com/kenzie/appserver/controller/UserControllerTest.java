@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.kenzie.capstone.service.model.UserRequest;
 
 
-
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -68,7 +68,8 @@ public void createNewUser_Successful() throws Exception {
         userRequest.setUsername(username);
         userRequest.setPassword(password);
         userRequest.setEmail(email);
-        // userRequest.setUserId(UUID.randomUUID().toString()); I may not need this as the ID is set in the lambda package. -adam
+        userRequest.setUserId(UUID.randomUUID().toString());
+        //I may not need this as the ID is set in the lambda package. -adam
 
         UserResponse userResponse = userService.createNewUser(userRequest);
         String userId = userResponse.getUserId();

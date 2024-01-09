@@ -121,40 +121,40 @@ class LambdaServiceTest {
 //    }
 
 //    Passes
-    @Test
-    public void updateTaskList_ValidUserId_UpdatesSuccessfully() {
-        String userId = "UserId";
-        String existingTaskListName = "Existing List";
-        String newTaskListName = "Updated List";
-        TaskListRequest taskListRequest = new TaskListRequest(userId, newTaskListName, existingTaskListName);
-
-        TaskListRecord taskListRecord = new TaskListRecord();
-        taskListRecord.setUserId(userId);
-        taskListRecord.setTaskListName(newTaskListName);
-
-        when(taskListDao.getTaskListByTaskListName(userId, existingTaskListName)).thenReturn(taskListRecord);
-        when(taskListDao.updateTaskListRecord(userId, existingTaskListName, newTaskListName)).thenReturn(new TaskListResponse(userId,
-                newTaskListName));
-
-        TaskListResponse response = lambdaTaskListService.updateTaskList(userId,taskListRequest);
-
-        assertNotNull(response);
-        assertEquals(userId, response.getUserId());
-        assertEquals(taskListRequest.getNewTaskListName(), response.getTaskListName());
-    }
+//    @Test
+//    public void updateTaskList_ValidUserId_UpdatesSuccessfully() {
+//        String userId = "UserId";
+//        String existingTaskListName = "Existing List";
+//        String newTaskListName = "Updated List";
+//        TaskListRequest taskListRequest = new TaskListRequest(userId, newTaskListName, existingTaskListName);
+//
+//        TaskListRecord taskListRecord = new TaskListRecord();
+//        taskListRecord.setUserId(userId);
+//        taskListRecord.setTaskListName(newTaskListName);
+//
+//        when(taskListDao.getTaskListByTaskListName(userId, existingTaskListName)).thenReturn(taskListRecord);
+//        when(taskListDao.updateTaskListRecord(userId, existingTaskListName, newTaskListName)).thenReturn(new TaskListResponse(userId,
+//                newTaskListName));
+//
+//        TaskListResponse response = lambdaTaskListService.updateTaskList(userId,taskListRequest);
+//
+//        assertNotNull(response);
+//        assertEquals(userId, response.getUserId());
+//        assertEquals(taskListRequest.getNewTaskListName(), response.getTaskListName());
+//    }
 
 //    Passes
-    @Test
-    public void updateTaskList_InvalidUserId_ThrowsException(){
-        String userId = "badUserId";
-        TaskListRequest taskListRequest = new TaskListRequest(userId, "Task List");
-
-        when(taskListDao.getTaskListByUserId(userId)).thenReturn(null);
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            lambdaTaskListService.updateTaskList(userId,taskListRequest);
-        });
-    }
+//    @Test
+//    public void updateTaskList_InvalidUserId_ThrowsException(){
+//        String userId = "badUserId";
+//        TaskListRequest taskListRequest = new TaskListRequest(userId, "Task List");
+//
+//        when(taskListDao.getTaskListByUserId(userId)).thenReturn(null);
+//
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            lambdaTaskListService.updateTaskList(userId,taskListRequest);
+//        });
+//    }
     /*
         this.taskDao = mock(TaskDao.class);
         this.taskListDao = mock(TaskListDao.class);
