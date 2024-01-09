@@ -19,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/task")
 public class TaskController {
+    @Autowired
     private final TaskService taskService;
     private final TaskListService taskListService;
 
@@ -33,11 +34,48 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+
+//    @PostMapping("/add")
+//    public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
+//        TaskRecord createdTask = taskService.addTask(task);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+//   }
+
+//    @PostMapping("/add")
+//    public ResponseEntity<TaskRecord> addTask(@RequestBody TaskRecord task){
+//        TaskRecord addedTask = taskService.addTask(task);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
+//    }
+    @PostMapping("/create")
+    public ResponseEntity<TaskResponse> createTask (@RequestBody TaskCreateRequest taskCreateRequest){
+        TaskRequest taskRequest = new TaskRequest();
+        taskRequest.setTaskDescription(taskCreateRequest.getTaskDescription());
+        taskRequest.setTaskId(taskCreateRequest.getTaskId());
+        taskRequest.setTaskName(taskCreateRequest.getTaskName());
+        if (taskRequest.getTaskName() == null){
+            taskRequest.setTaskName(UUID.randomUUID().toString());
+        }
+        try {
+            TaskResponse taskResponse = taskService.createTask(taskRequest);
+
+//            TaskResponseLambda taskResponseLambda = new TaskResponseLambda();
+//            taskResponseLambda.setTaskName(taskResponse.getTaskName());
+//            taskResponseLambda.setTaskDescription(taskResponse.getTaskDescription());
+//            taskResponseLambda.setTaskId(taskResponse.getTaskId());
+
+            return ResponseEntity.ok(taskResponse);
+        }catch (Exception e){
+            System.out.println("something went wrong: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
         TaskRecord createdTask = taskService.addTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
-   }
+ 
 
     //update task status by taskId
     @PostMapping("/{taskId}/update-status")

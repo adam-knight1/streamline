@@ -26,7 +26,7 @@ public class LambdaTaskService {
         }
         TaskRecord existingRecord = taskDao.getTaskRecordByName(taskName);
         if (existingRecord == null){
-            throw new InvalidDataException("Task with Name " + taskName + "not found");
+            throw new InvalidDataException("Task with Name " + taskName + " not found");
         }
         if (!existingRecord.getTaskId().equals(taskId)){
             throw new InvalidDataException("Task ID does not match Task Name");
