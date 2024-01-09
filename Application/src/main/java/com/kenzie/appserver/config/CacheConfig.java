@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 @EnableCaching
 public class CacheConfig {
     @Bean
-    public CacheStore concertCache() {
+    public CacheStore taskListCache() {
         return new CacheStore(120, TimeUnit.SECONDS);
     }
 }
