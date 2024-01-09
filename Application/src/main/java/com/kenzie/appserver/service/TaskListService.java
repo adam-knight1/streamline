@@ -52,7 +52,7 @@ public class TaskListService {
         }
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(request.getUserId());
-        taskListResponse.setTaskListName(request.getNewTaskListName());
+        taskListResponse.setTaskListName(request.getTaskListName());
         taskListResponse.setTasks(Collections.emptyList());
         return taskListResponse;
     }
@@ -64,7 +64,7 @@ public class TaskListService {
 
         if (optionalTaskListRecord.isPresent()) {
             TaskListRecord taskListRecord = optionalTaskListRecord.get();
-            taskListRecord.setTaskListName(request.getNewTaskListName());
+            taskListRecord.setTaskListName(request.getTaskListName());
             return taskListRepository.save(taskListRecord);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
@@ -72,6 +72,7 @@ public class TaskListService {
     }
 
     public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
+        //this routes the call from taskListService to the LambdaService client, to interact with the findTaskListById lambda. -Adam
         return lambdaServiceClient.findTaskListByUserId(userId);
     }
 

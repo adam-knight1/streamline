@@ -34,6 +34,7 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
+
 //    @PostMapping("/add")
 //    public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
 //        TaskRecord createdTask = taskService.addTask(task);
@@ -70,6 +71,11 @@ public class TaskController {
     }
 
 
+    @PostMapping("/create")
+    public ResponseEntity<TaskRecord> createTask (@RequestBody TaskRecord task){
+        TaskRecord createdTask = taskService.addTask(task);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+ 
 
     //update task status by taskId
     @PostMapping("/{taskId}/update-status")

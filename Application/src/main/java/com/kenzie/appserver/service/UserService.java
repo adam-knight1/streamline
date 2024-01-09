@@ -33,25 +33,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String getUsernameByUserId(String userId) {
-        //this method will apparently not work given the configuration of the project.
-        Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
-        if (userRecordOpt.isPresent()) {
-            UserRecord userRecord = userRecordOpt.get();
-            return userRecord.getUsername();
-        }
-            System.out.println("couldn't find userId");
-        return null;
-
-    }
 
     public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
         return lambdaServiceClient.findUserByUserId(userId);
     }
 
-    public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException{
+   /* public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException{
         return lambdaServiceClient.findUserByUsername(username);
-    }
+    }*/
 
 
     public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
@@ -71,7 +60,19 @@ public class UserService {
         return userResponse;
     }
 
-    public User transformToUser(UserRecord userRecord) {
+    /*public String getUsernameByUserId(String userId) {
+        //this method will apparently not work given the configuration of the project.
+        Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
+        if (userRecordOpt.isPresent()) {
+            UserRecord userRecord = userRecordOpt.get();
+            return userRecord.getUsername();
+        }
+            System.out.println("couldn't find userId");
+        return null;
+
+    }*/
+
+   /* public User transformToUser(UserRecord userRecord) {
         User user = new User();
         user.setUserId(userRecord.getUserId());
         user.setEmail(userRecord.getEmail());
@@ -79,9 +80,9 @@ public class UserService {
         user.setPassword(userRecord.getPassword());
         return user;
 
-    }
+    }*/
 
-      public Optional<UserRecord> authenticateUser(String username, String password){
+    /*  public Optional<UserRecord> authenticateUser(String username, String password){
         if (username == null || password == null) {
             logger.error("Username or Password is null");
             return Optional.empty();
@@ -100,7 +101,7 @@ public class UserService {
             logger.warn("Authentication failed for user: {}", username);
             return Optional.empty();
         }
-    }
+    }*/
 
     /*public boolean authenticateUser(String username, String submittedPassword) {
         UserRecord user;
@@ -112,8 +113,10 @@ public class UserService {
     }*/
 
 
-    //Keeping this methods in to show thought process.  Tried to query from the backend at first.  It doesn't
+    //Keeping this method in to show thought process.  Tried to query from the backend at first.  It doesn't
     //work with the project config.
+
+
      /* public User findByUserId(String userId) {
         System.out.println("Searching for userId: " + userId);
         User user = userRepository

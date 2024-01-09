@@ -14,6 +14,7 @@ public class LambdaServiceClient {
     private static final String CREATE_USER_ENDPOINT = "/user/create";
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
     private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
+    private static final String CREATE_TASK_ENDPOINT = "/task/create";
 
     private ObjectMapper mapper;
 
@@ -88,6 +89,21 @@ public class LambdaServiceClient {
 //        return taskResponseLambda;
 //
 //    }
+
+    public TaskResponseLambda addTask(String userId, String taskListName, TaskRecord taskRecord) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String requestData = mapper.writeValueAsString(taskRecord);
+        String response = endpointUtility.postEndpoint(CREATE_TASK_ENDPOINT, requestData);
+        TaskResponseLambda taskResponseLambda;
+        try {
+            taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON:" + e);
+        }
+        return taskResponseLambda;
+
+    }
+
 
     public TaskResponseLambda updateTask(String taskId, TaskRequest updatedTaskRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
