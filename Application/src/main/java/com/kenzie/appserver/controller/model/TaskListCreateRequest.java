@@ -9,11 +9,14 @@ public class TaskListCreateRequest {
     @JsonProperty("userId")
     private String userId;
 
-    @JsonProperty("existingTaskListName")
-    private String existingTaskListName;
+    @JsonProperty("taskListName")
+    private String taskListName;
 
-    @JsonProperty("newTaskListName")
-    private String newTaskListName;
+//    @JsonProperty("existingTaskListName")
+//    private String existingTaskListName;
+//
+//    @JsonProperty("newTaskListName")
+//    private String newTaskListName;
 
     public String getUserId() {
         return userId;
@@ -23,19 +26,27 @@ public class TaskListCreateRequest {
         this.userId = userId;
     }
 
-    public String getExistingTaskListName() {
-        return existingTaskListName;
+    public String getTaskListName() {
+        return taskListName;
     }
 
-    public void setExistingTaskListName(String existingTaskListName) {
-        this.existingTaskListName = existingTaskListName;
+    public void setTaskListName(String taskListName) {
+        this.taskListName = taskListName;
     }
 
-    public String getNewTaskListName() {
-        return newTaskListName;
-    }
-
-    public void setNewTaskListName(String newTaskListName) {
-        this.newTaskListName = newTaskListName;
-    }
+    //    public String getExistingTaskListName() {
+//        return existingTaskListName;
+//    }
+//
+//    public void setExistingTaskListName(String existingTaskListName) {
+//        this.existingTaskListName = existingTaskListName;
+//    }
+//
+//    public String getNewTaskListName() {
+//        return newTaskListName;
+//    }
+//
+//    public void setNewTaskListName(String newTaskListName) {
+//        this.newTaskListName = newTaskListName;
+//    }
 }
