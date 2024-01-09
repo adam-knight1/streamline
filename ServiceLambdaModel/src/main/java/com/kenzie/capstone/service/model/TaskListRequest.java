@@ -3,12 +3,20 @@ package com.kenzie.capstone.service.model;
 public class TaskListRequest {
     private String userId;
     private String taskListName;
-    private String newTaskListName;
-    private String existingTaskListName;
+//    private String newTaskListName;
+//    private String existingTaskListName;
 
     public TaskListRequest(String userId, String taskListName) {
         this.userId = userId;
         this.taskListName = taskListName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTaskListName() {
@@ -25,35 +33,27 @@ public class TaskListRequest {
 //        this.existingTaskListName = null;
 //    }
 
-    public TaskListRequest(String userId, String newTaskListName, String existingTaskListName) {
-        this.userId = userId;
-        this.newTaskListName = newTaskListName;
-        this.existingTaskListName = existingTaskListName;
-    }
+//    public TaskListRequest(String userId, String newTaskListName, String existingTaskListName) {
+//        this.userId = userId;
+//        this.newTaskListName = newTaskListName;
+//        this.existingTaskListName = existingTaskListName;
+//    }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getNewTaskListName() {
-        return newTaskListName;
-    }
-
-    public void setNewTaskListName(String newTaskListName) {
-        this.newTaskListName = newTaskListName;
-    }
-
-    public String getExistingTaskListName() {
-        return existingTaskListName;
-    }
-
-    public void setExistingTaskListName(String existingTaskListName) {
-        this.existingTaskListName = existingTaskListName;
-    }
+//    public String getNewTaskListName() {
+//        return newTaskListName;
+//    }
+//
+//    public void setNewTaskListName(String newTaskListName) {
+//        this.newTaskListName = newTaskListName;
+//    }
+//
+//    public String getExistingTaskListName() {
+//        return existingTaskListName;
+//    }
+//
+//    public void setExistingTaskListName(String existingTaskListName) {
+//        this.existingTaskListName = existingTaskListName;
+//    }
 
     //    @Override
 //    public String toString() {
