@@ -1,10 +1,13 @@
 package com.kenzie.appserver.controller;
 
+import com.amazonaws.services.dynamodbv2.model.Get;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.TaskListService;
+import com.kenzie.capstone.service.model.GetTaskListLambdaResponse;
 import com.kenzie.capstone.service.model.TaskListRequest;
+import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +40,7 @@ public class TaskListController {
 
     @PostMapping("/create")
     public ResponseEntity<TaskListResponse> createTaskList(@RequestBody TaskListCreateRequest createRequest) {
-        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getExistingTaskListName());
+        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getTaskListName());
 
         if (createRequest.getUserId() == null) {
             request.setUserId(UUID.randomUUID().toString());
@@ -55,6 +58,24 @@ public class TaskListController {
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{userId}")
+    //Now we can find taskLists by the primary key userId! -Adam
+    public ResponseEntity<GetTaskListLambdaResponse> getTaskListByUserId(@PathVariable("userId") String userId) {
+        System.out.println("Received request to find taskList with userId: " + userId);
+        try {
+            //This line makes the call to taskListService, which calls the corresponding method in
+            // lambda service client, and returns the new get task list response DTO from the lambda service package. -Adam
+           GetTaskListLambdaResponse getTaskListLambdaResponse = taskListService.findTaskListByUserId(userId);
+            if (getTaskListLambdaResponse == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.ok(getTaskListLambdaResponse);
+        } catch (Exception e) {
+            System.out.println("Error in fetching user: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -18,20 +18,20 @@
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 //
 //
-//@IntegrationTest
+/*//@IntegrationTest
 //class ExampleControllerTest {
 //    @Autowired
 //    private MockMvc mvc;
 //
 //    @Autowired
-////    ExampleService exampleService;
+//    ExampleService exampleService;
 //
 //    private final MockNeat mockNeat = MockNeat.threadLocal();
 //
 //    private final ObjectMapper mapper = new ObjectMapper();
 //
 //    @Test
-//    public void getById_Exists() throws Exception {
+//    public void getById_Exists() throws Exception {*/
 //
 //        String name = mockNeat.strings().valStr();
 //

@@ -2,16 +2,16 @@ package com.kenzie.capstone.service.model;
 
 public class TaskRequest {
     private String userId;
-    private String taskId;
+   // private String taskId;
     // This may be superfluous since the task is just a simple sentence "take the dog out" - OB
     private String taskName;
     private String taskDescription;
     private boolean completed;
 
-    public TaskRequest(String taskId, String taskName, String taskDescription) {
+    public TaskRequest( String taskName, String taskDescription) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.taskId = taskId;
+        //this.taskId = taskId;
     }
 
     public TaskRequest() {
@@ -35,13 +35,15 @@ public class TaskRequest {
         this.taskName = taskName;
     }
 
-    public String getTaskId() {
+    /*public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
+
+     */
 
     public String getTaskDescription() {
         return taskDescription;

@@ -30,13 +30,13 @@
 </div>
 
 <div class="card" id="create-task-form">
-    <h2>Add a New Task</h2>
+    <h2>Create a New Task</h2>
     <form class="card-content" id="create-task">
         <p class="form-field">
             <label>Task Description</label>
             <input type="text" required class="validated-field" id="task-desc-field">
         </p>
-        <button type="submit">Add</button>
+        <button type="submit">Create</button>
     </form>
 </div>
 
@@ -63,6 +63,20 @@
             <input type="text" class="validated-field" id="update-task-list-new-name-field">
         </p>
         <button type="submit">Update</button>
+    </form>
+</div>
+
+<div class="card" id="find-task-list-by-user-id-form">
+    <h2>Find Task List By User Id</h2>
+    <form class="card-content" id="find-task-list">
+        <p class="form-field">
+            <label>User ID</label>
+            <input type="text" required class="validated-field" id="find-task-list-by-user-id-field">
+        <div id="error-message"></div>
+        <div id="task-list-details"></div>
+
+        </p>
+        <button type="submit">Search</button>
     </form>
 </div>
 

@@ -10,22 +10,18 @@ import com.kenzie.capstone.service.LambdaUserService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.UserRecord;
-import com.kenzie.capstone.service.model.UserRequest;
-import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class FindUserByUsername implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();
 
-
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
-
         log.info(gson.toJson(input));
 
         ServiceComponent serviceComponent = DaggerServiceComponent.create();
@@ -36,27 +32,26 @@ public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, A
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        try {
-            UserRequest userRequest = gson.fromJson(input.getBody(), UserRequest.class);
+            try {
+                String username = input.getPathParameters().get("username");
 
-            UserRecord userRecord = new UserRecord();
-            userRecord.setUserId(userRequest.getUserId());  // I just uncommented this 1-8
-            userRecord.setEmail(userRequest.getEmail());
-            userRecord.setUsername(userRequest.getUsername());
-            userRecord.setPassword(userRequest.getPassword());
+                UserRecord foundUser = lambdaUserService.findByUserName(username);
+                if (foundUser == null) {
+                    return response
+                            .withStatusCode(404)
+                            .withBody("User not found in lambda");
+                }
 
-            //adding comment to debug git push
-            UserResponseLambda userResponseLambda = lambdaUserService.createNewUser(userRecord);
-            String output = gson.toJson(userResponseLambda);
-
-            return response
-                    .withStatusCode(200)
-                    .withBody(output);
-        } catch (Exception e) {
-            log.error("Error in CreateUser Lambda: ", e);
-            return response
-                    .withStatusCode(500)
-                    .withBody(gson.toJson(e.getMessage()));
+                String output = gson.toJson(foundUser);
+                return response
+                        .withStatusCode(200)
+                        .withBody(output);
+            } catch (Exception e) {
+                log.error("Uh oh! Error in FindUserByUsername Lambda: ", e);
+                return response
+                        .withStatusCode(500)
+                        .withBody(gson.toJson(e.getMessage()));
+            }
         }
+
     }
-}

@@ -53,10 +53,10 @@ public class UpdateTaskList implements RequestHandler<APIGatewayProxyRequestEven
 
         try {
             // Perform the taskList update using LambdaTaskListService
-            TaskListResponse taskListResponse = lambdaTaskListService.updateTaskList(userId, taskListRequest);
+            //TaskListResponse taskListResponse = lambdaTaskListService.updateTaskList(userId, taskListRequest);
             return response
-                    .withStatusCode(200)
-                    .withBody(gson.toJson(taskListResponse));
+                    .withStatusCode(200);
+//                    .withBody(gson.toJson(taskListResponse));
         } catch (IllegalArgumentException e) {
             log.error("Error in UpdateTaskList Lambda: ", e);
             return response

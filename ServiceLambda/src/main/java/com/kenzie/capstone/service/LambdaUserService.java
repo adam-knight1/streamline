@@ -25,20 +25,37 @@ public class LambdaUserService {
         return userDao.findUserById(userId);
     }
 
+    public UserRecord findByUserName(String username) {
+        //I need to add more logging statements here
+        try {
+            return userDao.findUserByUsername(username);
+        } catch (Exception e) {
+            System.out.println("Error from userDao showing up in lambdaUserService");
+        }
+        return null;
+    }
+
     public UserResponseLambda createNewUser(UserRecord userRecord) {
         if (userRecord == null || userRecord.getEmail() == null || userRecord.getUsername() == null || userRecord.getPassword() == null) {
             log.error("The user record contains null values");
             throw new IllegalArgumentException("User record cannot contain null values");
         }
+
+        //I added more logging statements to diagnose the issue of the correct UserId not
+        //populating to the front end for the User UI
         log.info("userid is " + userRecord.getUserId());
 
         if (userRecord.getUserId() == null) {
             userRecord.setUserId(UUID.randomUUID().toString());
         }
 
+
         try {
+            //this line calls createUser method in the userDao which then interacts with DynamoDB -adam
             userDao.createUser(userRecord);
             log.info("Successfully created user");
+//            localLoginMap.put(userRecord.getUsername(), userRecord);
+
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
             userResponseLambda.setUserId(userRecord.getUserId());

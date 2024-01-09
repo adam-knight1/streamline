@@ -7,7 +7,9 @@ import com.kenzie.appserver.repositories.TaskListRepository;
 import com.kenzie.appserver.repositories.model.TaskListRecord;
 import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.GetTaskListLambdaResponse;
 import com.kenzie.capstone.service.model.TaskListRequest;
+import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -50,7 +52,7 @@ public class TaskListService {
         }
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(request.getUserId());
-        taskListResponse.setTaskListName(request.getNewTaskListName());
+        taskListResponse.setTaskListName(request.getTaskListName());
         taskListResponse.setTasks(Collections.emptyList());
         return taskListResponse;
     }
@@ -62,11 +64,16 @@ public class TaskListService {
 
         if (optionalTaskListRecord.isPresent()) {
             TaskListRecord taskListRecord = optionalTaskListRecord.get();
-            taskListRecord.setTaskListName(request.getNewTaskListName());
+            taskListRecord.setTaskListName(request.getTaskListName());
             return taskListRepository.save(taskListRecord);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
         }
+    }
+
+    public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
+        //this routes the call from taskListService to the LambdaService client, to interact with the findTaskListById lambda. -Adam
+        return lambdaServiceClient.findTaskListByUserId(userId);
     }
 
     /*

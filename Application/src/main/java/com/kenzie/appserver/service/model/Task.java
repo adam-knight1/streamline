@@ -5,20 +5,17 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.UUID;
 public class Task  {
-    private String taskId;
+  /*  private String taskId;
+
+   */
     private String userId;
     private String taskName;
     private String taskDescription;
     private boolean completed;
 
 
-    public Task() {
-        this.taskId = UUID.randomUUID().toString();
-    }
-
 
     public Task(String taskName, String userId, String taskDescription, boolean completed) {
-        this();
         this.userId = userId;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
@@ -35,13 +32,15 @@ public class Task  {
         this.completed = newStatus;
     }
 
-    public String getTaskId() {
+  /*  public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
+
+   */
 
     public String getUserId() {
         return userId;
