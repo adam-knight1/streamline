@@ -61,7 +61,7 @@ public class TaskService {
         return taskResponse;
 
     }
-
+/*
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
@@ -72,6 +72,8 @@ public class TaskService {
         }
         return null;
     }
+
+ */
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
         TaskRecord task = taskRepository.findById(taskId).orElse(null);

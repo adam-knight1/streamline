@@ -25,10 +25,11 @@ export default class TaskClient extends BaseClass {
            throw error;
    }
    }
-   async updateTask(taskId) {
+   async updateTask(taskId, taskName, taskDescription) {
           try {
               const response = await this.client.put(`/task/update/${taskId}`, {
-               taskId: taskId
+               taskName: taskName,
+               taskDescription: taskDescription
               });
               return response.data;
           } catch (error) {
