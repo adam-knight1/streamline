@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
@@ -29,13 +30,14 @@ public class TaskListServiceTest {
     @Mock
     private LambdaServiceClient lambdaServiceClient;
     private TaskListService taskListService;
+    private CacheStore cacheStore;
     @Captor
     private ArgumentCaptor<TaskListRecord> taskListRecordCaptor;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        taskListService = new TaskListService(taskListRepository, lambdaServiceClient);
+        taskListService = new TaskListService(taskListRepository, lambdaServiceClient, cacheStore);
     }
 
     /** ------------------------------------------------------------------------

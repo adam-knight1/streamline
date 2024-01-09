@@ -1,4 +1,4 @@
-/*package com.kenzie.appserver.repositories;
+package com.kenzie.appserver.repositories;
 
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
@@ -20,6 +20,3 @@ public interface TaskRepository extends CrudRepository<TaskRecord, String> {
 
    // Optional<TaskRecord> findById(String taskId);
 }
-
-
- */

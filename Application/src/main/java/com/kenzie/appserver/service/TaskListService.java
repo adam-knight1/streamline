@@ -54,7 +54,7 @@ public class TaskListService {
             System.out.println("Task list creation unsuccessful.");
         }
         TaskList savedTaskList = new TaskList(request.getUserId(), request.getTaskListName());
-        cacheStore.add(savedTaskList.userId, savedTaskList);
+        //cacheStore.add(savedTaskList.userId, savedTaskList);
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(request.getUserId());
         taskListResponse.setTaskListName(request.getTaskListName());
@@ -62,19 +62,19 @@ public class TaskListService {
         return taskListResponse;
     }
 
-    public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {
-        // can't query DynamoDB/taskListRepo from backend, need to use findTaskListByUserId or
-        // findTaskListByTaskListName
-        Optional<TaskListRecord> optionalTaskListRecord = taskListRepository.findById(userId);
-
-        if (optionalTaskListRecord.isPresent()) {
-            TaskListRecord taskListRecord = optionalTaskListRecord.get();
-            taskListRecord.setTaskListName(request.getTaskListName());
-            return taskListRepository.save(taskListRecord);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
-        }
-    }
+//    public TaskListRecord updateTaskListName(TaskListCreateRequest request, String userId) {
+//        // can't query DynamoDB/taskListRepo from backend, need to use findTaskListByUserId or
+//        // findTaskListByTaskListName
+//        Optional<TaskListRecord> optionalTaskListRecord = taskListRepository.findById(userId);
+//
+//        if (optionalTaskListRecord.isPresent()) {
+//            TaskListRecord taskListRecord = optionalTaskListRecord.get();
+//            taskListRecord.setTaskListName(request.getTaskListName());
+//            return taskListRepository.save(taskListRecord);
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list not found for the user.");
+//        }
+//    }
 
     public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
         //this routes the call from taskListService to the LambdaService client, to interact with the findTaskListById lambda. -Adam
@@ -104,10 +104,10 @@ public class TaskListService {
 //        }
 //    }
 
-    private TaskList transformToTaskList(TaskListRecord record){
-
-        return new TaskList(record.getUserId(), record.getTaskListName());
-    }
+//    private TaskList transformToTaskList(TaskListRecord record){
+//
+//        return new TaskList(record.getUserId(), record.getTaskListName());
+//    }
 
 
 }
