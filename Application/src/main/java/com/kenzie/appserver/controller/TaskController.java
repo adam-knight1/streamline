@@ -1,4 +1,4 @@
-
+/*
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.TaskResponse;
@@ -35,7 +35,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
    }
 
-   /* @PostMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<TaskRecord> addTask(@RequestBody TaskRecord task){
         TaskRecord addedTask = taskService.addTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
@@ -64,7 +64,7 @@ public class TaskController {
         }
     }
 
-    */
+
 
     //update task status by taskId
     @PostMapping("/{taskId}/update-status")
@@ -102,3 +102,6 @@ public class TaskController {
     }
 
 }
+
+ */
+

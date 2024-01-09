@@ -1,4 +1,4 @@
-package com.kenzie.capstone.service.lambda;
+//package com.kenzie.capstone.service.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.LambdaTaskService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
@@ -18,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/*
 public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();
@@ -49,6 +50,15 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
           }
 
           TaskRequest taskRequest = gson.fromJson(input.getBody(), TaskRequest.class);
+          try {
+              taskRequest = gson.fromJson(body, TaskRequest.class);
+          } catch (JsonSyntaxException e ) {
+              log.error("Error parsing request body:", e);
+              return response
+                      .withStatusCode(400)
+                      .withBody("Error parsing request body");
+          }
+
           log.info("TaskRequest:" + gson.toJson(taskRequest));
 
           if (taskRequest.getTaskName() == null || taskRequest.getTaskName().isEmpty()) {
@@ -106,3 +116,6 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 //        }
     }
 }
+
+
+ */

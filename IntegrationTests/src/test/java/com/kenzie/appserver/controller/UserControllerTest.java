@@ -69,7 +69,7 @@ public void createNewUser_Successful() throws Exception {
         userRequest.setPassword(password);
         userRequest.setEmail(email);
         userRequest.setUserId(UUID.randomUUID().toString());
-        //I may not need this as the ID is set in the lambda package. -adam
+        //I may not need this as the ID is set in the lambda package. -adam. Confirmed I do need it!
 
         UserResponse userResponse = userService.createNewUser(userRequest);
         String userId = userResponse.getUserId();

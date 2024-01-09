@@ -1,4 +1,4 @@
-package com.kenzie.appserver.controller.model;
+/* package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,10 +8,9 @@ public class TaskCreateRequest {
 
     @JsonProperty("taskName")
     private String taskName;
-   /* @JsonProperty("taskId")
+    @JsonProperty("taskId")
     private String taskId;
 
-    */
     @JsonProperty("taskDescription")
     private String taskDescription;
 
@@ -26,7 +25,7 @@ public class TaskCreateRequest {
         this.taskName = taskName;
     }
 
-  /*  public String getTaskId() {
+    public String getTaskId() {
         return taskId;
     }
 
@@ -34,7 +33,6 @@ public class TaskCreateRequest {
         this.taskId = taskId;
     }
 
-   */
     public String getTaskDescription() {
         return taskDescription;
     }
@@ -51,3 +49,6 @@ public class TaskCreateRequest {
         this.completed = completed;
     }
 }
+
+
+ */
