@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kenzie.appserver.config.CacheStore;
 import com.kenzie.appserver.controller.model.TaskListCreateRequest;
 import com.kenzie.appserver.controller.model.TaskListResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
@@ -24,12 +25,14 @@ public class TaskListService {
     @Autowired
     private TaskListRepository taskListRepository;
     private LambdaServiceClient lambdaServiceClient;
+    private final CacheStore cacheStore;
 
 
     @Autowired
-    public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient) {
+    public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient, CacheStore cacheStore) {
         this.taskListRepository = taskListRepository;
         this.lambdaServiceClient = lambdaServiceClient;
+        this.cacheStore = cacheStore;
     }
 
 //    public TaskList findTaskListByUserId(String userId){
@@ -50,6 +53,8 @@ public class TaskListService {
             System.out.println(response);
             System.out.println("Task list creation unsuccessful.");
         }
+        TaskList savedTaskList = new TaskList(request.getUserId(), request.getTaskListName());
+        cacheStore.add(savedTaskList.userId, savedTaskList);
         TaskListResponse taskListResponse = new TaskListResponse();
         taskListResponse.setUserId(request.getUserId());
         taskListResponse.setTaskListName(request.getTaskListName());

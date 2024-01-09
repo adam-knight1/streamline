@@ -36,7 +36,7 @@ class TaskListPage extends BaseClass {
 
         if (createdTaskList) {
             this.showMessage(`TaskList ${createdTaskList.taskListName} created successfully!`);
-            document.getElementById("created-name").innerHTML = `Your task list name is: ${createdTaskList.taskListName}`;
+//            document.getElementById("created-name").innerHTML = `Your task list name is: ${createdTaskList.taskListName}`;
         } else {
             this.errorHandler("Error creating task list! Try again...");
         }
