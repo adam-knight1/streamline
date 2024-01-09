@@ -1,4 +1,4 @@
-/*import BaseClass from "../util/baseClass";
+import BaseClass from "../util/baseClass";
 import axios from 'axios'
 import Toastify from "toastify-js";
 
@@ -38,6 +38,6 @@ export default class TaskClient extends BaseClass {
       }
       }
 
-   }//end
+   }
 
 

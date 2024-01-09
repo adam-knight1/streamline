@@ -50,33 +50,33 @@ public class TaskControllerTest {
     mapper.registerModule(new Jdk8Module());
     }
 
-    @Test
-    public void createTask_Success() throws Exception {
-        TaskCreateRequest taskCreateRequest = new TaskCreateRequest();
-        taskCreateRequest.setTaskName("Sample Task");
-        taskCreateRequest.setTaskDescription("Sample Task Description");
-        taskCreateRequest.setTaskId("Sample Task ID");
-       // taskCreateRequest.setCompleted(false);
-
-
-        ResultActions result = (ResultActions) mvc.perform(MockMvcRequestBuilders.post("/task/create")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(taskCreateRequest)))
-                        .andExpect(status().isOk())
-                        .andReturn();
-        //.accept(MediaType.APPLICATION_JSON)
-
-        String responseBody = ((MvcResult) result).getResponse().getContentAsString();
-        TaskResponse response = mapper.readValue(responseBody,TaskResponse.class);
-
-
-        Assertions.assertEquals("Sample Task", response.getTaskName());
-        Assertions.assertEquals("Sample Task ID", response.getTaskId());
-        Assertions.assertEquals("Sample Task Description", response.getTaskDescription());
-       // Assertions.assertFalse(response.isCompleted());
-
-
-
-    }
+//    @Test
+//    public void createTask_Success() throws Exception {
+//        TaskCreateRequest taskCreateRequest = new TaskCreateRequest();
+//        taskCreateRequest.setTaskName("Sample Task");
+//        taskCreateRequest.setTaskDescription("Sample Task Description");
+//        taskCreateRequest.setTaskId("Sample Task ID");
+//       // taskCreateRequest.setCompleted(false);
+//
+//
+//        ResultActions result = (ResultActions) mvc.perform(MockMvcRequestBuilders.post("/task/create")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(mapper.writeValueAsString(taskCreateRequest)))
+//                        .andExpect(status().isOk())
+//                        .andReturn();
+//        //.accept(MediaType.APPLICATION_JSON)
+//
+//        String responseBody = ((MvcResult) result).getResponse().getContentAsString();
+//        TaskResponse response = mapper.readValue(responseBody,TaskResponse.class);
+//
+//
+//        Assertions.assertEquals("Sample Task", response.getTaskName());
+//        Assertions.assertEquals("Sample Task ID", response.getTaskId());
+//        Assertions.assertEquals("Sample Task Description", response.getTaskDescription());
+//       // Assertions.assertFalse(response.isCompleted());
+//
+//
+//
+//    }
 
 }

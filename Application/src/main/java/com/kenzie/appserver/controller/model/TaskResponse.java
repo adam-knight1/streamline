@@ -1,4 +1,3 @@
-/*
 package com.kenzie.appserver.controller.model;
 
 
@@ -70,5 +69,3 @@ public class TaskResponse {
         this.message = message;
     }
 }
-
- */

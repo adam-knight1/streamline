@@ -1,4 +1,4 @@
-/* package com.kenzie.capstone.service.model;
+package com.kenzie.capstone.service.model;
 
 public class TaskRequest {
     private String userId;
@@ -18,7 +18,6 @@ public class TaskRequest {
 
     }
 
-
     public String getUserId() {
         return userId;
     }
@@ -35,13 +34,13 @@ public class TaskRequest {
         this.taskName = taskName;
     }
 
-    /*public String getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
+//    public String getTaskId() {
+//        return taskId;
+//    }
+//
+//    public void setTaskId(String taskId) {
+//        this.taskId = taskId;
+//    }
 
 
 
@@ -60,8 +59,4 @@ public class TaskRequest {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
-
 }
-
-
- */
