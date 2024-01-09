@@ -12,11 +12,14 @@ public class TaskRecord {
     @Id
     @DynamoDBHashKey(attributeName = "taskName")
     private String taskName;
+
     @DynamoDBAttribute(attributeName = "userId")
     private String userId;
 
-    @DynamoDBAttribute(attributeName = "taskId")
+   /* @DynamoDBAttribute(attributeName = "taskId")
     private String taskId;
+
+    */
     @DynamoDBAttribute(attributeName = "taskDescription")
     private String taskDescription;
     @DynamoDBAttribute(attributeName = "completed")
@@ -30,13 +33,16 @@ public class TaskRecord {
         this.userId = userId;
     }
 
-    public String getTaskId() {
+   /* public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
+
+
+    */
 
     public String getTaskName() {
         return taskName;
@@ -45,6 +51,8 @@ public class TaskRecord {
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
+
+
 
     public String getTaskDescription() {
         return taskDescription;
@@ -67,19 +75,18 @@ public class TaskRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskRecord that = (TaskRecord) o;
-        return taskId == that.taskId && completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
+        return completed == that.completed && Objects.equals(userId, that.userId) && Objects.equals(taskName, that.taskName) && Objects.equals(taskDescription, that.taskDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, taskId, taskName, taskDescription, completed);
+        return Objects.hash(userId, taskName, taskDescription, completed);
     }
 
     @Override
     public String toString() {
         return "TaskRecord{" +
                 "userId='" + userId + '\'' +
-                ", taskId=" + taskId +
                 ", taskName='" + taskName + '\'' +
                 ", taskDescription='" + taskDescription + '\'' +
                 ", completed=" + completed +

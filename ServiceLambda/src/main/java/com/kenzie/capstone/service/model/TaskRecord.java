@@ -13,6 +13,8 @@ public class TaskRecord {
     private String taskName;
     private String taskDescription;
     private boolean completed;
+
+
     @DynamoDBHashKey(attributeName = "taskName")
     public String getTaskName() {
         return taskName;

@@ -9,7 +9,7 @@ public class TaskConverter {
     public static TaskRecord fromRequestToRecord(TaskRequest task) {
         TaskRecord record = new TaskRecord();
         record.setTaskDescription(task.getTaskDescription());
-        record.setTaskId(task.getTaskId());
+       // record.setTaskId(task.getTaskId());
         record.setTaskName(task.getTaskName());
         record.setUserId(task.getUserId());
         record.setCompleted(task.isCompleted());
@@ -19,7 +19,7 @@ public class TaskConverter {
     public static TaskResponseLambda fromRecordToResponse(TaskRecord record) {
         TaskResponseLambda referral = new TaskResponseLambda();
         referral.setTaskDescription(record.getTaskDescription());
-        referral.setTaskId(record.getTaskId());
+        //referral.setTaskId(record.getTaskId());
         referral.setTaskName(record.getTaskName());
         referral.setUserId(record.getUserId());
         referral.setCompleted(record.isCompleted());

@@ -1,19 +1,13 @@
 
 package com.kenzie.appserver.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.TaskCreationException;
-import com.kenzie.appserver.controller.model.TaskCreateRequest;
-import com.kenzie.appserver.controller.model.TaskResponse;
+//import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.TaskListRepository;
-import com.kenzie.appserver.repositories.TaskRepository;
-import com.kenzie.appserver.repositories.model.TaskListRecord;
+//import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.model.TaskRecord;
-import com.kenzie.appserver.service.model.Task;
-import com.kenzie.appserver.service.model.TaskList;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponseLambda;
+//import com.kenzie.capstone.service.model.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +16,7 @@ import java.util.UUID;
 
 @Service
 public class TaskService {
-    private final TaskRepository taskRepository;
+    /*private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
 
@@ -54,14 +48,14 @@ public class TaskService {
             }
             taskResponse.setUserId(taskRequest.getUserId());
             taskResponse.setTaskDescription(taskRequest.getTaskDescription());
-            taskResponse.setTaskId(taskRequest.getTaskId());
+           // taskResponse.setTaskId(taskRequest.getTaskId());
             taskResponse.setCompleted(taskRequest.isCompleted());
             throw new TaskCreationException(taskResponse, "Failed to create task");
         }
         return taskResponse;
 
     }
-/*
+*//*
     public TaskRecord addTaskToTaskList(String taskListId, TaskRecord task) {
        //checking if task list exists
         TaskListRecord taskListRecord = taskListRepository.findById(taskListId).orElse(null);
@@ -73,7 +67,7 @@ public class TaskService {
         return null;
     }
 
- */
+ *//*
 
     public TaskRecord updateTaskStatus(String taskId, boolean newStatus){
         TaskRecord task = taskRepository.findById(taskId).orElse(null);
@@ -93,13 +87,13 @@ public class TaskService {
         return false;
     }
 
-    public TaskResponse updateTask (String taskId, String taskName, String taskDescription) {
+    public TaskResponse updateTask (String taskName, String taskDescription, String updatedTaskDescription) {
         TaskResponse taskResponse = new TaskResponse();
 
         try{
-            boolean updateSuccessful = lambdaServiceClient.updateTask(taskId,taskName,taskDescription);
+            boolean updateSuccessful = lambdaServiceClient.updateTask(taskName,taskDescription);
             if (updateSuccessful){
-                taskResponse.setTaskId(taskId);
+                //taskResponse.setTaskId(taskId);
                 taskResponse.setTaskName(taskName);
                 taskResponse.setTaskDescription(taskDescription);
                 taskResponse.setMessage("Task updated successfully");
@@ -110,5 +104,6 @@ public class TaskService {
             taskResponse.setMessage("Error updating task: " + exception.getMessage());
         }
         return taskResponse;
-    }
+    }*/
+
 }

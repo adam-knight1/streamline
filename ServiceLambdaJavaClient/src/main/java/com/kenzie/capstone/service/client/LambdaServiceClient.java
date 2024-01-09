@@ -105,10 +105,10 @@ public class LambdaServiceClient {
     }
 
 
-    public TaskResponseLambda updateTask(String taskId, TaskRequest updatedTaskRequest) throws JsonProcessingException {
+    public TaskResponseLambda updateTask( TaskRequest updatedTaskRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(updatedTaskRequest);
-        String endpoint = "task/update/" + taskId;
+        String endpoint = "task/update/";
 
         String response = endpointUtility.postEndpoint(endpoint, requestData);
 
@@ -172,14 +172,14 @@ public class LambdaServiceClient {
     }
 
 
-    public boolean updateTask(String taskId, String taskName, String taskDescription) throws JsonProcessingException {
+    public boolean updateTask(String taskName, String taskDescription) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
 
-        TaskRequest taskRequest = new TaskRequest(taskId, taskName, taskDescription);
+        TaskRequest taskRequest = new TaskRequest( taskName, taskDescription);
 
         try {
             String requestData = mapper.writeValueAsString(taskRequest);
-            String endpoint = "task/update/" + taskId;
+            String endpoint = "task/update/";
 
             String response = endpointUtility.postEndpoint(endpoint, requestData);
             TaskResponseLambda taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
@@ -191,9 +191,10 @@ public class LambdaServiceClient {
         }
 
     }
+
     //was taskrecord update to taskresponselambda
 
-    public TaskResponseLambda createTask(TaskRequest taskRequest) throws JsonProcessingException {
+   /* public TaskResponseLambda createTask(TaskRequest taskRequest) throws JsonProcessingException {
 
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRequest);
@@ -207,6 +208,8 @@ public class LambdaServiceClient {
             }
 
         }
+
+    */
 
 }
 

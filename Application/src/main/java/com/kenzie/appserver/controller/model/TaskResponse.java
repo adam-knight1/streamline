@@ -1,10 +1,14 @@
+/*
 package com.kenzie.appserver.controller.model;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TaskResponse {
     @JsonProperty("taskId")
     private String taskId;
+
+
     @JsonProperty("userId")
     private String userId;
     @JsonProperty("taskName")
@@ -66,3 +70,5 @@ public class TaskResponse {
         this.message = message;
     }
 }
+
+ */

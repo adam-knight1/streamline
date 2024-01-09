@@ -1,20 +1,16 @@
-
+/*
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.TaskCreateRequest;
 import com.kenzie.appserver.controller.model.TaskResponse;
 import com.kenzie.appserver.repositories.model.TaskRecord;
 import com.kenzie.appserver.service.TaskListService;
 import com.kenzie.appserver.service.TaskService;
-import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponseLambda;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/task")
@@ -39,7 +35,7 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
    }
 
-   /* @PostMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<TaskRecord> addTask(@RequestBody TaskRecord task){
         TaskRecord addedTask = taskService.addTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedTask);
@@ -68,7 +64,7 @@ public class TaskController {
         }
     }
 
-    */
+
 
     //update task status by taskId
     @PostMapping("/{taskId}/update-status")
@@ -91,11 +87,12 @@ public class TaskController {
     }
 
     @PostMapping("/task/update")
-    public ResponseEntity<TaskResponse> updateTask(@PathVariable String taskId,
+    public ResponseEntity<TaskResponse> updateTask(//@PathVariable String taskId,
                                                    @RequestParam String taskName,
                                                    @RequestParam String taskDescription){
 
-        TaskResponse taskResponse = taskService.updateTask(taskId,taskName,taskDescription);
+        String updatedTaskDescription = null;
+        TaskResponse taskResponse = taskService.updateTask(taskName,taskDescription, updatedTaskDescription);
 
         if (taskResponse != null){
             return ResponseEntity.ok(taskResponse);
@@ -105,3 +102,6 @@ public class TaskController {
     }
 
 }
+
+ */
+
