@@ -60,7 +60,7 @@ public class CreateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 
           TaskRecord taskRecord = new TaskRecord();
           taskRecord.setTaskName(taskRequest.getTaskName());
-          taskRecord.setTaskId(taskRequest.getTaskId());
+          //taskRecord.setTaskId(taskRequest.getTaskId());
           taskRecord.setTaskDescription(taskRequest.getTaskDescription());
           taskRecord.setUserId(taskRequest.getUserId());
           taskRecord.setCompleted(taskRequest.isCompleted());
