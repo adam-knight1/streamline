@@ -3,16 +3,17 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "taskName"
+        - AttributeName: "title"
           AttributeType: "S"
-        - AttributeName: "userId"
+        - AttributeName: "status"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "taskName"
+        - AttributeName: "title"
           KeyType: "HASH"
-        - AttributeName: "userId"
+        - AttributeName: "status"
           KeyType: "RANGE"
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: false
       BillingMode: PAY_PER_REQUEST
       TableName: "Task"
+
