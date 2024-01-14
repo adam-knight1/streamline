@@ -8,10 +8,7 @@ public class Task  {
   /*  private String taskId;
 
    */
-    private String userId;
-    private String taskName;
-    private String taskDescription;
-    private boolean completed;
+    private
 
 
 
