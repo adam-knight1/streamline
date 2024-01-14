@@ -46,7 +46,7 @@ public class LambdaServiceClient {
     public TaskAddResponse addTaskToTaskList(TaskAddRequest taskAddRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskAddRequest);
-        String response = endpointUtility.postEndpoint("task/create",requestData);
+        String response = endpointUtility.postEndpoint("task/add",requestData);
         TaskAddResponse taskAddResponse;
         try {
             taskAddResponse = mapper.readValue(response,TaskAddResponse.class);
