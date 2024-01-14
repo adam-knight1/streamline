@@ -1,6 +1,5 @@
 package com.kenzie.capstone.service;
 
-import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.model.*;
 import org.slf4j.Logger;

@@ -1,9 +1,8 @@
 package com.kenzie.capstone.service;
-import com.kenzie.capstone.service.dao.TaskDao;
 
-import com.kenzie.capstone.service.model.TaskListRecord;
+import com.kenzie.capstone.service.dao.TaskDao;
+import com.kenzie.capstone.service.model.TaskAddResponse;
 import com.kenzie.capstone.service.model.TaskRecord;
-import com.kenzie.capstone.service.model.TaskRequest;
 import com.kenzie.capstone.service.model.TaskResponseLambda;
 import converter.TaskConverter;
 import exceptions.InvalidDataException;
@@ -20,32 +19,16 @@ public class LambdaTaskService {
         this.taskDao =taskDao;
     }
 
-    public TaskResponseLambda updateTask( String taskName, String taskDescription, boolean completed){
-        if ( taskName == null || taskName.isEmpty()){
-            throw new InvalidDataException("Invalid task details");
-        }
-        TaskRecord existingRecord = taskDao.getTaskRecordByName(taskName);
-        if (existingRecord == null){
-            throw new InvalidDataException("Task with Name " + taskName + " not found");
-        }
-      //  if (!existingRecord.getTaskId().equals(taskId)){
-       //     throw new InvalidDataException("Task ID does not match Task Name");
-       // }
-       // existingRecord.setTaskName(taskName);
-        existingRecord.setTaskDescription(taskDescription);
-        existingRecord.setCompleted(completed);
-        taskDao.updateTaskRecord(existingRecord);
-        return TaskConverter.fromRecordToResponse(existingRecord);
-    }
-    public TaskResponseLambda createTask(TaskRecord taskRecord) {
-        if (taskRecord == null || taskRecord.getTaskName() == null){
+
+    public TaskResponseLambda addTask(TaskRecord taskRecord) {
+        if (taskRecord == null || taskRecord.getTitle() == null){
             log.error("The task record contains null values");
             throw new IllegalArgumentException("The task record cannot contain null values");
         }
-        log.info("Task name is: " + taskRecord.getTaskName());
+        log.info("Task name is: " + taskRecord.getTitle());
 
         try {
-            taskDao.createTask(taskRecord);
+
             log.info("Successfully created a task.");
             return new TaskResponseLambda(taskRecord.getTaskName(),
                     taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
@@ -54,6 +37,25 @@ public class LambdaTaskService {
             throw new RuntimeException("Error creating a task", e);
         }
 
+    }
+
+    public TaskAddResponse addTasktoTaskList(TaskRecord taskRecord){
+        if (taskRecord == null || taskRecord.getTitle() == null){
+            log.error("The task record contains null values");
+            throw new IllegalArgumentException("The task record cannot contain null values");
+        }
+        log.info("Task name is: " + taskRecord.getTitle());
+
+        try {
+
+            log.info("Successfully created a task.");
+
+            return newaskResponseLambda(taskRecord.getTaskName(),
+                    taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
+        }catch (Exception e){
+            log.error("Error creating a task: ", e);
+            throw new RuntimeException("Error creating a task", e);
+        }
     }
 
 }
