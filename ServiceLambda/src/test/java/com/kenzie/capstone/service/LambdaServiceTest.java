@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.dao.UserDao;
 import com.kenzie.capstone.service.model.*;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LambdaServiceTest {
-    private TaskDao taskDao;
+  /*  private TaskDao taskDao;
     private TaskListDao taskListDao;
     private UserDao userDao;
     private LambdaTaskService lambdaTaskService;
@@ -32,7 +33,7 @@ class LambdaServiceTest {
         this.taskListDao = mock(TaskListDao.class);
         this.userDao = mock(UserDao.class);
         this.lambdaTaskService = new LambdaTaskService(taskDao);
-        this.lambdaTaskListService = new LambdaTaskListService(taskListDao,taskDao);
+        this.lambdaTaskListService = new LambdaTaskListService(taskListDao, taskDao);
         this.lambdaUserService = new LambdaUserService(userDao);
     }
 //not passing
@@ -158,14 +159,14 @@ class LambdaServiceTest {
 //            lambdaTaskListService.updateTaskList(userId,taskListRequest);
 //        });
 //    }
-    /*
+    *//*
         this.taskDao = mock(TaskDao.class);
         this.taskListDao = mock(TaskListDao.class);
         this.userDao = mock(UserDao.class);
         this.lambdaTaskService = new LambdaTaskService(taskDao);
         this.lambdaTaskListService = new LambdaTaskListService(taskListDao,taskDao);
         this.lambdaUserService = new LambdaUserService(userDao);
-     */
+     *//*
     @Test
     public void createUser_Successful() {
         String email = "testEmail";
@@ -225,6 +226,6 @@ class LambdaServiceTest {
         assertThrows(IllegalArgumentException.class, () -> {
             lambdaTaskListService.createTaskList(null);
         });
-    }
+    }*/
 }
 

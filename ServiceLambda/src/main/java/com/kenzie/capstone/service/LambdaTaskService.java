@@ -1,13 +1,13 @@
 package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.TaskDao;
-import com.kenzie.capstone.service.model.TaskAddResponse;
-import com.kenzie.capstone.service.model.TaskRecord;
-import com.kenzie.capstone.service.model.TaskResponseLambda;
+import com.kenzie.capstone.service.model.*;
 import converter.TaskConverter;
 import exceptions.InvalidDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
 
 public class LambdaTaskService {
 
@@ -16,46 +16,32 @@ public class LambdaTaskService {
 
 
     public LambdaTaskService(TaskDao taskDao){
-        this.taskDao =taskDao;
+        this.taskDao = taskDao;
     }
 
-
-    public TaskResponseLambda addTask(TaskRecord taskRecord) {
-        if (taskRecord == null || taskRecord.getTitle() == null){
+    public TaskAddResponse taskAddToTaskList (TaskRecord taskRecord) {
+        if (taskRecord == null || taskRecord.getTitle() == null) {
             log.error("The task record contains null values");
-            throw new IllegalArgumentException("The task record cannot contain null values");
+            throw new IllegalArgumentException("task record cannot contain null values");
         }
-        log.info("Task name is: " + taskRecord.getTitle());
+        log.info("task title is " + taskRecord.getTitle());
 
         try {
+            taskDao.addTask(taskRecord);
+            log.info("Successfully added task");
 
-            log.info("Successfully created a task.");
-            return new TaskResponseLambda(taskRecord.getTaskName(),
-                    taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
-        }catch (Exception e){
-            log.error("Error creating a task: ", e);
-            throw new RuntimeException("Error creating a task", e);
-        }
+            TaskAddResponse taskAddResponse = new TaskAddResponse();
+            taskAddResponse.setTitle(taskRecord.getTitle());
+            taskAddResponse.setBody(taskRecord.getBody());
+            taskAddResponse.setStatus(taskRecord.getStatus());
 
-    }
-
-    public TaskAddResponse addTasktoTaskList(TaskRecord taskRecord){
-        if (taskRecord == null || taskRecord.getTitle() == null){
-            log.error("The task record contains null values");
-            throw new IllegalArgumentException("The task record cannot contain null values");
-        }
-        log.info("Task name is: " + taskRecord.getTitle());
-
-        try {
-
-            log.info("Successfully created a task.");
-
-            return newaskResponseLambda(taskRecord.getTaskName(),
-                    taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
-        }catch (Exception e){
-            log.error("Error creating a task: ", e);
-            throw new RuntimeException("Error creating a task", e);
+            return taskAddResponse;
+        } catch (Exception e) {
+            log.error("Error creating user: ", e);
+            throw new RuntimeException("Error creating task", e);
         }
     }
 
-}
+    }
+
+

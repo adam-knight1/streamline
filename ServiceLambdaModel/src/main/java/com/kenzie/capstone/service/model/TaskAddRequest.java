@@ -3,7 +3,6 @@ package com.kenzie.capstone.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotEmpty;
 
 public class TaskAddRequest {
     @JsonProperty("title")
@@ -11,6 +10,10 @@ public class TaskAddRequest {
 
     @JsonProperty("body")
     private String body;
+
+    @JsonProperty("status")
+    private String status;
+
 
 
     public TaskAddRequest(String title, String body){
@@ -32,5 +35,13 @@ public class TaskAddRequest {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

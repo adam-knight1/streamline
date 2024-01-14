@@ -4,6 +4,7 @@ import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.LambdaTaskService;
 import com.kenzie.capstone.service.LambdaUserService;
 
+import com.kenzie.capstone.service.dao.TaskDao;
 import com.kenzie.capstone.service.dao.TaskListDao;
 import com.kenzie.capstone.service.dao.UserDao;
 import dagger.Module;

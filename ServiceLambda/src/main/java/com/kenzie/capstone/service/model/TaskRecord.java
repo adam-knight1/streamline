@@ -10,6 +10,14 @@ import java.util.Objects;
 public class TaskRecord {
     private String title;
     private String body;
+    private String status;
+
+    public String getStatus() {
+            return status;
+}
+    public String setStatus(String status){
+        return status;
+    }
 
     public String getTitle() {
         return title;
