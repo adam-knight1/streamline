@@ -33,12 +33,17 @@
     <h2>Create a New Task</h2>
     <form class="card-content" id="create-task">
         <p class="form-field">
-            <label>Task Description</label>
-            <input type="text" required class="validated-field" id="task-desc-field">
+            <label>Task Title</label>
+            <input type="text" required class="validated-field" id="task-title-field">
+        </p>
+        <p class="form-field">
+            <label>Task Body</label>
+            <textarea required class="validated-field" id="task-body-field"></textarea>
         </p>
         <button type="submit">Create</button>
     </form>
 </div>
+
 
 <div class="card" id="tasks-display">
     <h2>Your Tasks</h2>

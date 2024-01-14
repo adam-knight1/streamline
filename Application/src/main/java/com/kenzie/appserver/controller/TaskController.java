@@ -7,7 +7,11 @@ import org.springframework.http.ResponseEntity;
 import com.kenzie.capstone.service.model.TaskAddRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/task")
 public class TaskController {
 
     private final TaskService taskService;
@@ -28,6 +32,5 @@ public class TaskController {
         }
 
     }
-
 
 }

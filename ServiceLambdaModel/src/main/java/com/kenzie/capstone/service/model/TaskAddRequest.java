@@ -1,6 +1,7 @@
 package com.kenzie.capstone.service.model;
 
 
+import com.amazonaws.services.lambda.runtime.events.S3BatchEvent;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -14,7 +15,8 @@ public class TaskAddRequest {
     @JsonProperty("status")
     private String status;
 
-
+    public TaskAddRequest() {
+    }
 
     public TaskAddRequest(String title, String body){
         this.body = body;
