@@ -21,6 +21,7 @@ public class LambdaServiceClient {
     private static final Logger log = LogManager.getLogger(LambdaServiceClient.class);
 
 
+
     public LambdaServiceClient() {
         this.mapper = new ObjectMapper();
     }
@@ -40,6 +41,19 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return userResponseLambda;
+    }
+
+    public TaskAddResponse addTaskToTaskList(TaskAddRequest taskAddRequest) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String requestData = mapper.writeValueAsString(taskAddRequest);
+        String response = endpointUtility.postEndpoint("task/create",requestData);
+        TaskAddResponse taskAddResponse;
+        try {
+            taskAddResponse = mapper.readValue(response,TaskAddResponse.class);
+        } catch (Exception e) {
+            throw new ApiGatewayException("Exception thrown at in lambda service client", e);
+        }
+        return taskAddResponse;
     }
 
     public TaskListResponse createTaskList(TaskListRequest taskListRequest) throws JsonProcessingException {
@@ -67,6 +81,10 @@ public class LambdaServiceClient {
         }
         return taskListResponse;
     }
+
+/*
+    public TaskAddResponse addTaskToTaskList(com.kenzie.appserver.controller.model.TaskAddRequest taskAddRequest)
+*/
 
 
 

@@ -1,14 +1,22 @@
-package com.kenzie.appserver.controller.model;
+package com.kenzie.capstone.service.model;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TaskAddResponse {
+import javax.validation.constraints.NotEmpty;
+
+public class TaskAddRequest {
     @JsonProperty("title")
     private String title;
 
     @JsonProperty("body")
     private String body;
 
+
+    public TaskAddRequest(String title, String body){
+        this.body = body;
+        this.title = title;
+    }
 
     public String getTitle() {
         return title;

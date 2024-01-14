@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 
-public class TaskAddRequest {
+public class TaskAddRequestModel {
     @NotEmpty
     @JsonProperty("title")
     private String title;
@@ -13,7 +13,7 @@ public class TaskAddRequest {
     private String body;
 
 
-    public TaskAddRequest(String title, String body){
+    public TaskAddRequestModel(String title, String body){
         this.body = body;
         this.title = title;
     }
