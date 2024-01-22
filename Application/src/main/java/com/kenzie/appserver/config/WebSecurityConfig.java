@@ -1,17 +1,20 @@
 
 package com.kenzie.appserver.config;
 
+import com.kenzie.appserver.AjaxLoginProcessingFilter;
 import com.kenzie.appserver.CustomLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -35,16 +38,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/login", "/css/**", "/login.html", "/user/create", "/user/**", "/user.html", "/index").permitAll()
+                .antMatchers("/css/**", "/user/create", "/user/**", "/index").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login.html")
-                .successHandler(customLoginSuccessHandler)
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+                .formLogin().disable()
+                .logout().permitAll();
+    }
+
+    @Bean
+    public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
+        return new AjaxLoginProcessingFilter("/login", authenticationManagerBean());
     }
 
     @Bean
@@ -62,7 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Or use any other password encoder
+        //I'll change this once I add passwords to the DB encoded.
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
@@ -77,6 +82,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CorsFilter(source);
     }
 }
-
 
 
