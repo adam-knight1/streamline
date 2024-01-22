@@ -1,4 +1,4 @@
-/*
+
 package com.kenzie.appserver;
 
 import com.kenzie.appserver.repositories.UserRepository;
@@ -26,6 +26,7 @@ public class DynamoDBUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<UserRecord> optionalUserRecord = userRepository.findByUsername(username);
+        //need to change this to use the lambda
 
         logger.info("Loading user by username: {}", username);
 
@@ -43,6 +44,7 @@ public class DynamoDBUserDetailsService implements UserDetailsService {
 
     public UserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
         Optional<UserRecord> optionalUserRecord = userRepository.findByUserId(userId);
+        //need to change this to use the lambda
 
         if (optionalUserRecord.isPresent()) {
             UserRecord userRecord = optionalUserRecord.get();
@@ -53,4 +55,4 @@ public class DynamoDBUserDetailsService implements UserDetailsService {
     }
 }
 
-*/
+

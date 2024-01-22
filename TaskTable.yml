@@ -3,14 +3,14 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-        - AttributeName: "title"
+        - AttributeName: "taskListId"
           AttributeType: "S"
-        - AttributeName: "status"
+        - AttributeName: "title"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "title"
+        - AttributeName: "taskListId"
           KeyType: "HASH"
-        - AttributeName: "status"
+        - AttributeName: "title"
           KeyType: "RANGE"
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: false

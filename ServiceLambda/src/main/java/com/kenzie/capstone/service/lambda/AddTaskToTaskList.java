@@ -43,7 +43,7 @@ public class AddTaskToTaskList implements RequestHandler<APIGatewayProxyRequestE
             TaskRecord taskRecord = new TaskRecord();
             taskRecord.setTitle(taskAddRequest.getTitle());
             taskRecord.setBody(taskAddRequest.getBody());
-            taskRecord.setStatus(taskAddRequest.getStatus());
+            taskRecord.setCompleted(taskAddRequest.getCompleted());
 
            TaskAddResponse taskAddResponse = lambdaTaskService.taskAddToTaskList(taskRecord);
 

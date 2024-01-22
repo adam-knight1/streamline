@@ -1,4 +1,4 @@
-/*
+
 package com.kenzie.appserver;
 
 import com.kenzie.appserver.repositories.model.UserRecord;
@@ -58,7 +58,3 @@ public class CustomUserDetails implements UserDetails {
 }
 
 
-
-
-
-*/

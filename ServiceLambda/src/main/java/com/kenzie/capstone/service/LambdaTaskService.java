@@ -33,7 +33,7 @@ public class LambdaTaskService {
             TaskAddResponse taskAddResponse = new TaskAddResponse();
             taskAddResponse.setTitle(taskRecord.getTitle());
             taskAddResponse.setBody(taskRecord.getBody());
-            taskAddResponse.setStatus(taskRecord.getStatus());
+            taskAddResponse.setStatus(taskRecord.isCompleted());
 
             return taskAddResponse;
         } catch (Exception e) {

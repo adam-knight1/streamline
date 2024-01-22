@@ -12,8 +12,8 @@ public class TaskAddRequest {
     @JsonProperty("body")
     private String body;
 
-    @JsonProperty("status")
-    private String status;
+    @JsonProperty("isCompleted")
+    private boolean isCompleted;
 
     public TaskAddRequest() {
     }
@@ -39,11 +39,11 @@ public class TaskAddRequest {
         this.body = body;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean getCompleted() {
+        return isCompleted;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

@@ -1,6 +1,6 @@
 package com.kenzie.appserver;
 
-/*import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -21,5 +21,5 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
 
     }
-}*/
+}
 
