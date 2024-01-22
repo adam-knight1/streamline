@@ -5,21 +5,23 @@ import com.kenzie.appserver.CustomLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService dynamoDBUserDetailsService;
+
     @Autowired
     private CustomLoginSuccessHandler customLoginSuccessHandler;
 
@@ -31,30 +33,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-
                 .cors().and()
-
                 .authorizeRequests()
                 .antMatchers("/login", "/css/**", "/login.html", "/user/create", "/user/**", "/user.html", "/index").permitAll()
                 .anyRequest().authenticated()
                 .and()
-
-                // login
                 .formLogin()
                 .loginPage("/login.html")
                 .successHandler(customLoginSuccessHandler)
                 .permitAll()
                 .and()
-
-                // logout
                 .logout()
                 .permitAll();
-
     }
 
     @Bean
     public UserDetailsService customUserDetailsService() {
         return dynamoDBUserDetailsService;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(dynamoDBUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(); // Or use any other password encoder
     }
 
     @Bean
@@ -67,6 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
-
     }
 }
+
+
+
