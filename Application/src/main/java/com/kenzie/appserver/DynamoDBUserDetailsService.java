@@ -22,7 +22,7 @@ public class DynamoDBUserDetailsService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(DynamoDBUserDetailsService.class);
 
 
-    @Override
+  /*  @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<UserRecord> optionalUserRecord = userRepository.findByUsername(username);
@@ -40,10 +40,11 @@ public class DynamoDBUserDetailsService implements UserDetailsService {
             //adding log statements to debug login process
             throw new UsernameNotFoundException("User not found: " + username);
         }
-    }
-
+    }*/
     public UserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
         Optional<UserRecord> optionalUserRecord = userRepository.findByUserId(userId);
+
+
         //need to change this to use the lambda
 
         if (optionalUserRecord.isPresent()) {

@@ -9,6 +9,9 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "Task")
 public class TaskRecord {
     private String title;
+   // private String userId;
+    //going to get rid of taskList, use userId reference to tasks.  Then can search task table for tasks with
+    // specific user Id for get tasks
     private String taskListId;
     private String body;
     private boolean isCompleted;
