@@ -8,20 +8,31 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import java.util.Objects;
 @DynamoDBTable(tableName = "Task")
 public class TaskRecord {
+    private String taskId;
+    private String userId;
     private String title;
-   // private String userId;
-    //going to get rid of taskList, use userId reference to tasks.  Then can search task table for tasks with
-    // specific user Id for get tasks
-    private String taskListId;
     private String body;
-    private boolean isCompleted;
+    private String status;
 
-
-    @DynamoDBHashKey(attributeName = "taskListId")
-    public String getTaskListId() {
-        return taskListId;
+    @DynamoDBRangeKey(attributeName = "taskId")
+    public String getTaskId() {
+        return taskId;
     }
-    @DynamoDBRangeKey(attributeName = "title")
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+    @DynamoDBHashKey(attributeName = "userId")
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @DynamoDBAttribute(attributeName = "title")
     public String getTitle() {
         return title;
     }
@@ -30,24 +41,22 @@ public class TaskRecord {
         this.title = title;
     }
 
+    @DynamoDBAttribute(attributeName = "body")
     public String getBody() {
         return body;
     }
 
-    public void setTaskListId(String taskListId) {
-        this.taskListId = taskListId;
-    }
-
-    public boolean isCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
-    }
-
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @DynamoDBAttribute(attributeName = "status")
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
 
