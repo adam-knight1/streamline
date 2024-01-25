@@ -7,6 +7,7 @@ import exceptions.InvalidDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.UUID;
 
 public class LambdaTaskService {
@@ -20,6 +21,7 @@ public class LambdaTaskService {
     }
 
     public TaskAddResponse taskAddToTaskList (TaskRecord taskRecord) {
+        //this needs to be updated now after changing task record.
         if (taskRecord == null || taskRecord.getTitle() == null) {
             log.error("The task record contains null values");
             throw new IllegalArgumentException("task record cannot contain null values");
@@ -33,7 +35,7 @@ public class LambdaTaskService {
             TaskAddResponse taskAddResponse = new TaskAddResponse();
             taskAddResponse.setTitle(taskRecord.getTitle());
             taskAddResponse.setBody(taskRecord.getBody());
-            taskAddResponse.setStatus(taskRecord.isCompleted());
+          //  taskAddResponse.setStatus(taskRecord.isCompleted());
 
             return taskAddResponse;
         } catch (Exception e) {
@@ -42,6 +44,25 @@ public class LambdaTaskService {
         }
     }
 
+    public List<TaskRecord> getTasksByUserId(String userId) {
+        if (userId == null || userId.trim().isEmpty()) {
+            log.error("User ID is null or empty");
+            throw new IllegalArgumentException("User ID cannot be null or empty");
+        }
+
+        try {
+            List<TaskRecord> tasks = taskDao.getTasksByUserId(userId);
+            log.info("Successfully retrieved tasks for user ID: {}", userId);
+            return tasks;
+        } catch (Exception e) {
+            log.error("Error retrieving tasks for user ID: {} - Error: ", userId, e);
+            throw new RuntimeException("Error retrieving tasks for user ID", e);
+        }
     }
+
+
+
+
+}
 
 

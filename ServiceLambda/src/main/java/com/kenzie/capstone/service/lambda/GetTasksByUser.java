@@ -38,7 +38,7 @@ public class GetTasksByUser implements RequestHandler<APIGatewayProxyRequestEven
         try {
             String userId = input.getPathParameters().get("userId");
 
-            List<TaskRecord> tasks = lambdaTaskService.findTasksByUserId(userId); // Retrieve tasks for the user
+            List<TaskRecord> tasks = lambdaTaskService.getTasksByUserId(userId);
             if (tasks == null || tasks.isEmpty()) {
                 return response
                         .withStatusCode(404)
