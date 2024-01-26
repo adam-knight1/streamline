@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+/*public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     private static final Logger log = LogManager.getLogger(UpdateTask.class);
    // static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();
@@ -114,4 +114,4 @@ public class UpdateTask implements RequestHandler<APIGatewayProxyRequestEvent, A
 //                    .withBody("Error updating task");
 //        }
 //    }
-}
+}*/

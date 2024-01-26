@@ -6,7 +6,7 @@ import TaskClient from "../api/taskClient";
 class TaskListPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['onCreate', 'onUpdate','onCreateTask', 'renderTaskList'], this);
+        this.bindClassMethods(['onCreate', 'onUpdate', 'renderTaskList', 'onAddTask'], this);
         this.dataStore = new DataStore();
         this.taskClient = new TaskClient();
     }
@@ -15,13 +15,35 @@ class TaskListPage extends BaseClass {
         document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
         document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
         document.getElementById('find-task-list').addEventListener('submit', this.onFind);
-        document.getElementById('create-task').addEventListener('submit', this.onCreateTask);
+        document.getElementById('create-task').addEventListener('submit', this.onAddTask);
+       // document.getElementById('onAddTask').addEventListener('submit', this.onAddTask)
 
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
+
+                  const userId = localStorage.getItem('userId');
+                  if (userId) {
+                      await this.renderTaskList(userId);
+                  }
     }
 
-    async renderTaskList() {}
+    async renderTaskList() {
+    try {
+            const tasks = await this.taskClient.getTasksByUserId(userId);
+            //const tasks = await this.taskClient.getTasks();
+            const tasksContainer = document.getElementById('tasks-container');
+            tasksContainer.innerHTML = ''; // Clear existing tasks
+
+            tasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.innerHTML = `<p>${task.title}: ${task.body}</p>`;
+                tasksContainer.appendChild(taskElement);
+            });
+        } catch (error) {
+            console.error("Error rendering task list:", error);
+        }
+    }
+
 
     async onCreate(event) {
         event.preventDefault();
@@ -76,6 +98,27 @@ class TaskListPage extends BaseClass {
            }
        }
 
+       async onAddTask(event) {
+           event.preventDefault();
+
+           let title = document.getElementById("task-title-field").value;
+           let body = document.getElementById("task-body-field").value;
+          // let status = document.getElementById("task-status-field").value;
+
+           try {
+               let addedTask = await this.taskClient.addTaskToTaskList(title, body, status);
+               if (addedTask) {
+                   this.showMessage(`Task '${title}' added successfully!`);
+                   // Update UI here maybe
+               } else {
+                   this.errorHandler("Error adding Task! Try again...");
+               }
+           } catch (error) {
+               this.errorHandler("Error in addTaskToTaskList:", error);
+           }
+       }
+
+
        displayTaskListDetails(taskList) {
            const taskListDetails = document.getElementById("task-list-details");
            let tasksHtml = '';
@@ -90,24 +133,12 @@ class TaskListPage extends BaseClass {
                <p><strong>Tasks:</strong> ${tasksHtml}</p>
            `;
        }
-   async onCreateTask(event) {
-           event.preventDefault();
 
-           let taskDescription = document.getElementById("task-desc-field").value;
-           let userId = document.getElementById("userId-field").value;
-           let taskListName = document.getElementById("taskList-name-field").value;
+       extractUserIdFromUrl() {
+           const urlParts = window.location.pathname.split('/');
+           return urlParts[urlParts.length - 1];
 
-           this.showMessage(`userId ${userId}`);
-
-           let createdTask = await this.taskClient.createTask(userId, taskListName, taskDescription, this.errorHandler);
-
-           if (createdTask) {
-               this.showMessage(`Task ${createdTask.taskName} created successfully!`);
-               document.getElementById("created-task").innerHTML = `Your task was created: ${createdTask.taskName}`;
-           } else {
-               this.errorHandler("Error creating Task! Try again...");
-           }
-       }
+}
 }
 
 const main = async () => {

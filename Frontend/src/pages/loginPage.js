@@ -32,7 +32,7 @@ class LoginPage extends BaseClass {
                 this.showMessage("Invalid username or password.");
             }
         } catch (error) {
-            this.showMessage("An error occurred during login. Please try again.");
+            this.showMessage("Failed to authenticate the user.  Please try again or contact support.");
         }
     }
 }

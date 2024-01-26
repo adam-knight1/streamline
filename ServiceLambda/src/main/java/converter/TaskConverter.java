@@ -6,7 +6,7 @@ import com.kenzie.capstone.service.model.TaskResponseLambda;
 
 public class TaskConverter {
 
-    public static TaskRecord fromRequestToRecord(TaskRequest task) {
+    /*public static TaskRecord fromRequestToRecord(TaskRequest task) {
         TaskRecord record = new TaskRecord();
         record.setTaskDescription(task.getTaskDescription());
        // record.setTaskId(task.getTaskId());
@@ -25,5 +25,5 @@ public class TaskConverter {
         referral.setCompleted(record.isCompleted());
         return referral;
     }
-
+*/
 }

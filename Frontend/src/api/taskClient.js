@@ -10,34 +10,24 @@ export default class TaskClient extends BaseClass {
         });
     }
 
-   async createTask(userId, taskName, taskDescription, completed) {
+   async addTaskToTaskList(title, body, status) {
        try {
-           const response = await this.client.post(`/task/create`, {
-           userId: userId,
-           taskName: taskName,
-           taskDescription: taskDescription,
-           completed: completed
+           const response = await this.client.post('/task/add', {
+               title: title,
+               body: body,
+               status: status
            });
-           console.log("Received response:", response.data);
+           console.log("Axios response:", response);
+           console.log("Parsed data:", response.data);
            return response.data;
        } catch (error) {
-           console.error("Failed to create a task:", error);
-           throw error;
+           console.error("Error in addTaskToTaskList:", error);
+           return this.handleError("addTaskToTaskList", error);
+       }
    }
-   }
-   async updateTask(taskId, taskName, taskDescription) {
-          try {
-              const response = await this.client.put(`/task/update/${taskId}`, {
-               taskName: taskName,
-               taskDescription: taskDescription
-              });
-              return response.data;
-          } catch (error) {
-              console.error("Failed to update task:", error);
-              throw error;
-      }
-      }
 
    }
+
+   
 
 

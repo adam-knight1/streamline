@@ -35,7 +35,7 @@ export default class TaskListClient extends BaseClass {
             throw error;
         }
     }
-
+/*
     async getTaskListByUserId(userId) {
             try {
                 const response = await this.client.get(`/taskList/${userId}`);
@@ -44,5 +44,16 @@ export default class TaskListClient extends BaseClass {
             } catch (error) {
                 return this.handleError("getTaskListByUserId", error);
             }
-        }
+        }*/
+
+        async getTasksByUserId(userId) {
+            try {
+                const response = await this.client.get(`/task/user/${userId}`);
+                return response.data;
+            } catch (error) {
+                console.error("Error getting tasks by userId:", error);
+                throw error;
+            }
+
+}
 }

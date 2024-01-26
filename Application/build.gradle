@@ -17,6 +17,7 @@ dependencies {
     implementation project(":ServiceLambdaJavaClient")
     implementation 'org.springframework.boot:spring-boot-starter:2.6.3'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
+    implementation project(path: ':ServiceLambda')
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.6.3'
     
@@ -27,10 +28,8 @@ dependencies {
     implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.9.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: '2.6.3'
 
-   /* implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.3'
-    implementation 'org.springframework.boot:spring-boot-starter-security'*/
-    //from Spring Security website
-
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
     implementation group: 'io.micrometer', name: 'micrometer-core', version: '1.8.3'

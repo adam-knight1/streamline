@@ -40,7 +40,7 @@ public class UserController {
         }
     }
 
-   /* @GetMapping("/name/{username}")
+    @GetMapping("/name/{username}")
     public ResponseEntity<UserResponseLambda> getUserByUsername(@PathVariable("username") String username){
         System.out.println("Received request to find user with username: " + username);
         try {
@@ -54,7 +54,7 @@ public class UserController {
             System.out.println("Error in fetching user by username: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
 
     @PostMapping("/create")

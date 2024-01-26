@@ -30,31 +30,6 @@ Resources:
           Properties:
             Path: /example/{id}
             Method: get
-
-  CreateTaskFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.CreateTask
-      Runtime: java11
-      Description: Create a new task
-      MemorySize: 512
-      Timeout: 30
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        CreateTaskEvent:
-          Type: Api
-          Properties:
-            Path: /task/create
-            Method: post
-
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -197,3 +172,50 @@ Resources:
           Properties:
             Path: /taskList/{userId}
             Method: get
+  AddTaskFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.AddTaskToTaskList
+      Runtime: java11
+      Description: Add a new task to the task list
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        CreateUserEvent:
+          Type: Api
+          Properties:
+            Path: /task/add
+            Method: post
+  GetTasksByUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://capstone-capstoneadam-artifacts/1e905885f4cf248e4e8b769c25731b83
+      Handler: com.kenzie.capstone.service.lambda.GetTasksByUser
+      Runtime: java11
+      Description: Retrieve all tasks for user
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        GetAllUserTasksEvent:
+          Type: Api
+          Properties:
+            Path: /task/user/userId
+            Method: get
+

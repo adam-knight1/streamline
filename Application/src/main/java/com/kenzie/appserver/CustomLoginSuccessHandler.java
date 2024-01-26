@@ -1,6 +1,6 @@
 package com.kenzie.appserver;
 
-/*import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -15,11 +15,13 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, IOException {
-        //this will auto verify against dynamo if it's set up right
-        response.sendRedirect("/taskList.html"); //
-        System.out.println("login success!");
 
-
+        String identifier = authentication.getName();
+        String redirectUrl = "/taskList/" + identifier;
+        response.sendRedirect(redirectUrl);
+        System.out.println("Login success for user: " + identifier);
     }
-}*/
+
+}
+
 

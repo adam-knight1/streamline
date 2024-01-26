@@ -27,7 +27,8 @@ module.exports = {
           '/example',
           '/user',
           '/login',
-          '/taskList'
+          '/taskList',
+          '/task'
         ],
         target: 'http://localhost:5001'
       }

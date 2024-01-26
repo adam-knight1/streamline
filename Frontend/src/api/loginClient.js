@@ -13,10 +13,15 @@ export default class LoginClient extends BaseClass {
 
     async loginUser(username, password) {
         try {
-            const response = await this.client.post('/login/loginUser', {
+            const response = await this.client.post('/login', {
                 username: username,
                 password: password
             });
+
+                    if (response.data && response.data.userId) {
+                        localStorage.setItem('userId', response.data.userId);
+                    }
+
             return response.data;
         } catch (error) {
             return this.handleError("loginUser", error);

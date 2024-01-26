@@ -36,6 +36,8 @@ public class DaoModule {
         return new TaskDao(mapper);
     }
 
+
+
     @Singleton
     @Provides
     @Named("UserDao")

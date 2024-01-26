@@ -1,14 +1,14 @@
 package com.kenzie.capstone.service;
-import com.kenzie.capstone.service.dao.TaskDao;
 
-import com.kenzie.capstone.service.model.TaskListRecord;
-import com.kenzie.capstone.service.model.TaskRecord;
-import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.TaskResponseLambda;
+import com.kenzie.capstone.service.dao.TaskDao;
+import com.kenzie.capstone.service.model.*;
 import converter.TaskConverter;
 import exceptions.InvalidDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.UUID;
 
 public class LambdaTaskService {
 
@@ -17,43 +17,52 @@ public class LambdaTaskService {
 
 
     public LambdaTaskService(TaskDao taskDao){
-        this.taskDao =taskDao;
+        this.taskDao = taskDao;
     }
 
-    public TaskResponseLambda updateTask( String taskName, String taskDescription, boolean completed){
-        if ( taskName == null || taskName.isEmpty()){
-            throw new InvalidDataException("Invalid task details");
-        }
-        TaskRecord existingRecord = taskDao.getTaskRecordByName(taskName);
-        if (existingRecord == null){
-            throw new InvalidDataException("Task with Name " + taskName + " not found");
-        }
-      //  if (!existingRecord.getTaskId().equals(taskId)){
-       //     throw new InvalidDataException("Task ID does not match Task Name");
-       // }
-       // existingRecord.setTaskName(taskName);
-        existingRecord.setTaskDescription(taskDescription);
-        existingRecord.setCompleted(completed);
-        taskDao.updateTaskRecord(existingRecord);
-        return TaskConverter.fromRecordToResponse(existingRecord);
-    }
-    public TaskResponseLambda createTask(TaskRecord taskRecord) {
-        if (taskRecord == null || taskRecord.getTaskName() == null){
+    public TaskAddResponse taskAddToTaskList (TaskRecord taskRecord) {
+        //this needs to be updated now after changing task record.
+        if (taskRecord == null || taskRecord.getTitle() == null) {
             log.error("The task record contains null values");
-            throw new IllegalArgumentException("The task record cannot contain null values");
+            throw new IllegalArgumentException("task record cannot contain null values");
         }
-        log.info("Task name is: " + taskRecord.getTaskName());
+        log.info("task title is " + taskRecord.getTitle());
 
         try {
-            taskDao.createTask(taskRecord);
-            log.info("Successfully created a task.");
-            return new TaskResponseLambda(taskRecord.getTaskName(),
-                    taskRecord.getTaskDescription(), taskRecord.getUserId(), taskRecord.isCompleted());
-        }catch (Exception e){
-            log.error("Error creating a task: ", e);
-            throw new RuntimeException("Error creating a task", e);
-        }
+            taskDao.addTask(taskRecord);
+            log.info("Successfully added task");
 
+            TaskAddResponse taskAddResponse = new TaskAddResponse();
+            taskAddResponse.setTitle(taskRecord.getTitle());
+            taskAddResponse.setBody(taskRecord.getBody());
+          //  taskAddResponse.setStatus(taskRecord.isCompleted());
+
+            return taskAddResponse;
+        } catch (Exception e) {
+            log.error("Error creating user: ", e);
+            throw new RuntimeException("Error creating task", e);
+        }
     }
 
+    public List<TaskRecord> getTasksByUserId(String userId) {
+        if (userId == null || userId.trim().isEmpty()) {
+            log.error("User ID is null or empty");
+            throw new IllegalArgumentException("User ID cannot be null or empty");
+        }
+
+        try {
+            List<TaskRecord> tasks = taskDao.getTasksByUserId(userId);
+            log.info("Successfully retrieved tasks for user ID: {}", userId);
+            return tasks;
+        } catch (Exception e) {
+            log.error("Error retrieving tasks for user ID: {} - Error: ", userId, e);
+            throw new RuntimeException("Error retrieving tasks for user ID", e);
+        }
+    }
+
+
+
+
 }
+
+
