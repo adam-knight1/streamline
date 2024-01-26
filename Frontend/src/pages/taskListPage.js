@@ -20,11 +20,17 @@ class TaskListPage extends BaseClass {
 
         this.client = new TaskListClient();
         this.dataStore.addChangeListener(this.renderTaskList)
+
+                  const userId = localStorage.getItem('userId');
+                  if (userId) {
+                      await this.renderTaskList(userId);
+                  }
     }
 
     async renderTaskList() {
     try {
-            const tasks = await this.taskClient.getTasks();
+            const tasks = await this.taskClient.getTasksByUserId(userId);
+            //const tasks = await this.taskClient.getTasks();
             const tasksContainer = document.getElementById('tasks-container');
             tasksContainer.innerHTML = ''; // Clear existing tasks
 
@@ -128,6 +134,11 @@ class TaskListPage extends BaseClass {
            `;
        }
 
+       extractUserIdFromUrl() {
+           const urlParts = window.location.pathname.split('/');
+           return urlParts[urlParts.length - 1];
+
+}
 }
 
 const main = async () => {

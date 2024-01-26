@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.util.List;
 
 
 public class LambdaServiceClient {
@@ -15,6 +17,8 @@ public class LambdaServiceClient {
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
     private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
     private static final String CREATE_TASK_ENDPOINT = "/task/create";
+    private static final String GET_TASKS_BY_USER_ENDPOINT = "/tasks/";
+
 
     private ObjectMapper mapper;
 
@@ -171,6 +175,23 @@ public class LambdaServiceClient {
         }
 
     }
+
+    public List<TaskRecord> getTasksByUserId(String userId) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
+        String response = endpointUtility.getEndpoint(GET_TASKS_BY_USER_ENDPOINT + userId);
+
+        List<TaskRecord> tasks;
+        try {
+            TypeReference<List<TaskRecord>> typeRef = new TypeReference<List<TaskRecord>>() {};
+            tasks = mapper.readValue(response, typeRef);
+            log.info("Successfully retrieved tasks for userId: {}", userId);
+        } catch (Exception e) {
+            log.error("Error retrieving tasks for userId: {}", userId, e);
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
+        return tasks;
+    }
+
 
 }
 

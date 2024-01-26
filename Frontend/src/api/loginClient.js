@@ -17,6 +17,11 @@ export default class LoginClient extends BaseClass {
                 username: username,
                 password: password
             });
+
+                    if (response.data && response.data.userId) {
+                        localStorage.setItem('userId', response.data.userId);
+                    }
+
             return response.data;
         } catch (error) {
             return this.handleError("loginUser", error);

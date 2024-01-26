@@ -15,16 +15,13 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, IOException {
-        //this will auto verify against dynamo if it's set up right
 
         String identifier = authentication.getName();
-
         String redirectUrl = "/taskList/" + identifier;
-
-        /*response.sendRedirect(redirectUrl);*/
-
-        response.sendRedirect("/taskList.html"); //
-        System.out.println("login success!");
+        response.sendRedirect(redirectUrl);
+        System.out.println("Login success for user: " + identifier);
     }
+
 }
+
 
