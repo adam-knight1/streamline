@@ -46,14 +46,20 @@ export default class TaskListClient extends BaseClass {
             }
         }*/
 
-        async getTasksByUserId(userId) {
-            try {
-                const response = await this.client.get(`/task/user/${userId}`);
-                return response.data;
-            } catch (error) {
-                console.error("Error getting tasks by userId:", error);
-                throw error;
-            }
+         async getTasksByUserId() {
+             const userId = localStorage.getItem('userId'); // Retrieve userId from localStorage
+             if (!userId) {
+                 throw new Error("User ID not found in local storage");
+             }
+
+             try {
+                 const response = await this.client.get(`/task/user/${userId}`);
+                 return response.data;
+             } catch (error) {
+                 console.error("Error getting tasks by userId:", error);
+                 throw error;
+             }
+
 
 }
 }

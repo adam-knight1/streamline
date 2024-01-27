@@ -17,7 +17,7 @@ public class LambdaServiceClient {
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
     private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
     private static final String CREATE_TASK_ENDPOINT = "/task/create";
-    private static final String GET_TASKS_BY_USER_ENDPOINT = "/tasks/";
+    private static final String GET_TASKS_BY_USER_ENDPOINT = "/task/user/{userId}";
 
 
     private ObjectMapper mapper;
@@ -178,11 +178,12 @@ public class LambdaServiceClient {
 
     public List<TaskRecord> getTasksByUserId(String userId) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_TASKS_BY_USER_ENDPOINT + userId);
+        String response = endpointUtility.getEndpoint("task/user/" + userId);
 
         List<TaskRecord> tasks;
         try {
-            TypeReference<List<TaskRecord>> typeRef = new TypeReference<List<TaskRecord>>() {};
+            TypeReference<List<TaskRecord>> typeRef = new TypeReference<>() {
+            };
             tasks = mapper.readValue(response, typeRef);
             log.info("Successfully retrieved tasks for userId: {}", userId);
         } catch (Exception e) {

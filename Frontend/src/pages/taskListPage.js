@@ -27,7 +27,7 @@ class TaskListPage extends BaseClass {
                   }
     }
 
-    async renderTaskList() {
+   /* async renderTaskList() {
     try {
             const tasks = await this.taskClient.getTasksByUserId(userId);
             //const tasks = await this.taskClient.getTasks();
@@ -42,8 +42,30 @@ class TaskListPage extends BaseClass {
         } catch (error) {
             console.error("Error rendering task list:", error);
         }
-    }
+    }*/
 
+    async renderTaskList() {
+        const userId = localStorage.getItem('userId');
+
+        if (!userId) {
+            console.error("User ID is not defined.");
+            return;
+        }
+
+        try {
+            const tasks = await this.taskClient.getTasksByUserId(userId);
+            const tasksContainer = document.getElementById('tasks-container');
+            tasksContainer.innerHTML = ''; // Clear existing tasks
+
+            tasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.innerHTML = `<p>${task.title}: ${task.body}</p>`;
+                tasksContainer.appendChild(taskElement);
+            });
+        } catch (error) {
+            console.error("Error rendering task list:", error);
+        }
+    }
 
     async onCreate(event) {
         event.preventDefault();
@@ -98,41 +120,86 @@ class TaskListPage extends BaseClass {
            }
        }
 
-       async onAddTask(event) {
-           event.preventDefault();
+   /*  async onAddTask(event) {
+         event.preventDefault();
 
-           let title = document.getElementById("task-title-field").value;
-           let body = document.getElementById("task-body-field").value;
-          // let status = document.getElementById("task-status-field").value;
+         let title = document.getElementById("task-title-field").value;
+         let body = document.getElementById("task-body-field").value;
+         let userId = '1111111'
 
-           try {
-               let addedTask = await this.taskClient.addTaskToTaskList(title, body, status);
-               if (addedTask) {
-                   this.showMessage(`Task '${title}' added successfully!`);
-                   // Update UI here maybe
-               } else {
-                   this.errorHandler("Error adding Task! Try again...");
-               }
-           } catch (error) {
-               this.errorHandler("Error in addTaskToTaskList:", error);
-           }
-       }
+         try {
+             let addedTask = await this.taskClient.addTaskToTaskList(userId, title, body);
+             if (addedTask) {
+                 this.showMessage(`Task '${title}' added successfully!`);
+                 //  update UI here
+             } else {
+                 this.errorHandler("Error adding Task! Try again...");
+             }
+         } catch (error) {
+             this.errorHandler("Error in addTaskToTaskList:", error);
+         }
+     }*/
+
+  /*   async onAddTask(event) {
+     const userId = localStorage.getItem('userId');
+         event.preventDefault();
+
+         let title = document.getElementById("task-title-field").value;
+         let body = document.getElementById("task-body-field").value;
+
+         let userId = userId;
+
+         try {
+             let addedTask = await this.taskClient.addTaskToTaskList(userId, title, body);
+             if (addedTask) {
+                 this.showMessage(`Task '${title}' added successfully!`);
+                 await this.renderTaskList(userId);
+             } else {
+                 this.errorHandler("Error adding Task! Try again...");
+             }
+         } catch (error) {
+             this.errorHandler("Error in addTaskToTaskList:", error);
+         }
+     }
+*/
+
+async onAddTask(event) {
+    const userId = localStorage.getItem('userId');
+    event.preventDefault();
+
+    let title = document.getElementById("task-title-field").value;
+    let body = document.getElementById("task-body-field").value;
 
 
-       displayTaskListDetails(taskList) {
-           const taskListDetails = document.getElementById("task-list-details");
-           let tasksHtml = '';
+    try {
+        let addedTask = await this.taskClient.addTaskToTaskList(userId, title, body);
+        if (addedTask) {
+            this.showMessage(`Task '${title}' added successfully!`);
+            await this.renderTaskList(userId);
+        } else {
+            this.errorHandler("Error adding Task! Try again...");
+        }
+    } catch (error) {
+        this.errorHandler("Error in addTaskToTaskList:", error);
+    }
+}
 
-           if(taskList.tasks && taskList.tasks.length) {
-               tasksHtml = '<ul>' + taskList.tasks.map(task => `<li>${task}</li>`).join('') + '</ul>';
-           }
+    displayTaskListDetails(tasks) {
+        const tasksContainer = document.getElementById('tasks-container');
+        tasksContainer.innerHTML = '';
 
-           taskListDetails.innerHTML = `
-               <p><strong>User ID:</strong> ${taskList.userId}</p>
-               <p><strong>Task List Name:</strong> ${taskList.taskListName}</p>
-               <p><strong>Tasks:</strong> ${tasksHtml}</p>
-           `;
-       }
+        tasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.classList.add('task-item');
+            taskElement.innerHTML = `
+                <h3>${task.title}</h3>
+                <p>${task.body}</p>
+                <p>Status: ${task.status}</p>
+            `;
+            tasksContainer.appendChild(taskElement);
+        });
+    }
+
 
        extractUserIdFromUrl() {
            const urlParts = window.location.pathname.split('/');

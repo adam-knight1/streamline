@@ -216,6 +216,6 @@ Resources:
         GetAllUserTasksEvent:
           Type: Api
           Properties:
-            Path: /task/user/userId
+            Path: /task/user/{userId}
             Method: get
 

@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.TaskAddResponseModel;
 import com.kenzie.appserver.service.TaskService;
 import com.kenzie.capstone.service.model.GetAllTasksResponse;
+import com.kenzie.capstone.service.model.TaskAddResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.kenzie.capstone.service.model.TaskAddRequest;
@@ -21,10 +22,10 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<TaskAddResponseModel> addTask (@RequestBody TaskAddRequest taskAddRequest) {
+    public ResponseEntity<TaskAddResponse> addTask (@RequestBody TaskAddRequest taskAddRequest) {
 
         try {
-            TaskAddResponseModel taskAddResponse = taskService.addTask(taskAddRequest);
+            TaskAddResponse taskAddResponse = taskService.addTask(taskAddRequest);
             return ResponseEntity.ok(taskAddResponse);
         } catch (Exception e) {
             System.out.println("Error in task controller");
@@ -45,7 +46,4 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 }

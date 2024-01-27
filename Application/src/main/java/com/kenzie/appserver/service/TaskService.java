@@ -2,21 +2,20 @@
 package com.kenzie.appserver.service;
 
 //import com.kenzie.appserver.controller.model.TaskResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.TaskAddResponseModel;
 //import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 //import com.kenzie.capstone.service.model.TaskRequest;
-import com.kenzie.capstone.service.model.GetAllTasksResponse;
-import com.kenzie.capstone.service.model.TaskAddRequest;
-import com.kenzie.capstone.service.model.TaskResponse;
+import com.kenzie.capstone.service.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.kenzie.capstone.service.model.TaskRecord;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,21 +30,27 @@ import java.util.stream.Collectors;
         this.taskRepository = taskRepository;
     }
 
-    public TaskAddResponseModel addTask(TaskAddRequest taskAddRequest){
+    public TaskAddResponse addTask(TaskAddRequest taskAddRequest) throws JsonProcessingException {
 
         try {
-            lambdaServiceClient.addTaskToTaskList(taskAddRequest);
+            TaskAddResponse response = lambdaServiceClient.addTaskToTaskList(taskAddRequest);
+            return response;
         } catch (Exception e) {
             System.out.println("failure in taskService");
+            logger.error(e.getMessage());
+            System.out.println(e.getMessage());
+            logger.error("Error adding task", e);
+            throw e;
         }
 
-        //generate the task response populating it with taskAddRequest
 
-        TaskAddResponseModel taskAddResponse = new TaskAddResponseModel();
+      /*  TaskAddResponse taskAddResponse = new TaskAddResponse();
         taskAddResponse.setBody(taskAddRequest.getBody());
         taskAddResponse.setTitle(taskAddRequest.getTitle());
+        taskAddResponse.setUserId(taskAddRequest.getUserId());
+        taskAddResponse.setStatus(taskAddRequest.getStatus());
+        taskAddResponse.setTaskId(taskAddRequest.getTaskId());*/
 
-        return taskAddResponse;
     }
 
     public GetAllTasksResponse getTasksByUserId(String userId) {
