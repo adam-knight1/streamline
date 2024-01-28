@@ -6,15 +6,15 @@ import TaskClient from "../api/taskClient";
 class TaskListPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['onCreate', 'renderTaskList', 'onAddTask'], this);
+        this.bindClassMethods(['renderTaskList', 'onAddTask'], this);
         this.dataStore = new DataStore();
         this.taskClient = new TaskClient();
     }
 
     async mount() {
-        document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
-        document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);
-        document.getElementById('find-task-list').addEventListener('submit', this.onFind);
+       /* document.getElementById('create-taskList').addEventListener('submit', this.onCreate);
+        document.getElementById('update-taskList').addEventListener('submit', this.onUpdate);*/
+       /* document.getElementById('find-task-list').addEventListener('submit', this.onFind);*/
         document.getElementById('create-task').addEventListener('submit', this.onAddTask);
        // document.getElementById('onAddTask').addEventListener('submit', this.onAddTask)
 
@@ -58,16 +58,18 @@ class TaskListPage extends BaseClass {
            const tasksContainer = document.getElementById('tasks-container');
            tasksContainer.innerHTML = ''; // Clear the old tasks
 
-           taskArray.forEach(task => {
-               const taskElement = document.createElement('div');
-               taskElement.classList.add('task-item');
-               taskElement.innerHTML = `
-                   <h3>${task.title}</h3>
-                   <p>${task.body}</p>
-                   <p>Status: ${task.status}</p>
-               `;
-               tasksContainer.appendChild(taskElement);
-           });
+          taskArray.forEach(task => {
+              const taskElement = document.createElement('div');
+              taskElement.classList.add('task-item');
+              taskElement.innerHTML = `
+                  <h3>${task.title}</h3>
+                  <p>${task.body}</p>
+                  <p>Status: ${task.status}</p>
+                  <button class="complete-task-btn" onclick="completeTask('${task.taskId}')">Complete</button>
+              `;
+              tasksContainer.appendChild(taskElement);
+          });
+
        } catch (error) {
            console.error("Error rendering task list:", error);
        }
@@ -75,7 +77,7 @@ class TaskListPage extends BaseClass {
 
 
 
-    async onCreate(event) {
+   /* async onCreate(event) {
         event.preventDefault();
 
         let userId = document.getElementById("userId-field").value;
@@ -92,9 +94,9 @@ class TaskListPage extends BaseClass {
         } else {
             this.errorHandler("Error creating task list! Try again...");
         }
-    }
+    }*/
 
-     async onFind(event) {
+     /*async onFind(event) {
            event.preventDefault();
            let userId = document.getElementById("find-task-list-by-user-id-field").value;
            try {
@@ -107,7 +109,7 @@ class TaskListPage extends BaseClass {
            } catch (error) {
                this.errorHandler("An error occurred while fetching the task list");
            }
-       }
+       }*/
 
 
 async onAddTask(event) {
