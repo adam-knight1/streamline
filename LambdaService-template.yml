@@ -128,7 +128,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.FindUserByUserName
+      Handler: com.kenzie.capstone.service.lambda.FindUserByUsername
       Runtime: java11
       Description: Find a user by username
       MemorySize: 512

@@ -74,7 +74,7 @@ public class LambdaServiceClient {
     }
 
 
-    public TaskResponseLambda addTask(String userId, String taskListName, TaskRecord taskRecord) throws JsonProcessingException {
+   /* public TaskResponseLambda addTask(String userId, String taskListName, TaskRecord taskRecord) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskRecord);
         String response = endpointUtility.postEndpoint(CREATE_TASK_ENDPOINT, requestData);
@@ -86,10 +86,10 @@ public class LambdaServiceClient {
         }
         return taskResponseLambda;
 
-    }
+    }*/
 
 
-    public TaskResponseLambda updateTask( TaskRequest updatedTaskRequest) throws JsonProcessingException {
+    /*public TaskResponseLambda updateTask( TaskRequest updatedTaskRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(updatedTaskRequest);
         String endpoint = "task/update/";
@@ -103,7 +103,7 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return taskResponse;
-    }
+    }*/
 
     public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
@@ -133,27 +133,31 @@ public class LambdaServiceClient {
 
     public UserResponseLambda findUserByUsername(String username) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
-        log.info("Attempting to find user by username: " + username);
+        String endpointUrl = "user/name/" + username;
+        log.info("Attempting to find user by username: {}", username);
+        log.debug("Constructed endpoint URL: {}", endpointUrl); // Additional log
 
         String response;
         try {
-            response = endpointUtility.getEndpoint("user/name/" + username);
-            log.info("Received response from endpoint: " + response); //
+            response = endpointUtility.getEndpoint(endpointUrl);
+            log.info("Received response from endpoint: {}", response);
         } catch (Exception e) {
-            log.error("Error calling endpoint: " + e.getMessage(), e);
+            log.error("Error calling endpoint for username '{}': {}", username, e.getMessage(), e);
             throw e;
         }
 
         UserResponseLambda userResponse;
         try {
             userResponse = mapper.readValue(response, UserResponseLambda.class);
-            log.info("Successfully mapped response to UserResponseLambda");
+            log.info("Successfully mapped response to UserResponseLambda for username '{}'", username);
         } catch (Exception e) {
-            log.error("Unable to map deserialize JSON: " + e.getMessage(), e);
+            log.error("Unable to map deserialize JSON for username '{}': {}", username, e.getMessage(), e);
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e, e);
         }
+        log.debug("Returning userResponse object for username '{}'", username);
         return userResponse;
     }
+
 
 
     public boolean updateTask(String taskName, String taskDescription) throws JsonProcessingException {
