@@ -47,7 +47,7 @@ export default class TaskListClient extends BaseClass {
         }*/
 
          async getTasksByUserId() {
-             const userId = localStorage.getItem('userId'); // Retrieve userId from localStorage
+             const userId = localStorage.getItem('userId');
              if (!userId) {
                  throw new Error("User ID not found in local storage");
              }

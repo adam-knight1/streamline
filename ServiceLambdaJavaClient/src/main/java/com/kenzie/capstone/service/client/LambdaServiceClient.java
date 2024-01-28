@@ -178,16 +178,23 @@ public class LambdaServiceClient {
 
     public List<TaskRecord> getTasksByUserId(String userId) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint("task/user/" + userId);
+        String response;
+        try {
+            log.info("Attempting to retrieve tasks for userId: {}", userId);
+            response = endpointUtility.getEndpoint("task/user/" + userId);
+            log.info("Received response from endpoint for userId {}: {}", userId, response);
+        } catch (Exception e) {
+            log.error("Error when calling endpoint to get tasks for userId: {} - Error: {}", userId, e.getMessage(), e);
+            throw new ApiGatewayException("Error calling endpoint for tasks by userId: " + userId, e);
+        }
 
         List<TaskRecord> tasks;
         try {
-            TypeReference<List<TaskRecord>> typeRef = new TypeReference<>() {
-            };
+            TypeReference<List<TaskRecord>> typeRef = new TypeReference<>() {};
             tasks = mapper.readValue(response, typeRef);
-            log.info("Successfully retrieved tasks for userId: {}", userId);
+            log.info("Successfully deserialized tasks for userId {}: {}", userId, tasks);
         } catch (Exception e) {
-            log.error("Error retrieving tasks for userId: {}", userId, e);
+            log.error("Error deserializing tasks for userId: {} - Error: {}", userId, e.getMessage(), e);
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return tasks;
@@ -195,5 +202,8 @@ public class LambdaServiceClient {
 
 
 }
+
+
+
 
 

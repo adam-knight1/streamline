@@ -42,30 +42,33 @@ import java.util.stream.Collectors;
             logger.error("Error adding task", e);
             throw e;
         }
-
-
-      /*  TaskAddResponse taskAddResponse = new TaskAddResponse();
-        taskAddResponse.setBody(taskAddRequest.getBody());
-        taskAddResponse.setTitle(taskAddRequest.getTitle());
-        taskAddResponse.setUserId(taskAddRequest.getUserId());
-        taskAddResponse.setStatus(taskAddRequest.getStatus());
-        taskAddResponse.setTaskId(taskAddRequest.getTaskId());*/
-
     }
 
     public GetAllTasksResponse getTasksByUserId(String userId) {
         try {
             List<TaskRecord> taskRecords = lambdaServiceClient.getTasksByUserId(userId);
+
+            if (taskRecords.isEmpty()) {
+                logger.info("No task records found for userId: {}", userId);
+            } else {
+                logger.info("Retrieved task records for userId {}: {}", userId, taskRecords);
+            }
+
             List<TaskResponse> taskResponses = taskRecords.stream()
                     .map(this::convertToTaskResponse)
                     .collect(Collectors.toList());
+
+            logger.info("Transformed task records to task responses for userId {}: {}", userId, taskResponses);
+
             GetAllTasksResponse response = new GetAllTasksResponse();
             response.setTasks(taskResponses);
             return response;
         } catch (Exception e) {
+            logger.error("Error retrieving tasks for user ID in taskService: {}", userId, e);
             throw new RuntimeException("Error retrieving tasks for user ID: " + userId, e);
         }
     }
+
 
     private TaskResponse convertToTaskResponse(TaskRecord taskRecord) {
         TaskResponse response = new TaskResponse();
