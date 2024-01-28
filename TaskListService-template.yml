@@ -84,3 +84,26 @@ Resources:
             Path: /taskList/{userId}
             Method: get
 
+  GetTasksByUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://capstone-capstoneadam-artifacts/1e905885f4cf248e4e8b769c25731b83
+      Handler: com.kenzie.capstone.service.lambda.GetTasksByUser
+      Runtime: java11
+      Description: Retrieve all tasks for user
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        GetAllUserTasksEvent:
+          Type: Api
+          Properties:
+            Path: /task/user/{userId}
+            Method: get

@@ -5,26 +5,47 @@ import Toastify from "toastify-js";
 export default class TaskClient extends BaseClass {
     constructor(baseURL) {
         super();
+        this.bindClassMethods(['addTaskToTaskList','handleError'], this);
         this.client = axios.create({
             baseURL: baseURL
         });
     }
 
-   async addTaskToTaskList(title, body, status) {
+   async addTaskToTaskList(userId, title, body) {
+   console.log("Sending task data:", { userId, title, body});
        try {
            const response = await this.client.post('/task/add', {
-               title: title,
-               body: body,
-               status: status
+               userId,
+               title,
+               body,
            });
            console.log("Axios response:", response);
-           console.log("Parsed data:", response.data);
            return response.data;
        } catch (error) {
            console.error("Error in addTaskToTaskList:", error);
-           return this.handleError("addTaskToTaskList", error);
+           throw error;
        }
    }
+
+    handleError(method, error) {
+           console.error(method + " failed - " + error);
+           if (error.response && error.response.data.message) {
+               console.error(error.response.data.message);
+           }
+           throw error;
+       }
+
+       async getTasksByUserId(userId) {
+                   try {
+                       const response = await this.client.get(`/task/user/${userId}`);
+                       return response.data;
+                   } catch (error) {
+                       console.error("Error getting tasks by userId:", error);
+                       throw error;
+                   }
+
+       }
+
 
    }
 

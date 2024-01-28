@@ -22,11 +22,15 @@ class LoginPage extends BaseClass {
         console.log('Client:', this.client);
 
         let username = document.getElementById("login-username-field").value;
+        //set the local storage for username here since it's currently userId
         let password = document.getElementById("login-password-field").value;
+
+        localStorage.setItem('userId' , username);
 
         try {
             const userData = await this.client.loginUser(username, password);
             if (userData) {
+                localStorage.setItem('userId', username);
                 window.location.href = '/taskList.html';
             } else {
                 this.showMessage("Invalid username or password.");

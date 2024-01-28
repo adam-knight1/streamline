@@ -13,24 +13,15 @@ public class TaskRecord {
     private String title;
     private String body;
     private String status;
-
+    @DynamoDBHashKey(attributeName = "userId")
+    public String getUserId() {
+        return userId;
+    }
     @DynamoDBRangeKey(attributeName = "taskId")
     public String getTaskId() {
         return taskId;
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    @DynamoDBHashKey(attributeName = "userId")
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     @DynamoDBAttribute(attributeName = "title")
     public String getTitle() {
@@ -48,6 +39,15 @@ public class TaskRecord {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @DynamoDBAttribute(attributeName = "status")

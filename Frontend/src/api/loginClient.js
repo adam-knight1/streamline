@@ -18,15 +18,21 @@ export default class LoginClient extends BaseClass {
                 password: password
             });
 
-                    if (response.data && response.data.userId) {
-                        localStorage.setItem('userId', response.data.userId);
-                    }
+            console.log("Login response:", response);
+
+            if (response.data && response.data.userId) {
+                localStorage.setItem('userId', response.data.userId);
+            } else {
+                console.log("UserId not present in response");
+            }
 
             return response.data;
         } catch (error) {
+            console.error("Login error:", error);
             return this.handleError("loginUser", error);
         }
     }
+
 
     handleError(method, error) {
         console.error(method + " failed - " + error);

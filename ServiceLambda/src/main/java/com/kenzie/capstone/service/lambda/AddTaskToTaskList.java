@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AddTaskToTaskList implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
@@ -37,13 +38,15 @@ public class AddTaskToTaskList implements RequestHandler<APIGatewayProxyRequestE
                 .withHeaders(headers);
 
         try {
-            UserRequest userRequest = gson.fromJson(input.getBody(), UserRequest.class);
             TaskAddRequest taskAddRequest = gson.fromJson(input.getBody(), TaskAddRequest.class);
 
             TaskRecord taskRecord = new TaskRecord();
             taskRecord.setTitle(taskAddRequest.getTitle());
             taskRecord.setBody(taskAddRequest.getBody());
-//            taskRecord.setCompleted(taskAddRequest.getCompleted());
+            taskRecord.setUserId(taskAddRequest.getUserId());
+            taskRecord.setStatus("incomplete");
+            taskRecord.setTaskId(UUID.randomUUID().toString());
+//
 
            TaskAddResponse taskAddResponse = lambdaTaskService.taskAddToTaskList(taskRecord);
 
