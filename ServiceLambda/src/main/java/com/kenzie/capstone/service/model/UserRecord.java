@@ -9,17 +9,12 @@ import java.util.Objects;
 
     @DynamoDBTable(tableName = "User")
     public class UserRecord {
-       // @Id
-        //@DynamoDBHashKey(attributeName = "userId")
         private String userId;
 
-       // @DynamoDBAttribute(attributeName = "email")
         private String email;
 
-       // @DynamoDBAttribute(attributeName = "username")
         private String username;
 
-       // @DynamoDBAttribute(attributeName = "password")
         private String password;
 
         public UserRecord(){

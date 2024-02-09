@@ -125,6 +125,11 @@ textarea {
     }
 }
 
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
 .bubble-button {
     display: block;
     margin: 10px auto;
