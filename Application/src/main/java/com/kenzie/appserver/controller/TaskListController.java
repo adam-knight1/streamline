@@ -23,51 +23,13 @@ public class TaskListController {
     TaskListController(TaskListService taskListService) {
         this.taskListService = taskListService;
     }
-
-//    @GetMapping("/userId")
-//    public ResponseEntity<TaskListResponse> getTaskListById(String userId) {
-//        TaskList taskList = taskListService.findTaskListByUserId(userId);
-//        if (taskList == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        TaskListResponse taskListResponse = new TaskListResponse();
-//        taskListResponse.setUserId(taskList.getUserId());
-//        taskListResponse.setTaskListName(taskList.getTaskListName());
-//        //This may need some more logic
-//        taskListResponse.setTasks(taskList.getTasks());
-//        return ResponseEntity.ok(taskListResponse);
-//    }
-
-    @PostMapping("/create")
-    public ResponseEntity<TaskListResponse> createTaskList(@RequestBody TaskListCreateRequest createRequest) {
-        TaskListRequest request = new TaskListRequest(createRequest.getUserId(), createRequest.getTaskListName());
-
-        if (createRequest.getUserId() == null) {
-            request.setUserId(UUID.randomUUID().toString());
-        }
-
-        try {
-            TaskListResponse taskListResponse = taskListService.createTaskList(request);
-
-//            com.kenzie.capstone.service.model.TaskListResponse taskListResponseLambda = new com.kenzie.capstone.service.model.TaskListResponse();
-//            taskListResponseLambda.setUserId(taskListResponse.getUserId());
-//            taskListResponseLambda.setTaskListName(taskListResponse.getTaskListName());
-//            taskListResponseLambda.setTasks(Collections.emptyList());
-
-            return ResponseEntity.ok(taskListResponse);
-        } catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
+    //Retrieves TaskList by primary key UserID;
     @GetMapping("/{userId}")
-    //Now we can find taskLists by the primary key userId! -Adam
     public ResponseEntity<GetTaskListLambdaResponse> getTaskListByUserId(@PathVariable("userId") String userId) {
         System.out.println("Received request to find taskList with userId: " + userId);
         try {
             //This line makes the call to taskListService, which calls the corresponding method in
-            // lambda service client, and returns the new get task list response DTO from the lambda service package. -Adam
+            // lambda service client, and returns the new get task list response DTO from the lambda service package.
            GetTaskListLambdaResponse getTaskListLambdaResponse = taskListService.findTaskListByUserId(userId);
             if (getTaskListLambdaResponse == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -79,68 +41,4 @@ public class TaskListController {
         }
     }
 
-   /* @PutMapping("/userId/updateName")
-    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
-
-omer implemented original code
-    @PutMapping("/userId/updateName")
-    public ResponseEntity<TaskListResponse> updateTaskListName(TaskListCreateRequest request, String userId){
-        TaskList taskList = taskListService.updateTaskListName(request, userId);
-       if(taskList == null){
-            return ResponseEntity.notFound().build();
-        }
-        TaskListResponse taskListResponse = new TaskListResponse();
-        taskListResponse.setUserId(taskList.getUserId());
-        taskListResponse.setTaskListName(taskList.getTaskListName());
-        //This may need some more logic
-       taskListResponse.setTasks(Collections.emptyList());
-        return ResponseEntity.ok(taskListResponse);
-    }
-
-
-    //i didnt want to delete omers original code. Just wanted to mess with this constructor. -alexis
-    @PutMapping("/userId/updateName")
-    public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
-                                                               @PathVariable("userId") String userId){
-        String updatedTaskListName = request.getTaskListName();
-
-        TaskList taskList = taskListService.updateTaskListName(request, userId);
-        if(taskList == null){
-            return ResponseEntity.notFound().build();
-        }
-        TaskListResponse taskListResponse = new TaskListResponse();
-        taskListResponse.setUserId(taskList.getUserId());
-        taskListResponse.setTaskListName(taskList.getTaskListName());
-        taskListResponse.setTasks(Collections.emptyList());
-        return ResponseEntity.ok(taskListResponse);
-    }
-
-    */
-
-//    @PutMapping("/{userId}/updateName")
-//    public ResponseEntity<TaskListResponse> updateTaskListName(@RequestBody TaskListCreateRequest request,
-//                                                               @PathVariable String userId) {
-//        if (userId == null) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//        TaskListRecord updatedRecord = taskListService.updateTaskListName(request, userId);
-//        if (updatedRecord == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        TaskListResponse taskListResponse = new TaskListResponse();
-//        taskListResponse.setUserId(updatedRecord.getUserId());
-//        taskListResponse.setTaskListName(updatedRecord.getTaskListName());
-//        taskListResponse.setTasks(Collections.emptyList());
-//        return ResponseEntity.ok(taskListResponse);
-//
-//    }
-
-//    @DeleteMapping("/userId/delete")
-//    public ResponseEntity<String> deleteTaskListByUserId(String userId) {
-//        if (taskListService.deleteTaskListByUserId(userId)) {
-//            return ResponseEntity.ok("Task list successfully deleted for user id: " + userId);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
 }

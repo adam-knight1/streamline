@@ -47,14 +47,14 @@ export default class UserClient extends BaseClass {
         }
     }
 
-    async updateUser(userId, updatedInfo) {
+   /* async updateUser(userId, updatedInfo) {
         try {
             const response = await this.client.put(`/user/${userId}`, updatedInfo);
             return response.data;
         } catch (error) {
             return this.handleError("updateUser", error);
         }
-    }
+    }*/
 
     async deleteUser(userId) {
         try {

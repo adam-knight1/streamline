@@ -13,22 +13,11 @@ import java.util.Map;
 
 
 public class LambdaServiceClient {
-    private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
-    private static final String SET_EXAMPLE_ENDPOINT = "example";
-    private static final String CREATE_USER_ENDPOINT = "/user/create";
-    private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
-    private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
-    private static final String CREATE_TASK_ENDPOINT = "/task/create";
     private static final String COMPLETE_TASK_ENDPOINT = "/task/complete";
-
-    private static final String GET_TASKS_BY_USER_ENDPOINT = "/task/user/{userId}";
-
 
     private ObjectMapper mapper;
 
     private static final Logger log = LogManager.getLogger(LambdaServiceClient.class);
-
-
 
     public LambdaServiceClient() {
         this.mapper = new ObjectMapper();
@@ -37,7 +26,7 @@ public class LambdaServiceClient {
     public UserResponseLambda createUser(UserRequest userRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(userRequest);
-        //write value as string since I'm using userRequest object rather than data string like example"
+        //write value as string since I'm using userRequest object rather than data string like example
         String response = endpointUtility.postEndpoint("user/create", requestData);
 
         System.out.println("Response from /user/create: " + response);
@@ -54,27 +43,14 @@ public class LambdaServiceClient {
     public TaskAddResponse addTaskToTaskList(TaskAddRequest taskAddRequest) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String requestData = mapper.writeValueAsString(taskAddRequest);
-        String response = endpointUtility.postEndpoint("task/add",requestData);
+        String response = endpointUtility.postEndpoint("task/add", requestData);
         TaskAddResponse taskAddResponse;
         try {
-            taskAddResponse = mapper.readValue(response,TaskAddResponse.class);
+            taskAddResponse = mapper.readValue(response, TaskAddResponse.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Exception thrown at in lambda service client", e);
         }
         return taskAddResponse;
-    }
-
-    public TaskListResponse createTaskList(TaskListRequest taskListRequest) throws JsonProcessingException {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String requestData = mapper.writeValueAsString(taskListRequest);
-        String response = endpointUtility.postEndpoint("taskList/create", requestData);
-        TaskListResponse taskListResponse;
-        try {
-            taskListResponse = mapper.readValue(response, TaskListResponse.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-        }
-        return taskListResponse;
     }
 
     public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
@@ -144,7 +120,8 @@ public class LambdaServiceClient {
 
         List<TaskRecord> tasks;
         try {
-            TypeReference<List<TaskRecord>> typeRef = new TypeReference<>() {};
+            TypeReference<List<TaskRecord>> typeRef = new TypeReference<>() {
+            };
             tasks = mapper.readValue(response, typeRef);
             log.info("Successfully deserialized tasks for userId {}: {}", userId, tasks);
         } catch (Exception e) {
@@ -157,7 +134,7 @@ public class LambdaServiceClient {
     public void completeTask(String userId, String taskId, String status) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
 
-        // building the request payloa
+        // building the request payload
         Map<String, String> requestData = new HashMap<>();
         requestData.put("userId", userId);
         requestData.put("taskId", taskId);
@@ -182,7 +159,7 @@ public class LambdaServiceClient {
 
         }
     }
-    }
+}
 
 
 

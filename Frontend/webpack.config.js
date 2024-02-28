@@ -8,7 +8,6 @@ module.exports = {
     usedExports: true
   },
   entry: {
-    examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     userPage: path.resolve(__dirname, 'src', 'pages', 'UserPage.js'),
     loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
     taskListPage: path.resolve(__dirname, 'src', 'pages', 'taskListPage.js')
@@ -24,7 +23,6 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/example',
           '/user',
           '/login',
           '/taskList',

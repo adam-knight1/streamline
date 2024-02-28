@@ -25,45 +25,18 @@ public class TaskListService {
     @Autowired
     private TaskListRepository taskListRepository;
     private LambdaServiceClient lambdaServiceClient;
-    private final CacheStore cacheStore;
+
 
 
     @Autowired
-    public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient, CacheStore cacheStore) {
+    public TaskListService(TaskListRepository taskListRepository, LambdaServiceClient lambdaServiceClient) {
         this.taskListRepository = taskListRepository;
         this.lambdaServiceClient = lambdaServiceClient;
-        this.cacheStore = cacheStore;
-    }
 
-//    public TaskList findTaskListByUserId(String userId){
-//        Optional<TaskListRecord> taskListRecord = taskListRepository.findById(userId);
-//        if(taskListRecord.isPresent()){
-//            TaskListRecord record = taskListRecord.get();
-//            return transformToTaskList(record);
-//        }else{
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task list does not exist.");
-//        }
-//    }
-
-    public TaskListResponse createTaskList(TaskListRequest request) throws JsonProcessingException {
-        com.kenzie.capstone.service.model.TaskListResponse response = new com.kenzie.capstone.service.model.TaskListResponse();
-        try {
-            response = lambdaServiceClient.createTaskList(request);
-        } catch (Exception e) {
-            System.out.println(response);
-            System.out.println("Task list creation unsuccessful.");
-        }
-        TaskList savedTaskList = new TaskList(request.getUserId(), request.getTaskListName());
-        //cacheStore.add(savedTaskList.userId, savedTaskList);
-        TaskListResponse taskListResponse = new TaskListResponse();
-        taskListResponse.setUserId(request.getUserId());
-        taskListResponse.setTaskListName(request.getTaskListName());
-        taskListResponse.setTasks(Collections.emptyList());
-        return taskListResponse;
     }
 
     public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
-        //this routes the call from taskListService to the LambdaService client, to interact with the findTaskListById lambda. -Adam
+        //this routes the call from taskListService to the LambdaService client, to interact with the findTaskListById lambda.
         return lambdaServiceClient.findTaskListByUserId(userId);
     }
 

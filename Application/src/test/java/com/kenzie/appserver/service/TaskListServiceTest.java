@@ -30,110 +30,14 @@ public class TaskListServiceTest {
     @Mock
     private LambdaServiceClient lambdaServiceClient;
     private TaskListService taskListService;
-    private CacheStore cacheStore;
     @Captor
     private ArgumentCaptor<TaskListRecord> taskListRecordCaptor;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        taskListService = new TaskListService(taskListRepository, lambdaServiceClient, cacheStore);
+        taskListService = new TaskListService(taskListRepository, lambdaServiceClient);
     }
-
-    /** ------------------------------------------------------------------------
-     *  taskListService.createTaskList
-     *  ------------------------------------------------------------------------ **/
-
-    @Test
-    void createTaskList_happyCase() throws JsonProcessingException {
-        // GIVEN
-        String userId = "user";
-        String taskListName = "Paul's Tasks";
-        TaskListRecord record = new TaskListRecord();
-        record.setUserId(userId);
-        record.setTaskListName(taskListName);
-        TaskListRequest request = new TaskListRequest(userId, taskListName);
-
-        when(taskListRepository.findById(userId)).thenReturn(Optional.of(record));
-        when(taskListRepository.save(record)).thenReturn(record);
-
-        // WHEN
-        TaskListResponse taskListResponse = taskListService.createTaskList(request);
-
-        // THEN
-        Assertions.assertNotNull(taskListResponse);
-        Assertions.assertEquals(userId, taskListResponse.getUserId());
-        Assertions.assertEquals(taskListName, taskListResponse.getTaskListName());
-        Assertions.assertEquals(Collections.emptyList(), taskListResponse.getTasks());
-    }
-
-//    @Test
-//    void createTaskList_nonExistingUser_fails() throws JsonProcessingException {
-//        // GIVEN
-//        String userId = "nonExistingUser";
-//        String taskListName = "Chores";
-//        TaskListRequest request = new TaskListRequest(userId, taskListName);
-//
-//        when(taskListService.createTaskList(request)).thenThrow(Exception.class);
-//
-//        // WHEN
-//        try{
-//            taskListService.createTaskList(request);
-//        }catch(Exception ignored){}
-//    }
-
-    /** ------------------------------------------------------------------------
-    *  taskListService.updateTaskList
-    *  ------------------------------------------------------------------------ **/
-
-//    // not passing
-//    @Test
-//    public void updateTaskList_Exists_Succeeds() {
-//        // GIVEN
-//        String userId = "user";
-//        String taskListName = "Name";
-//        String newTaskListName = "NewName";
-//        TaskListCreateRequest request = new TaskListCreateRequest();
-//        request.setUserId(userId);
-//        request.setExistingTaskListName(newTaskListName);
-//
-//        // simulating an existing tasklist for the same user
-//        TaskListRecord existingRecord = new TaskListRecord(userId, taskListName);
-//        TaskListRecord updatedTaskListRecord = new TaskListRecord(userId, newTaskListName);
-//
-//        when(taskListRepository.findById(userId)).thenReturn(Optional.of(existingRecord));
-//        when(taskListRepository.save(updatedTaskListRecord)).thenReturn(updatedTaskListRecord);
-//
-//        // WHEN
-//        TaskListRecord updatedTasklist = taskListService.updateTaskListName(request, userId);
-//
-//        // THEN
-//        Assertions.assertNotNull(updatedTasklist);
-//        Assertions.assertEquals(newTaskListName, updatedTasklist.getTaskListName());
-//    }
-
-//    @Test
-//    public void updateTaskList_DoesNotExist_Fails() {
-//        // GIVEN
-//        String userId = "user";
-//        String taskListName = "Name";
-//        String newTaskListName = "NewName";
-//        TaskListCreateRequest request = new TaskListCreateRequest();
-//        request.setUserId(userId);
-//        request.setExistingTaskListName(newTaskListName);
-//
-//        when(taskListRepository.findById(userId)).thenReturn(Optional.empty());
-//
-//        // WHEN & THEN
-//        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
-//                taskListService.updateTaskListName(request, userId));
-//        Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-//    }
-//         // WHEN & THEN
-//         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
-//                 taskListService.updateTaskListName(request, userId));
-//         Assertions.assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-//     }
 
     @Test
     void FindTaskListByUserIdTest() throws Exception {

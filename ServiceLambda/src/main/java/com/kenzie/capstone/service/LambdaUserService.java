@@ -26,7 +26,6 @@ public class LambdaUserService {
     }
 
     public UserRecord findByUserName(String username) {
-        //I need to add more logging statements here
         try {
             return userDao.findUserByUsername(username);
         } catch (Exception e) {
@@ -41,21 +40,16 @@ public class LambdaUserService {
             throw new IllegalArgumentException("User record cannot contain null values");
         }
 
-        //I added more logging statements to diagnose the issue of the correct UserId not
-        //populating to the front end for the User UI
         log.info("userid is " + userRecord.getUserId());
 
         if (userRecord.getUserId() == null) {
             userRecord.setUserId(UUID.randomUUID().toString());
         }
 
-
         try {
-            //this line calls createUser method in the userDao which then interacts with DynamoDB -adam
+            //this line calls createUser method in the userDao which then interacts with DynamoDB
             userDao.createUser(userRecord);
             log.info("Successfully created user");
-//            localLoginMap.put(userRecord.getUsername(), userRecord);
-
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
             userResponseLambda.setUserId(userRecord.getUserId());
@@ -69,17 +63,13 @@ public class LambdaUserService {
     }
 
 
-    public UserRecord updateUser(UserRecord userRecord) {
-        return userDao.updateUser(userRecord);
-    }
-
-    public boolean deleteUser(String userId) {
+    /*public boolean deleteUser(String userId) {
         try {
             userDao.deleteUser(userId);
             return true;
         } catch (Exception e) {
             return false;
         }
-    }
+    }*/
 }
 

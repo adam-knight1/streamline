@@ -40,10 +40,9 @@ public class TaskDao {
 
     public List<TaskRecord> getTasksByUserId(String userId) {
         DynamoDBQueryExpression<TaskRecord> queryExpression = new DynamoDBQueryExpression<>();
-
         TaskRecord hashKeyValues = new TaskRecord();
-        hashKeyValues.setUserId(userId);
 
+        hashKeyValues.setUserId(userId);
         queryExpression.setHashKeyValues(hashKeyValues);
 
         List<TaskRecord> taskList;
