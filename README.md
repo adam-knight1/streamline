@@ -34,3 +34,7 @@ Before running the project, make sure to fill out the necessary environment vari
 - Testing of various aspects of the application, when fully implemented, can be accomplished by navigating to
 test folders for each module (service, lambda, integration) and pressing the 'run' triangle at the top
 - Individual tests can be run in the same manner.
+
+# Collaboration
+
+
