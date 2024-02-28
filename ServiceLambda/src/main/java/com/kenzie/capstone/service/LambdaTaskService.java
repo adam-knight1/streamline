@@ -16,12 +16,11 @@ public class LambdaTaskService {
     private static final Logger log = LoggerFactory.getLogger(LambdaTaskService.class);
 
 
-    public LambdaTaskService(TaskDao taskDao){
+    public LambdaTaskService(TaskDao taskDao) {
         this.taskDao = taskDao;
     }
 
-    public TaskAddResponse taskAddToTaskList (TaskRecord taskRecord) {
-        //this needs to be updated now after changing task record.
+    public TaskAddResponse taskAddToTaskList(TaskRecord taskRecord) {
         if (taskRecord == null || taskRecord.getTitle() == null) {
             log.error("The task record contains null values");
             throw new IllegalArgumentException("task record cannot contain null values");
@@ -62,9 +61,15 @@ public class LambdaTaskService {
         }
     }
 
-
-
-
+    public CompleteTaskResponse completeTask(String userId, String taskId) {
+        taskDao.completeTask(userId, taskId);
+        CompleteTaskResponse response = new CompleteTaskResponse();
+        response.setUserId(userId);
+        response.setTaskId(taskId);
+        response.setStatus("Complete");
+        log.info("Task {} for user {} marked as complete.", taskId, userId);
+        return response;
+    }
 }
 
 

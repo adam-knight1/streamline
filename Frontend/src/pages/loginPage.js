@@ -1,6 +1,7 @@
 import BaseClass from "../util/baseClass";
 import LoginClient from '../api/LoginClient';
 import DataStore from "../util/DataStore";
+import UserClient from '../api/UserClient'
 
 
 class LoginPage extends BaseClass {
@@ -9,11 +10,11 @@ class LoginPage extends BaseClass {
         this.bindClassMethods(['onLogin'], this);
         this.dataStore = new DataStore();
         this.client = new LoginClient;
+        this.userClient = new UserClient();
     }
 
     async mount() {
         document.getElementById('user-login').addEventListener('submit', this.onLogin);
-       // this.loginClient = new LoginClient;
 
     }
 
@@ -22,15 +23,16 @@ class LoginPage extends BaseClass {
         console.log('Client:', this.client);
 
         let username = document.getElementById("login-username-field").value;
-        //set the local storage for username here since it's currently userId
+        const user = await this.userClient.getUserByUsername(username);
         let password = document.getElementById("login-password-field").value;
 
-        localStorage.setItem('userId' , username);
+
 
         try {
-            const userData = await this.client.loginUser(username, password);
+            const userData = await this.client.loginUser(user.userId, password); //the backend logic uses UserId as username for now
+            //this can be changed -adam
             if (userData) {
-                localStorage.setItem('userId', username);
+            localStorage.setItem('userId' , user.userId);
                 window.location.href = '/taskList.html';
             } else {
                 this.showMessage("Invalid username or password.");

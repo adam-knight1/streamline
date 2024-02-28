@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.TaskAddResponseModel;
 import com.kenzie.appserver.service.TaskService;
+import com.kenzie.capstone.service.model.CompleteTaskRequest;
 import com.kenzie.capstone.service.model.GetAllTasksResponse;
 import com.kenzie.capstone.service.model.TaskAddResponse;
 import org.apache.logging.log4j.LogManager;
@@ -43,7 +44,6 @@ public class TaskController {
 
             GetAllTasksResponse tasksResponse = taskService.getTasksByUserId(userId);
 
-            // Log the response from TaskService
             logger.info("TasksResponse from TaskService for userId {}: {}", userId, tasksResponse);
 
             if (tasksResponse.getTasks() == null || tasksResponse.getTasks().isEmpty()) {
@@ -52,6 +52,20 @@ public class TaskController {
             return ResponseEntity.ok(tasksResponse);
         } catch (Exception e) {
             logger.error("Error in TaskController while retrieving tasks for userId {}: ", userId, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/complete")
+    public ResponseEntity<?> completeTask(@RequestBody CompleteTaskRequest completeTaskRequest) {
+        try {
+            logger.info("Received request to complete task with userId: {} and taskId: {}", completeTaskRequest.getUserId(), completeTaskRequest.getTaskId());
+
+            taskService.completeTask(completeTaskRequest.getUserId(), completeTaskRequest.getTaskId());
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error completing task for userId: {} and taskId: {}", completeTaskRequest.getUserId(), completeTaskRequest.getTaskId(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

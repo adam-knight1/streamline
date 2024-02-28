@@ -11,12 +11,4 @@ import java.util.Optional;
 @EnableScan
 public interface TaskRepository extends CrudRepository<TaskRecord, String> {
 
-    //find tasks by userId
-    List<TaskRecord> findByUserId (String userId);
-
-    //delete tasks by userid
-    void deleteByUserId(String userId);
-
-
-   // Optional<TaskRecord> findById(String taskId);
 }

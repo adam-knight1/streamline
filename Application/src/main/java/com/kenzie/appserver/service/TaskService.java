@@ -3,7 +3,7 @@ package com.kenzie.appserver.service;
 
 //import com.kenzie.appserver.controller.model.TaskResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.kenzie.appserver.controller.model.TaskAddResponseModel;
+import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.appserver.repositories.TaskRepository;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
@@ -14,8 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,6 +69,17 @@ import java.util.stream.Collectors;
             throw new RuntimeException("Error retrieving tasks for user ID: " + userId, e);
         }
     }
+
+    public void completeTask(String userId, String taskId) throws JsonProcessingException {
+        try {
+            lambdaServiceClient.completeTask(userId, taskId, "Complete");
+        } catch (Exception e) {
+            logger.error("Error calling completeTask Lambda function for taskId: {} with userId: {}", taskId, userId, e);
+            throw new RuntimeException("Error calling completeTask Lambda function for taskId: " + taskId + " and userId: " + userId, e);
+        }
+    }
+
+
 
 
     private TaskResponse convertToTaskResponse(TaskRecord taskRecord) {

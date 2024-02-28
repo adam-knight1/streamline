@@ -48,31 +48,9 @@ public class UserDao {
     }
 
 
-        /*public List<UserRecord> findUserByEmail(String email) {
-            UserRecord userRecord = new UserRecord();
-            userRecord.setEmail(email);
-
-            DynamoDBQueryExpression<UserRecord> queryExpression = new DynamoDBQueryExpression<UserRecord>()
-                    .withIndexName("email") //I need to set up the GSI for this to work
-                    .withConsistentRead(false)
-                    .withHashKeyValues(userRecord);
-
-            return mapper.query(UserRecord.class, queryExpression);
-        }
-*/
-
-    //idk if this will work as is with just the save and delete operations as is
-        public UserRecord updateUser(UserRecord userRecord) {
-            mapper.save(userRecord);
-            return userRecord;
-        }
-
-        public void deleteUser(String userId) {
-            UserRecord userRecord = mapper.load(UserRecord.class, userId);
-            if (userRecord != null) {
-                mapper.delete(userRecord);
-            }
-        }
+    //This method finds the user in the DB by using the username range key
+    //Returns first entry of PQL of UserRecords
+    //Logging statements added to track request time
     public UserRecord findUserByUsername(String username) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUsername(username);
@@ -89,7 +67,7 @@ public class UserDao {
 
         long endTime = System.currentTimeMillis();
         logger.info("Query end: " + endTime);
-        logger.info("Query duration: " + (endTime - startTime) + " ms"); //trying to determine if this is timing out.
+        logger.info("Query duration: " + (endTime - startTime) + " ms"); //use to determine any time out issues
 
         if (!result.isEmpty()) {
             return result.get(0);
