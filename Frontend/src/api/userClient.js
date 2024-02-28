@@ -5,7 +5,7 @@ export default class UserClient extends BaseClass {
 
     constructor(baseURL) {
         super();
-        this.bindClassMethods(['getUser', 'createUser', 'updateUser', 'deleteUser', 'handleError'], this);
+        this.bindClassMethods(['getUser', 'createUser', 'handleError'], this);
         this.client = axios.create({
             baseURL: baseURL
         });
@@ -56,14 +56,14 @@ export default class UserClient extends BaseClass {
         }
     }*/
 
-    async deleteUser(userId) {
+    /*async deleteUser(userId) {
         try {
             const response = await this.client.delete(`/user/${userId}`);
             return response.data;
         } catch (error) {
             return this.handleError("deleteUser", error);
         }
-    }
+    }*/
 
 
 

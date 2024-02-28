@@ -17,7 +17,7 @@ public class CustomUserDetails implements UserDetails {
         this.username = userRecord.getUsername();
         this.password = userRecord.getPassword();
         // authorities = userRecord.getRoles();
-        //if I want to roles to userRecord in the future like admin^^
+        //if I want to add roles to userRecord in the future like admin^^
 
     }
 
