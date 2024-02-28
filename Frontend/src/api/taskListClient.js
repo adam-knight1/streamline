@@ -35,16 +35,6 @@ export default class TaskListClient extends BaseClass {
             throw error;
         }
     }
-/*
-    async getTaskListByUserId(userId) {
-            try {
-                const response = await this.client.get(`/taskList/${userId}`);
-                console.log("Received response:", response.data);
-                return response.data;
-            } catch (error) {
-                return this.handleError("getTaskListByUserId", error);
-            }
-        }*/
 
          async getTasksByUserId() {
              const userId = localStorage.getItem('userId');

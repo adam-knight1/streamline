@@ -24,26 +24,6 @@ public class TaskDao {
     }
 
 
-    /*public TaskRecord addTask(TaskRecord taskRecord) {
-        try {
-            DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
-            Map<String, ExpectedAttributeValue> expectedAttributes = new HashMap<>();
-            expectedAttributes.put("taskId", new ExpectedAttributeValue()
-                    .withValue(new AttributeValue().withS(taskRecord.getTaskId()))
-                    .withExists(false));
-
-            saveExpression.setExpected(expectedAttributes);
-            System.out.println("Saving taskRecord: " + taskRecord);
-
-            mapper.save(taskRecord, saveExpression);
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("Task with taskId " + taskRecord.getTaskId() +
-                    " already exists for userId " + taskRecord.getUserId());
-        }
-        return taskRecord;
-    }
-*/
-
     public TaskRecord addTask(TaskRecord taskRecord) {
         if (taskRecord == null || taskRecord.getUserId() == null || taskRecord.getTaskId() == null) {
             throw new IllegalArgumentException("Task record and its key attributes cannot be null");
@@ -57,40 +37,6 @@ public class TaskDao {
         }
         return taskRecord;
     }
-
-
-  /*  public TaskRecord addTask(TaskRecord taskRecord) {
-        if (taskRecord == null) {
-            logger.error("Task record is null");
-            throw new IllegalArgumentException("Task record cannot be null");
-        }
-        if (taskRecord.getUserId() == null || taskRecord.getTaskId() == null ||
-                taskRecord.getTitle() == null || taskRecord.getBody() == null) {
-            logger.error("Task record contains null values");
-            throw new IllegalArgumentException("Task record fields cannot be null");
-        }
-
-        try {
-            DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
-            Map<String, ExpectedAttributeValue> expectedAttributes = new HashMap<>();
-            expectedAttributes.put("taskId", new ExpectedAttributeValue()
-                    .withValue(new AttributeValue().withS(taskRecord.getTaskId()))
-                    .withExists(false));
-
-            saveExpression.setExpected(expectedAttributes);
-            logger.info("Saving taskRecord: {}", taskRecord);
-
-            mapper.save(taskRecord, saveExpression);
-            return taskRecord;
-        } catch (ConditionalCheckFailedException e) {
-            logger.error("Task with taskId {} already exists for userId {}",
-                    taskRecord.getTaskId(), taskRecord.getUserId(), e);
-            throw new IllegalArgumentException("Task with taskId " + taskRecord.getTaskId() +
-                    " already exists for userId " + taskRecord.getUserId());
-        }*/
-
-
-
 
     public List<TaskRecord> getTasksByUserId(String userId) {
         DynamoDBQueryExpression<TaskRecord> queryExpression = new DynamoDBQueryExpression<>();
@@ -111,6 +57,21 @@ public class TaskDao {
 
         return taskList;
     }
+
+    public void completeTask(String userId, String taskId) {
+        TaskRecord taskRecord = mapper.load(TaskRecord.class, userId, taskId);
+        if (taskRecord != null) {
+            taskRecord.setStatus("Complete");
+            mapper.save(taskRecord, new DynamoDBSaveExpression()
+                    .withExpectedEntry("taskId",
+                            new ExpectedAttributeValue(new AttributeValue().withS(taskId))));
+            logger.info("Task with ID {} for user {} marked as complete.", taskId, userId);
+        } else {
+            logger.error("Task with ID {} for user {} not found.", taskId, userId);
+            throw new IllegalArgumentException("Task not found.");
+        }
+    }
+
 }
 
 

@@ -43,25 +43,21 @@ export default class TaskClient extends BaseClass {
                        console.error("Error getting tasks by userId:", error);
                        throw error;
                    }
-
        }
 
 
    async completeTask(userId, taskId) {
        try {
-           // Assuming your API has an endpoint to complete a task by userId and taskId
            const response = await this.client.post(`/task/complete`, {
                userId: userId,
                taskId: taskId
            });
-           return response.data; // You might want to return something meaningful here
+           return response.data;
        } catch (error) {
            console.error("Error completing task:", error);
            throw error;
        }
    }
-
-
 
    }
 

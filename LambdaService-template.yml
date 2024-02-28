@@ -218,4 +218,26 @@ Resources:
           Properties:
             Path: /task/user/{userId}
             Method: get
-
+  CompleteTaskFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.CompleteTask
+      Runtime: java11
+      Description: Mark task status as completed
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        CompleteTaskEvent:
+          Type: Api
+          Properties:
+            Path: /task/complete
+            Method: Post

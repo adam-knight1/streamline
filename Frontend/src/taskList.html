@@ -11,7 +11,7 @@
     <h1 class="site-title">My Todo List</h1>
 </header>
 <div class="welcome-section">
-    <p>Welcome to your todo list homepage!  You can add and edit tasks below. </p>
+    <p>Welcome to your todo list homepage! You can add and edit tasks below. </p>
 </div>
 
 <div class="card" id="create-task-form">
@@ -29,11 +29,20 @@
     </form>
 </div>
 
-<div class="card" id="tasks-display">
-    <h2>My Todo List</h2>
-    <div id="tasks-container">
+<div id="tasks-display">
+    <div id="incomplete-tasks-section">
+        <h2>Incomplete Tasks</h2>
+        <div id="incomplete-tasks-container" class="tasks-container">
+        </div>
+    </div>
+
+    <div id="completed-tasks-section">
+        <h2>Completed Tasks</h2>
+        <div id="completed-tasks-container" class="tasks-container">
+        </div>
     </div>
 </div>
+
 
 
 <a href="javascript:history.back()" class="bubble-button">Go Back</a>

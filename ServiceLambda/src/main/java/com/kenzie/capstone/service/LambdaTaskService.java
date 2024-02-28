@@ -62,6 +62,17 @@ public class LambdaTaskService {
         }
     }
 
+    public CompleteTaskResponse completeTask(String userId, String taskId) {
+        taskDao.completeTask(userId, taskId);
+        CompleteTaskResponse response = new CompleteTaskResponse();
+        response.setUserId(userId);
+        response.setTaskId(taskId);
+        response.setStatus("Complete");
+        log.info("Task {} for user {} marked as complete.", taskId, userId);
+        return response;
+    }
+
+
 
 
 

@@ -7,7 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class LambdaServiceClient {
@@ -17,6 +19,8 @@ public class LambdaServiceClient {
     private static final String CREATE_TASKLIST_ENDPOINT = "/taskList/create";
     private static final String UPDATE_TASKLIST_ENDPOINT = "/taskList/update";
     private static final String CREATE_TASK_ENDPOINT = "/task/create";
+    private static final String COMPLETE_TASK_ENDPOINT = "/task/complete";
+
     private static final String GET_TASKS_BY_USER_ENDPOINT = "/task/user/{userId}";
 
 
@@ -73,38 +77,6 @@ public class LambdaServiceClient {
         return taskListResponse;
     }
 
-
-   /* public TaskResponseLambda addTask(String userId, String taskListName, TaskRecord taskRecord) throws JsonProcessingException {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String requestData = mapper.writeValueAsString(taskRecord);
-        String response = endpointUtility.postEndpoint(CREATE_TASK_ENDPOINT, requestData);
-        TaskResponseLambda taskResponseLambda;
-        try {
-            taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON:" + e);
-        }
-        return taskResponseLambda;
-
-    }*/
-
-
-    /*public TaskResponseLambda updateTask( TaskRequest updatedTaskRequest) throws JsonProcessingException {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String requestData = mapper.writeValueAsString(updatedTaskRequest);
-        String endpoint = "task/update/";
-
-        String response = endpointUtility.postEndpoint(endpoint, requestData);
-
-        TaskResponseLambda taskResponse;
-        try {
-            taskResponse = mapper.readValue(response, TaskResponseLambda.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-        }
-        return taskResponse;
-    }*/
-
     public UserResponseLambda findUserByUserId(String userId) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint("user/" + userId);
@@ -135,7 +107,7 @@ public class LambdaServiceClient {
         EndpointUtility endpointUtility = new EndpointUtility();
         String endpointUrl = "user/name/" + username;
         log.info("Attempting to find user by username: {}", username);
-        log.debug("Constructed endpoint URL: {}", endpointUrl); // Additional log
+        log.debug("Constructed endpoint URL: {}", endpointUrl);
 
         String response;
         try {
@@ -156,28 +128,6 @@ public class LambdaServiceClient {
         }
         log.debug("Returning userResponse object for username '{}'", username);
         return userResponse;
-    }
-
-
-
-    public boolean updateTask(String taskName, String taskDescription) throws JsonProcessingException {
-        EndpointUtility endpointUtility = new EndpointUtility();
-
-        TaskRequest taskRequest = new TaskRequest( taskName, taskDescription);
-
-        try {
-            String requestData = mapper.writeValueAsString(taskRequest);
-            String endpoint = "task/update/";
-
-            String response = endpointUtility.postEndpoint(endpoint, requestData);
-            TaskResponseLambda taskResponseLambda = mapper.readValue(response, TaskResponseLambda.class);
-            return taskResponseLambda.isCompleted();
-        } catch (JsonProcessingException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ApiGatewayException("Error updating task: " + e.getMessage());
-        }
-
     }
 
     public List<TaskRecord> getTasksByUserId(String userId) throws JsonProcessingException {
@@ -204,8 +154,35 @@ public class LambdaServiceClient {
         return tasks;
     }
 
+    public void completeTask(String userId, String taskId, String status) throws JsonProcessingException {
+        EndpointUtility endpointUtility = new EndpointUtility();
 
-}
+        // building the request payloa
+        Map<String, String> requestData = new HashMap<>();
+        requestData.put("userId", userId);
+        requestData.put("taskId", taskId);
+        requestData.put("status", status);
+
+        // Converting map to json
+        String jsonRequestData = mapper.writeValueAsString(requestData);
+
+        // Log
+        log.info("Sending request to complete task with userId: {} and taskId: {}, status: {}", userId, taskId, status);
+
+        try {
+            String response = endpointUtility.postEndpoint(COMPLETE_TASK_ENDPOINT, jsonRequestData);
+
+            log.info("Received response from completing task: {}", response);
+
+            //will add response here
+        } catch (Exception e) {
+            // request error log
+            log.error("Error calling endpoint to complete task for userId: {} and taskId: {}, status: {}", userId, taskId, status, e);
+            throw new ApiGatewayException("Error completing task with userId: " + userId + " and taskId: " + taskId + ", status: " + status, e);
+
+        }
+    }
+    }
 
 
 
