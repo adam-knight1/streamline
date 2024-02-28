@@ -182,10 +182,12 @@ class TaskListPage extends BaseClass {
            const incompleteTasksContainer = document.getElementById('incomplete-tasks-container');
            const completedTasksContainer = document.getElementById('completed-tasks-container');
            incompleteTasksContainer.innerHTML = ''; // Clear old tasks
-           completedTasksContainer.innerHTML = ''; // Clear old tasks
+           completedTasksContainer.innerHTML = '';
+
 
            taskArray.forEach(task => {
                const taskElement = document.createElement('div');
+               taskElement.setAttribute('data-task-id', task.taskId); //attempting debug
                taskElement.classList.add('task-item');
                taskElement.innerHTML = `
                    <h3>${task.title}</h3>
@@ -211,35 +213,49 @@ class TaskListPage extends BaseClass {
 
 
 
-   async completeTask(taskId) {
-           const userId = localStorage.getItem('userId'); userId in localStorage
-           if (!userId) {
-               console.error("User ID is not available");
-               return;
-           }
+  async completeTask(taskId) {
+      // Log taskId to ensure it's expected
+      console.log("Completing task with ID:", taskId);
 
-           try {
-               // Calling API to mark the task as complete
-               const completeTaskResponse = await this.taskClient.completeTask(userId, taskId);
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+          console.error("User ID is not available");
+          return;
+      }
 
-               // Update the UI on success
-               const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
-               if (taskElement) {
-                   taskElement.classList.add('completed');
-                   taskElement.querySelector('.task-status').textContent = 'Completed';
+      // Log userId for debugging purposes
+      console.log("User ID from localStorage:", userId);
 
-                   const completedTasksContainer = document.getElementById('completed-tasks-container');
-                   completedTasksContainer.appendChild(taskElement);
-               } else {
-                   console.error("Task element not found in the DOM");
-               }
+      try {
+          // Calling API to mark task complete
+          const completeTaskResponse = await this.taskClient.completeTask(userId, taskId);
 
+          // Log the response from the completeTask API call
+          console.log("completeTask response:", completeTaskResponse);
 
-           } catch (error) {
-               console.error("Error completing task:", error);
-               // Handle the error
-           }
-       }
+          // Update the UI on success
+          const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+
+          // Log the taskElement to see if it was found
+          console.log("Found task element in DOM:", taskElement);
+
+          if (taskElement) {
+              taskElement.classList.add('completed');
+              taskElement.querySelector('.task-status').textContent = 'Completed';
+
+              const completedTasksContainer = document.getElementById('completed-tasks-container');
+
+              console.log("Completed tasks container:", completedTasksContainer);
+
+              completedTasksContainer.appendChild(taskElement);
+          } else {
+              console.error("Task element not found in the DOM for taskId:", taskId);
+          }
+      } catch (error) {
+          console.error("Error completing task:", error);
+      }
+  }
+
 
 
 

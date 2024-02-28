@@ -7,29 +7,6 @@ Parameters:
     Default: dev
 
 Resources:
-  GetExampleDataFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.GetExampleData
-      Runtime: java11
-      Description: Get Example Data for given id
-      MemorySize: 512
-      Timeout: 240
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        UpdateResource:
-          Type: Api
-          Properties:
-            Path: /example/{id}
-            Method: get
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -78,29 +55,7 @@ Resources:
             Path: /taskList/create
             Method: post
 
-  UpdateTaskListFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.UpdateTaskList
-      Runtime: java11
-      Description: Update existing TaskList
-      MemorySize: 512
-      Timeout: 30
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        CreateTaskEvent:
-          Type: Api
-          Properties:
-            Path: /taskList/update
-            Method: post
+
   FindUserByUserIdFunction:
     Type: AWS::Serverless::Function
     Properties:
