@@ -60,7 +60,6 @@ public class TaskListDao {
 
             saveExpression.setExpected(expectedAttributes);
 
-            System.out.println("Saving taskListRecord: " + taskListRecord); //for debugging
             mapper.save(taskListRecord, saveExpression);
 
         } catch (ConditionalCheckFailedException e) {
