@@ -27,14 +27,6 @@ export default class TaskClient extends BaseClass {
        }
    }
 
-    handleError(method, error) {
-           console.error(method + " failed - " + error);
-           if (error.response && error.response.data.message) {
-               console.error(error.response.data.message);
-           }
-           throw error;
-       }
-
     async getTasksByUserId(userId) {
             try {
                  const response = await this.client.get(`/task/user/${userId}`);
@@ -58,6 +50,14 @@ export default class TaskClient extends BaseClass {
            throw error;
        }
    }
+
+    handleError(method, error) {
+              console.error(method + " failed - " + error);
+              if (error.response && error.response.data.message) {
+                  console.error(error.response.data.message);
+              }
+              throw error;
+          }
 }
 
    
