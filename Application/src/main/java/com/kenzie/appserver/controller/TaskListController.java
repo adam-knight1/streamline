@@ -23,7 +23,12 @@ public class TaskListController {
     TaskListController(TaskListService taskListService) {
         this.taskListService = taskListService;
     }
-    //Retrieves TaskList by primary key UserID;
+
+    /**
+     * Retrieves the task list associated with a specific user ID.
+     * @param userId the unique identifier of the user whose task list is to be retrieved.
+     * @return ResponseEntity containing the task list or a status indicating not found or an internal server error.
+     */
     @GetMapping("/{userId}")
     public ResponseEntity<GetTaskListLambdaResponse> getTaskListByUserId(@PathVariable("userId") String userId) {
         System.out.println("Received request to find taskList with userId: " + userId);
