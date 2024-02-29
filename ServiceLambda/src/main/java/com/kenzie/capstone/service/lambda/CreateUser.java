@@ -17,11 +17,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Lambda function handler for creating a user
+ */
 public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();
-
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
@@ -40,12 +41,11 @@ public class CreateUser implements RequestHandler<APIGatewayProxyRequestEvent, A
             UserRequest userRequest = gson.fromJson(input.getBody(), UserRequest.class);
 
             UserRecord userRecord = new UserRecord();
-            userRecord.setUserId(userRequest.getUserId());  // I just uncommented this 1-8
+            userRecord.setUserId(userRequest.getUserId());
             userRecord.setEmail(userRequest.getEmail());
             userRecord.setUsername(userRequest.getUsername());
             userRecord.setPassword(userRequest.getPassword());
 
-            //adding comment to debug git push
             UserResponseLambda userResponseLambda = lambdaUserService.createNewUser(userRecord);
             String output = gson.toJson(userResponseLambda);
 

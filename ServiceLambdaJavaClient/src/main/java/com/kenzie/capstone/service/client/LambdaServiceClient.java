@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class LambdaServiceClient {
     private static final String COMPLETE_TASK_ENDPOINT = "/task/complete";
 

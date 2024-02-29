@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 
 public class LambdaUserService {
-
     private UserDao userDao;
     private String errorMessage;
     private static final Logger log = LoggerFactory.getLogger(LambdaUserService.class);
@@ -61,15 +60,5 @@ public class LambdaUserService {
             throw new RuntimeException("Error creating user", e);
         }
     }
-
-
-    /*public boolean deleteUser(String userId) {
-        try {
-            userDao.deleteUser(userId);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }*/
 }
 

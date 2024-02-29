@@ -21,6 +21,14 @@ public class LambdaTaskListService {
     }
 
     //Todo exception handling;
+
+    /**
+     * Finds a task list by the user ID.
+     * This method calls the underlying DAO to retrieve the TaskListRecord from the database.
+     *
+     * @param userId The ID of the user whose task list is being retrieved.
+     * @return The TaskListRecord associated with the user, if found.
+     */
     public TaskListRecord findTaskListByUserId(String userId) {
         return taskListDao.getTaskListByUserId(userId);
     }
