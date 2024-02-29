@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @EnableScan
 public interface TaskListRepository extends CrudRepository<TaskListRecord, String> {
+    //As much of the logic has migrated over to AWS Lambda, this repository will be evaluated for any further utility.
 
 }
 

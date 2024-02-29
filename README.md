@@ -35,6 +35,8 @@ Before running the project, make sure to fill out the necessary environment vari
 test folders for each module (service, lambda, integration) and pressing the 'run' triangle at the top
 - Individual tests can be run in the same manner.
 
-# Collaboration
+# Future Direction
+- Please note that this project is continually being updated daily.  Please check GitHub for the latest
+version.
 
 
