@@ -2,11 +2,8 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.UserNotFoundException;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
-import com.kenzie.appserver.controller.model.UserLoginRequest;
-import com.kenzie.appserver.controller.model.UserLoginResponse;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
-import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.model.UserRequest;
 import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.springframework.http.HttpStatus;
@@ -74,6 +71,12 @@ public class UserController {
         userRequest.setUsername(userCreateRequest.getUsername());
         userRequest.setPassword(userCreateRequest.getPassword());
         userRequest.setEmail(userCreateRequest.getEmail());
+
+        //todo - implementing username check that avoids race conditions
+        /*if (userService.usernameExists(userRequest.getUsername())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }*/
+
         if (userRequest.getUserId() == null) {
             userRequest.setUserId(UUID.randomUUID().toString());
         }
@@ -82,8 +85,7 @@ public class UserController {
             UserResponse userResponse = userService.createNewUser(userRequest);
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
-            userResponseLambda.setUserId(userRequest.getUserId());  //I changed this from userResponse.getUserId
-            System.out.println("hi adam!" + userRequest.getUserId());  //this is different than what is in the table.
+            userResponseLambda.setUserId(userRequest.getUserId());
             userResponseLambda.setUsername(userResponse.getUsername());
             userResponseLambda.setEmail(userResponse.getEmail());
 

@@ -1,14 +1,8 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.UserLoginRequest;
-import com.kenzie.appserver.controller.model.UserLoginResponse;
-import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
-import com.kenzie.appserver.service.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -16,6 +10,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
+    //slated for deletion pending move of spring security components
     private final UserService userService;
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
