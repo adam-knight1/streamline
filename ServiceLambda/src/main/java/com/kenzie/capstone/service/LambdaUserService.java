@@ -19,11 +19,24 @@ public class LambdaUserService {
         this.userDao = userDao;
     }
 
+    /**
+     * Finds a user by their unique user ID.
+     * This method queries the database using the user ID to retrieve the corresponding user record.
+     *
+     * @param userId The unique identifier of the user to find.
+     * @return The UserRecord if the user is found, otherwise null.
+     */
     public UserRecord findByUserId(String userId) {
         //I need to add more logging statements here
         return userDao.findUserById(userId);
     }
-
+    /**
+     * Finds a user by their username.
+     * Utilizes the username index to search the database for the user record.
+     *
+     * @param username The username of the user to find.
+     * @return The UserRecord if the user is found, otherwise null.
+     */
     public UserRecord findByUserName(String username) {
         try {
             return userDao.findUserByUsername(username);
@@ -33,6 +46,15 @@ public class LambdaUserService {
         return null;
     }
 
+    /**
+     * Creates a new user in the database.
+     * Validates the user record and uses UserDao to persist it.
+     * Constructs a response object containing the user details.
+     *
+     * @param userRecord The record of the user to be created.
+     * @return A response object containing the new user's details.
+     * @throws IllegalArgumentException If the user record contains null values.
+     */
     public UserResponseLambda createNewUser(UserRecord userRecord) {
         if (userRecord == null || userRecord.getEmail() == null || userRecord.getUsername() == null || userRecord.getPassword() == null) {
             log.error("The user record contains null values");
