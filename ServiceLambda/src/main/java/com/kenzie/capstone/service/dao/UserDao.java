@@ -75,5 +75,4 @@ public class UserDao {
         System.out.println("no user was found with that username -userdao");
         return null;
     }
-
 }
