@@ -12,21 +12,42 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Data access object for handling TaskList operations with DynamoDB.
+ */
+
 public class TaskListDao {
-    private DynamoDBMapper mapper;
 
     /**
      * Allows access to and manipulation of Match objects from the data store.
      * @param mapper Access to DynamoDB
      */
+    private DynamoDBMapper mapper;
+
+    /**
+     * Constructor for TaskListDao.
+     * @param mapper Provides the functionality to perform various operations on DynamoDB.
+     */
     public TaskListDao(DynamoDBMapper mapper) {
         this.mapper = mapper; //inject Dynamo mapper
     }
 
+    /**
+     * Retrieves a TaskListRecord by the user's unique identifier.
+     * @param userId The unique identifier of the user.
+     * @return The TaskListRecord associated with the provided userId.
+     */
     public TaskListRecord getTaskListByUserId(String userId) {
         //this works as is, no query needed as userId is the primary key
         return mapper.load(TaskListRecord.class, userId);
     }
+
+    /**
+     * Creates a new TaskList in the database if one does not already exist for the user.
+     * @param taskListRecord The TaskListRecord to save.
+     * @return The saved TaskListRecord.
+     * @throws IllegalArgumentException if a TaskList with the given userId already exists.
+     */
     public TaskListRecord createTaskList(TaskListRecord taskListRecord) {
         try {
             DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
