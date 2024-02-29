@@ -25,6 +25,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    // Endpoint to retrieve a user by their userId
+    // Returns 404 if the user is not found
+    // Returns 500 if an internal server error occurs
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseLambda> getUser(@PathVariable("userId") String userId) {
         System.out.println("Received request to find user with userId: " + userId);
@@ -40,6 +43,9 @@ public class UserController {
         }
     }
 
+    // Endpoint to retrieve a user by their username
+    // Returns 404 if the user is not found
+    // Returns 500 if an internal server error occurs
     @GetMapping("/name/{username}")
     public ResponseEntity<UserResponseLambda> getUserByUsername(@PathVariable("username") String username){
         System.out.println("Received request to find user with username: " + username);
@@ -58,6 +64,10 @@ public class UserController {
     }
 
 
+    // Endpoint to create a new user with the details provided in the request body
+    // Generates a new UUID for the user if not provided
+    // Returns 200 if the user is created successfully
+    // Returns 400 if the request is bad or an error occurs
     @PostMapping("/create")
     public ResponseEntity<UserResponseLambda> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
         UserRequest userRequest = new UserRequest();
