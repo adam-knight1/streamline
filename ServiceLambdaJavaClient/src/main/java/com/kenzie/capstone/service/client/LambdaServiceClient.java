@@ -21,9 +21,7 @@ import java.util.Map;
  */
 public class LambdaServiceClient {
     private static final String COMPLETE_TASK_ENDPOINT = "/task/complete";
-
     private ObjectMapper mapper;
-
     private static final Logger log = LogManager.getLogger(LambdaServiceClient.class);
 
     public LambdaServiceClient() {
@@ -105,7 +103,9 @@ public class LambdaServiceClient {
      * @return GetTaskListLambdaResponse object with the task list details.
      * @throws JsonProcessingException If JSON deserialization fails.
      */
-    public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
+
+    //todo-slated for deletion pending test, also TasklistService potentially
+    /*public GetTaskListLambdaResponse findTaskListByUserId(String userId) throws JsonProcessingException {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint("taskList/" + userId);
 
@@ -116,7 +116,7 @@ public class LambdaServiceClient {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
         return getTaskListLambdaResponse;
-    }
+    }*/
 
     /**
      * Finds a user by their username.

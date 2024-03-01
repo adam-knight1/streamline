@@ -2,13 +2,13 @@ package com.kenzie.capstone.service.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+/**
+ * TaskAddResponse is a DTO that encapsulates the response data after adding a new task.
+ * It contains the details of the newly added task, including the user ID, task ID, title,
+ * body, and status. This class is used to confirm the creation of a task and provide the
+ * client with the new task's details.
+ */
 public class TaskAddResponse {
-  /*  @JsonProperty("taskId")
-    private String taskId;
-*/
     @JsonProperty("userId")
     private String userId;
 

@@ -1,10 +1,16 @@
 package com.kenzie.capstone.service.model;
 
+/**
+ * UserResponseLambda is a DTO that encapsulates the response data for user-related operations.
+ * It is used to transfer user data, including identification and authentication details, between
+ * different layers of the application, such as services and controllers, especially after user
+ * creation or retrieval operations.
+ */
 public class UserResponseLambda {
     private String userId;
     private String username;
     private String email;
-    private String password; //I am only adding this to overcome a deserialization error.  There will be no getter.
+    private String password;
 
     public String getUserId() {
         return userId;

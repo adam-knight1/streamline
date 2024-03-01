@@ -1,7 +1,6 @@
 package com.kenzie.capstone.service.model;
 
 
-import com.amazonaws.services.lambda.runtime.events.S3BatchEvent;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
