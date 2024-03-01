@@ -10,6 +10,16 @@ import org.springframework.security.core.Authentication;
 
 import java.io.IOException;
 
+/**
+ * CustomLoginSuccessHandler is a component that extends SimpleUrlAuthenticationSuccessHandler,
+ * a Spring Security class that handles what happens after a user successfully authenticates.
+ * This custom handler redirects the user to their task list page upon successful login.
+ *
+ * The redirection URL is built using the authenticated user's username (or another unique identifier)
+ * to direct the user to a personalized page, enhancing the user experience by taking them directly
+ * to their content.
+ */
+
 @Component
 public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
