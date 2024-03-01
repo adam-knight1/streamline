@@ -2,11 +2,8 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.UserNotFoundException;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
-import com.kenzie.appserver.controller.model.UserLoginRequest;
-import com.kenzie.appserver.controller.model.UserLoginResponse;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
-import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.model.UserRequest;
 import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.springframework.http.HttpStatus;
@@ -25,6 +22,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    // Endpoint to retrieve a user by their userId
+    // Returns 404 if the user is not found
+    // Returns 500 if an internal server error occurs
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseLambda> getUser(@PathVariable("userId") String userId) {
         System.out.println("Received request to find user with userId: " + userId);
@@ -40,6 +40,9 @@ public class UserController {
         }
     }
 
+    // Endpoint to retrieve a user by their username
+    // Returns 404 if the user is not found
+    // Returns 500 if an internal server error occurs
     @GetMapping("/name/{username}")
     public ResponseEntity<UserResponseLambda> getUserByUsername(@PathVariable("username") String username){
         System.out.println("Received request to find user with username: " + username);
@@ -58,12 +61,22 @@ public class UserController {
     }
 
 
+    // Endpoint to create a new user with the details provided in the request body
+    // Generates a new UUID for the user if not provided
+    // Returns 200 if the user is created successfully
+    // Returns 400 if the request is bad or an error occurs
     @PostMapping("/create")
     public ResponseEntity<UserResponseLambda> createNewUser(@RequestBody UserCreateRequest userCreateRequest) {
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername(userCreateRequest.getUsername());
         userRequest.setPassword(userCreateRequest.getPassword());
         userRequest.setEmail(userCreateRequest.getEmail());
+
+        //todo - implementing username check that avoids race conditions
+        /*if (userService.usernameExists(userRequest.getUsername())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }*/
+
         if (userRequest.getUserId() == null) {
             userRequest.setUserId(UUID.randomUUID().toString());
         }
@@ -72,8 +85,7 @@ public class UserController {
             UserResponse userResponse = userService.createNewUser(userRequest);
 
             UserResponseLambda userResponseLambda = new UserResponseLambda();
-            userResponseLambda.setUserId(userRequest.getUserId());  //I changed this from userResponse.getUserId
-            System.out.println("hi adam!" + userRequest.getUserId());  //this is different than what is in the table.
+            userResponseLambda.setUserId(userRequest.getUserId());
             userResponseLambda.setUsername(userResponse.getUsername());
             userResponseLambda.setEmail(userResponse.getEmail());
 
@@ -83,47 +95,4 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
-
-   /* @PutMapping("/{userId}")
-    public ResponseEntity<UserResponseLambda> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
-        Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
-        return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody User updatedUserInfo) {
-//        Optional<User> optionalUpdatedUser = userService.updateUser(userId, updatedUserInfo);
-//        return optionalUpdatedUser.map(user -> ResponseEntity.ok(userToResponse(user)))
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-
-
-
-
-//    @DeleteMapping("/{userId}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
-//        if(userService.deleteUser(userId)) {
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
-
-
-    private UserResponse userToResponse(User user) {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setUserId(user.getUserId());
-        userResponse.setUsername(user.getUsername());
-        userResponse.setPassword(user.getPassword());
-        userResponse.setEmail(user.getEmail());
-        return userResponse;
-    }
-
-    */
-
 }

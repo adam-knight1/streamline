@@ -1,14 +1,12 @@
 package com.kenzie.appserver.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
-import com.kenzie.appserver.controller.model.UserRequestTest;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
 import net.andreinc.mockneat.MockNeat;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,8 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-
 @IntegrationTest
 class UserControllerTest {
     @Autowired
@@ -32,7 +28,7 @@ class UserControllerTest {
 
     @Autowired
     UserService userService;
-
+    //todo - reconfigure this class
 
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
@@ -58,7 +54,7 @@ public void createNewUser_Successful() throws Exception {
             .andExpect(jsonPath("$.username").value(is(username)));
 }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void getUserByUserId_Exists() throws Exception {
         String username = mockNeat.strings().valStr();
         String email = mockNeat.emails().valStr();

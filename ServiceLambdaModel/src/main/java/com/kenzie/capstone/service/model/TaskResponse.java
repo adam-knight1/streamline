@@ -1,5 +1,11 @@
 package com.kenzie.capstone.service.model;
 
+/**
+ * TaskResponse is a DTO that represents the task data sent back to the client.
+ * It contains information about a specific task, including its unique identifier, associated user ID,
+ * title, body content, and status. This class is used to transport task details from the server to the client,
+ * primarily when loading tasks on initial login or live reload
+ */
 public class TaskResponse {
     private String taskId;
     private String userId;

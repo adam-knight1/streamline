@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
+/**
+ * Lambda function handler for marking a task as complete.
+ */
 public class CompleteTask implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new Gson();

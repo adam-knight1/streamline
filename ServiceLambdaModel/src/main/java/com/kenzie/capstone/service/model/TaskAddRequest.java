@@ -1,13 +1,13 @@
 package com.kenzie.capstone.service.model;
 
 
-import com.amazonaws.services.lambda.runtime.events.S3BatchEvent;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+/**
+ * TaskAddRequest is a DTO designed to encapsulate the data necessary to add a new task.
+ * It includes the user ID to associate the task with, along with the title and body of the task.
+ * This class is used to transport task creation data from the client to the server.
+ */
 public class TaskAddRequest {
     @JsonProperty("userId")
     private String userId;
@@ -21,8 +21,14 @@ public class TaskAddRequest {
     public TaskAddRequest() {
     }
 
+    /**
+     * Constructs a new TaskAddRequest with specified title, body, and user ID.
+     * @param title The title of the task.
+     * @param body The body or description of the task.
+     * @param userId The ID of the user to whom the task belongs.
+     */
     public TaskAddRequest(String title, String body, String userId) {
-        this.userId = userId; //temp debug to find if this is why it's not going into DB
+        this.userId = userId;
         this.title = title;
         this.body = body;
     }

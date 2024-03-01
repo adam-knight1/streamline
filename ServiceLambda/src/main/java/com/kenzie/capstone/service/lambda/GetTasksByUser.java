@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Lambda function handler for finding the tasks belonging to a user by the primary key userId
+ */
 public class GetTasksByUser implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();

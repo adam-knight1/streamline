@@ -1,5 +1,10 @@
 package com.kenzie.capstone.service.model;
 
+/**
+ * UserRequest is a DTO that encapsulates user credentials and details for user-related operations.
+ * It includes the unique identifier, email, password, and username for the user. This class is
+ * typically used when creating a new user or updating existing user details.
+ */
 public class UserRequest {
     private String userId;
     private String email;

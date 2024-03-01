@@ -1,5 +1,10 @@
 package com.kenzie.capstone.service.model;
 
+/**
+ * CompleteTaskResponse is a DTO that represents the response after marking a task as complete.
+ * It contains the user ID, task ID, and the new status of the task. This class is used to
+ * confirm the completion of a task and provide the client with the task's updated status.
+ */
 public class CompleteTaskResponse {
     private String userId;
     private String taskId;

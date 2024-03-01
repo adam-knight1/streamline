@@ -6,9 +6,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kenzie.capstone.service.LambdaTaskListService;
 import com.kenzie.capstone.service.LambdaTaskService;
-import com.kenzie.capstone.service.LambdaUserService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.*;
@@ -19,10 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Lambda function handler for adding a task to a task list.
+ */
 public class AddTaskToTaskList implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     static final Logger log = LogManager.getLogger();
     private final Gson gson = new GsonBuilder().create();
-
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
@@ -46,7 +46,6 @@ public class AddTaskToTaskList implements RequestHandler<APIGatewayProxyRequestE
             taskRecord.setUserId(taskAddRequest.getUserId());
             taskRecord.setStatus("incomplete");
             taskRecord.setTaskId(UUID.randomUUID().toString());
-//
 
            TaskAddResponse taskAddResponse = lambdaTaskService.taskAddToTaskList(taskRecord);
 
