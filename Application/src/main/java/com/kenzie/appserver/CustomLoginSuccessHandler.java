@@ -21,7 +21,6 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         response.sendRedirect(redirectUrl);
         System.out.println("Login success for user: " + identifier);
     }
-
 }
 
 
