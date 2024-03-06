@@ -6,7 +6,8 @@ import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.service.UserService;
 import net.andreinc.mockneat.MockNeat;
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,7 +30,6 @@ public class UserControllerTest {
     private UserService userservice;
     //todo - reconfigure this class
     private final MockNeat mockNeat = MockNeat.threadLocal();
-
     private final ObjectMapper mapper = new ObjectMapper();
 
 @Test
@@ -63,7 +63,7 @@ public void createNewUser_Successful() throws Exception {
         userRequest.setEmail(email);
         userRequest.setUserId(UUID.randomUUID().toString());
 
-        UserResponse userResponse = userService.createNewUser(userRequest);
+        UserResponse userResponse = userservice.createNewUser(userRequest);
         String userId = userResponse.getUserId();
 
         mvc.perform(get("/user/{userId}", userId)
