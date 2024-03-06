@@ -9,14 +9,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kenzie.appserver.controller.model.UserResponse;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
-import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -42,16 +40,18 @@ public class UserService {
         return lambdaServiceClient.findUserByUsername(username);
     }
 
-
     public UserResponse createNewUser(UserRequest userRequest) throws Exception {
         String validateUsername = userRequest.getUsername();
         UserResponseLambda duplicateUserProfile = findUserByUsername(validateUsername);
 
-        if (duplicateUserProfile != null) {
-            String duplicateUsername = duplicateUserProfile.getUsername();
-            if (duplicateUsername.equalsIgnoreCase(validateUsername))
-                throw new DuplicateUsernameException("Username is not available: " + validateUsername);
+        if (duplicateUserProfile != null && Boolean.FALSE.equals(duplicateUserProfile.getUserExists())) {
+            // If userExists is false, then no duplicate user exists. Proceed with user creation.
+        } else if (duplicateUserProfile != null) {
+            // If duplicateUserProfile is not null and userExists is not explicitly false, assume a duplicate exists.
+            throw new DuplicateUsernameException("Username is not available: " + validateUsername);
         }
+
+        //Calling the lambda function to create a new user
 
         try {
             lambdaServiceClient.createUser(userRequest);
@@ -60,6 +60,7 @@ public class UserService {
             throw new RuntimeException(e);
         }
 
+        //generating the UserResponse to send back to the controller
         UserResponse userResponse = new UserResponse();
         userResponse.setUserId(userRequest.getUserId());
         userResponse.setEmail(userRequest.getEmail());

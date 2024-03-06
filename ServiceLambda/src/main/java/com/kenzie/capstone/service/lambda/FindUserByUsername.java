@@ -40,9 +40,14 @@ public class FindUserByUsername implements RequestHandler<APIGatewayProxyRequest
 
                 UserRecord foundUser = lambdaUserService.findByUserName(username);
                 if (foundUser == null) {
-                    return response
+                    /*return response
                             .withStatusCode(404)
                             .withBody("User not found in lambda");
+                }*/
+                    return response
+                            .withStatusCode(200)
+                            .withBody("{\"message\": \"User not found\", \"userExists\": false}");
+                    //I'm adding this to test no duplicate username checks 3/5
                 }
 
                 String output = gson.toJson(foundUser);
@@ -56,5 +61,4 @@ public class FindUserByUsername implements RequestHandler<APIGatewayProxyRequest
                         .withBody(gson.toJson(e.getMessage()));
             }
         }
-
     }

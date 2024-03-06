@@ -19,13 +19,11 @@ public class User {
         this.email = email;
     }
 
-
     public User(String userId, String username, String password, String email) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
-
     }
 
     public String getUserId() {
