@@ -61,13 +61,11 @@ public class DynamoDBUserDetailsService implements UserDetailsService {
             userRecord.setEmail(user.getEmail());
             userRecord.setUserId(username);
             userRecord.setPassword(user.getPassword());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
             return new CustomUserDetails(userRecord);
-       /* } else {
+        } catch (JsonProcessingException e) {
+            logger.error("JSON processing failed for username: {}", username, e);
             throw new UsernameNotFoundException("User not found with userId: " + username);
-        }*/
+        }
     }
 }
 
