@@ -43,7 +43,17 @@ public class UserService {
     }
 
 
-    public UserResponse createNewUser(UserRequest userRequest) throws JsonProcessingException {
+    public UserResponse createNewUser(UserRequest userRequest) throws Exception {
+
+        String validateUsername = userRequest.getUsername();
+        UserResponseLambda duplicateUserProfile = findUserByUsername(validateUsername);
+
+        if (duplicateUserProfile != null) {
+            String duplicateUsername = duplicateUserProfile.getUsername();
+            if (duplicateUsername.equalsIgnoreCase(validateUsername))
+                throw new Exception("Duplicate username");
+        }
+
         try {
             lambdaServiceClient.createUser(userRequest);
         } catch (Exception e) {
@@ -51,107 +61,9 @@ public class UserService {
         }
         UserResponse userResponse = new UserResponse();
         userResponse.setUserId(userRequest.getUserId());
-           /* if (userRequest.getUserId() == null){
-                userResponse.setUserId(UUID.randomUUID().toString());
-            }*/ //just added this -adam 12/31  and now commented it out 12-8
         userResponse.setEmail(userRequest.getEmail());
         userResponse.setUsername(userRequest.getUsername());
-        System.out.println("User Id in userService is: " + userRequest.getUserId());
+
         return userResponse;
     }
-
-    /*public String getUsernameByUserId(String userId) {
-        //this method will apparently not work given the configuration of the project.
-        Optional<UserRecord> userRecordOpt = userRepository.findByUserId(userId);
-        if (userRecordOpt.isPresent()) {
-            UserRecord userRecord = userRecordOpt.get();
-            return userRecord.getUsername();
-        }
-            System.out.println("couldn't find userId");
-        return null;
-
-    }*/
-
-   /* public User transformToUser(UserRecord userRecord) {
-        User user = new User();
-        user.setUserId(userRecord.getUserId());
-        user.setEmail(userRecord.getEmail());
-        user.setUsername(userRecord.getUsername());
-        user.setPassword(userRecord.getPassword());
-        return user;
-
-    }*/
-
-    /*  public Optional<UserRecord> authenticateUser(String username, String password){
-        if (username == null || password == null) {
-            logger.error("Username or Password is null");
-            return Optional.empty();
-        }
-
-        Optional<UserRecord> userRecord = userRepository.findByUsername(username);
-
-        if (userRecord.isEmpty()) {
-            logger.warn("User not found - authenticateUser: {}", username);
-            return Optional.empty();
-        }
-        if (userRecord.get().getPassword().equals(password)) {
-            logger.info("User authenticated successfully: {}", username);
-            return userRecord;
-        } else {
-            logger.warn("Authentication failed for user: {}", username);
-            return Optional.empty();
-        }
-    }*/
-
-    /*public boolean authenticateUser(String username, String submittedPassword) {
-        UserRecord user;
-        if (user != null) {
-            String storedHashedPassword = user.getPassword();
-            return checkPassword(submittedPassword, storedHashedPassword);
-        }
-        return false;
-    }*/
-
-
-    //Keeping this method in to show thought process.  Tried to query from the backend at first.  It doesn't
-    //work with the project config.
-
-
-     /* public User findByUserId(String userId) {
-        System.out.println("Searching for userId: " + userId);
-        User user = userRepository
-                .findById(userId)
-                .map(u -> new User(u.getUserId(),u.getUsername(), u.getPassword(), u.getEmail()))
-                .orElse(null);
-        if (user == null) {
-            System.out.println("User with userId: " + userId + " not found.");
-        } else {
-            System.out.println("User found: " + user);
-        }
-        return user;
-    }*/
-
-    /*public User createNewUser(User user) {
-        UserRecord userRecord = new UserRecord();
-        userRecord.setUserId(user.getUserId());
-        userRecord.setEmail(user.getEmail());
-        userRecord.setPassword(user.getPassword());
-        userRecord.setUsername(user.getUsername());
-
-        if (userRecord.getUserId() != null ||
-                userRecord.getEmail() != null ||
-                userRecord.getPassword() != null ||
-                userRecord.getUsername() != null) {
-            try {
-                userRepository.save(userRecord);
-                return user;
-            } catch (Exception e) {
-                System.out.println("unable to save user" + e.getMessage());
-                return null;
-            }
-        } else {
-            return null;
-        }
-    }*/
-
 }

@@ -49,6 +49,28 @@ class UserServiceTest {
     }
 
     @Test
+    void CreateNewUser_InvalidData_UserCreationUnsuccessful() throws Exception {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setUsername("BadTestUser");
+        userRequest.setPassword("WrongPassword");
+        userRequest.setEmail("Notest@testing123.com");
+
+        UserResponseLambda mockResponse = new UserResponseLambda();
+        mockResponse.setUsername("BadName");
+        mockResponse.setEmail("WrongEmail");
+
+        when(lambdaServiceClient.createUser(any(UserRequest.class))).thenReturn(mockResponse);
+
+        UserResponse result = userService.createNewUser(userRequest);
+
+        assertNotNull(result);
+        assertNotEquals("testUser", result.getUsername());
+        assertNotEquals("test@testing123.com", result.getEmail());
+
+        verify(lambdaServiceClient, times(1)).createUser(any(UserRequest.class));
+    }
+
+    @Test
     void FindUserByUserIdTest() throws Exception {
         String userId = "123";
         UserResponseLambda mockResponse = new UserResponseLambda();
