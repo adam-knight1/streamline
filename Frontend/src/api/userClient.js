@@ -31,7 +31,7 @@ export default class UserClient extends BaseClass {
             }
         }
 
-    async createUser(username, password, email) {
+    /*async createUser(username, password, email) {
         try {
             const response = await this.client.post('/user/create', {
                 username: username,
@@ -45,25 +45,27 @@ export default class UserClient extends BaseClass {
             console.error("Error in createUser:", error)
             return this.handleError("createUser", error);
         }
+    }*/
+
+    async createUser(username, password, email) {
+        try {
+            const response = await this.client.post('/user/create', {
+                username: username,
+                password: password,
+                email: email
+            });
+            console.log("Axios response:", response);
+            console.log("Parsed data:", response.data);
+            return response.data;
+        } catch (error) {
+            console.error("Error in createUser:", error);
+            if (error.response && error.response.data && error.response.data.message.includes('Username is not available')) {
+                throw new Error('UsernameUnavailable');
+            } else {
+                return this.handleError("createUser", error);
+            }
+        }
     }
-
-   /* async updateUser(userId, updatedInfo) {
-        try {
-            const response = await this.client.put(`/user/${userId}`, updatedInfo);
-            return response.data;
-        } catch (error) {
-            return this.handleError("updateUser", error);
-        }
-    }*/
-
-    /*async deleteUser(userId) {
-        try {
-            const response = await this.client.delete(`/user/${userId}`);
-            return response.data;
-        } catch (error) {
-            return this.handleError("deleteUser", error);
-        }
-    }*/
 
 
 

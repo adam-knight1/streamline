@@ -79,9 +79,6 @@ import java.util.stream.Collectors;
         }
     }
 
-
-
-
     private TaskResponse convertToTaskResponse(TaskRecord taskRecord) {
         TaskResponse response = new TaskResponse();
         response.setTaskId(taskRecord.getTaskId());

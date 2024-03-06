@@ -17,6 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * UserService handles business logic for user-related operations.
+ * Utilizes LambdaServiceClient for interacting with AWS Lambda functions and UserRepository for local data access.
+ * Supports operations like finding users (by ID or username) and creating new users, including duplicate username checks.
+ * Implements thread-safe local login tracking with ConcurrentHashMap.
+ */
 @Service
 public class UserService {
     private UserRepository userRepository;

@@ -24,27 +24,26 @@ class UserPage extends BaseClass {
 
     async onCreate(event) {
         event.preventDefault();
-        console.log('Client:', this.client);
-
-        this.dataStore.set("user", null);
-
         let username = document.getElementById("username-field").value;
         let email = document.getElementById("email-field").value;
         let password = document.getElementById("password-field").value;
 
-        let createdUser = await this.client.createUser(username, password, email, this.errorHandler);
-        console.log("Created user response:", createdUser);
-
-        this.dataStore.set("user", createdUser);
-
-        if (createdUser) {
+        try {
+            let createdUser = await this.client.createUser(username, password, email);
+            console.log("Created user response:", createdUser);
+            // Success handling
             this.showMessage(`User ${createdUser.username} created successfully!`);
-            //this.showMessage(`User ${createdUser.userId} created successfully!`); //userId for debugging purposes
             document.getElementById("keep-it-safe").innerHTML = 'Account created successfully!';
             document.getElementById("created-user-id").innerHTML = `Your username is: ${createdUser.username}`;
+        } catch (error) {
+        //handling duplicate user name per userClient create method
 
-        } else {
-            this.errorHandler("Error creating user! Try again...");
+            if (error.message === 'UsernameUnavailable') {
+                this.showMessage("Username is already taken. Please try another.", true); // Assuming second parameter `true` indicates an error
+            } else {
+                // Generic error handling
+                this.showMessage("Error creating user! Please try again...", true);
+            }
         }
     }
 
