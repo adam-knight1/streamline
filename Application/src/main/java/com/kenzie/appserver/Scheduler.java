@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Scheduler {
 
-    // Create any asynchronous services
+    // Create any asynchronous services if desired
 
 //    @Autowired
 //    private AsynchronousService checkAsyncService;

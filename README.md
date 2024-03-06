@@ -20,8 +20,6 @@ To run this project, you will need:
 
 ## Installation and Run
 
-Before running the project, make sure to fill out the necessary environment variables:
-
 1. Clone the repository: https://github.com/adam-knight1/streamline.git
 2. Run the backend with ./gradlew bootRun
 3. Deploy the docker container by running ./local-dynamodb.sh
@@ -36,7 +34,7 @@ test folders for each module (service, lambda, integration) and pressing the 'ru
 - Individual tests can be run in the same manner.
 
 # Future Direction
-- Please note that this project is continually being updated daily.  Please check GitHub for the latest
+- Please note that this project is continually being updated on a daily basis.  Please check GitHub for the latest
 version.
 
 

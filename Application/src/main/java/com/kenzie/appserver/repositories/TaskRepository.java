@@ -9,6 +9,4 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 @EnableScan
-public interface TaskRepository extends CrudRepository<TaskRecord, String> {
-
-}
+public interface TaskRepository extends CrudRepository<TaskRecord, String> { }

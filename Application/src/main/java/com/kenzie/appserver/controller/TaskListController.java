@@ -20,7 +20,7 @@ public class TaskListController {
      * @param userId the unique identifier of the user whose task list is to be retrieved.
      * @return ResponseEntity containing the task list or a status indicating not found or an internal server error.
      */
-    @GetMapping("/{userId}")
+   /* @GetMapping("/{userId}")
     public ResponseEntity<GetTaskListLambdaResponse> getTaskListByUserId(@PathVariable("userId") String userId) {
         System.out.println("Received request to find taskList with userId: " + userId);
         try {
@@ -33,5 +33,5 @@ public class TaskListController {
             System.out.println("Error in fetching user: " + e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 }
