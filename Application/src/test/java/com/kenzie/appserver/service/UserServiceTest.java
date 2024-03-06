@@ -25,15 +25,15 @@ class UserServiceTest {
             MockitoAnnotations.initMocks(this);
         }
 
+
     @Test
-    void CreateNewUserTest() throws Exception {
+    void CreateNewUser_ValidData_UserCreationSuccessful() throws Exception {
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername("testUser");
         userRequest.setPassword("password");
         userRequest.setEmail("test@testing123.com");
 
         UserResponseLambda mockResponse = new UserResponseLambda();
-        mockResponse.setUserId("1234567");
         mockResponse.setUsername(userRequest.getUsername());
         mockResponse.setEmail(userRequest.getEmail());
 
@@ -42,7 +42,6 @@ class UserServiceTest {
         UserResponse result = userService.createNewUser(userRequest);
 
         assertNotNull(result);
-       // assertEquals("1234567", result.getUserId());
         assertEquals("testUser", result.getUsername());
         assertEquals("test@testing123.com", result.getEmail());
 

@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * DynamoDBUserDetailsService is a service class implementing Spring Security's UserDetailsService,
- * which is a core interface in Spring Security framework. This service is responsible for retrieving
+ * This is a service class implementing Spring Security's UserDetailsService,
+ * a core interface in Spring Security framework. This service is responsible for retrieving
  * user-specific data. It is used by the AuthenticationManager to load details about the user during
  * authentication.
  *
  * Specifically, this class is designed to interact with Amazon DynamoDB to retrieve user information
  * stored in the database. It generally uses UserRepository to perform operations like finding a user by their
- * username or user ID.  To experiment with AWS Lambda, this class employs the FindUserByUsername lambda.
+ * username or user ID, however, to experiment with stateless AWS Lambda operations, this class employs the FindUserByUsername lambda.
  * If the user is found, this class constructs and returns a CustomUserDetails object
  * populated with the user's information fetched from DynamoDB.
  *
