@@ -1,4 +1,5 @@
 package com.kenzie.appserver.service;
+import com.kenzie.appserver.DuplicateUsernameException;
 import com.kenzie.capstone.service.model.UserResponseLambda;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserService {
     private UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     private LambdaServiceClient lambdaServiceClient = new LambdaServiceClient();
     private ConcurrentHashMap<String, UserRecord> localLoginMap = new ConcurrentHashMap<>(); //added this threadsafe map for the local login
 
@@ -44,21 +44,22 @@ public class UserService {
 
 
     public UserResponse createNewUser(UserRequest userRequest) throws Exception {
-
         String validateUsername = userRequest.getUsername();
         UserResponseLambda duplicateUserProfile = findUserByUsername(validateUsername);
 
         if (duplicateUserProfile != null) {
             String duplicateUsername = duplicateUserProfile.getUsername();
             if (duplicateUsername.equalsIgnoreCase(validateUsername))
-                throw new Exception("Duplicate username");
+                throw new DuplicateUsernameException("Username is not available: " + validateUsername);
         }
 
         try {
             lambdaServiceClient.createUser(userRequest);
         } catch (Exception e) {
-            System.out.println("unsuccessful user creation");
+            logger.error("Error during user creation");
+            throw new RuntimeException(e);
         }
+
         UserResponse userResponse = new UserResponse();
         userResponse.setUserId(userRequest.getUserId());
         userResponse.setEmail(userRequest.getEmail());
